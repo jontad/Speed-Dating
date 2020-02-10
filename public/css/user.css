@@ -1,0 +1,23 @@
+body {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        display: contents;
+        text-align: center;
+        overflow: hidden;
+    }   
+    
+    #profilePicture {
+        height: 200px;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    #profilePicture > img {
+        height: 100%;
+        width: 100%;
+    }
+}
