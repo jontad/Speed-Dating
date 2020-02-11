@@ -5,19 +5,26 @@ body {
 @media only screen and (max-width: 600px) {
     body {
         display: contents;
-        text-align: center;
+        text-align: left;
         overflow: hidden;
     }   
     
     #profilePicture {
-        height: 200px;
-        width: 200px;
-        margin-left: auto;
-        margin-right: auto;
+        height: auto;
+        width: 100%;
     }
     
     #profilePicture > img {
         height: 100%;
         width: 100%;
+    }
+    #profileInfo {
+        margin: 0em 2em;        
+    }
+    .profileText {
+        margin: 0.2em 0;  
+    }
+    .bold {
+        font-weight: bold;
     }
 }

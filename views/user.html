@@ -5,19 +5,23 @@
         <meta charset="utf-8"/>
         <link rel="stylesheet" type="text/css" href="./css/user.css">
         <script src="https://vuejs.org/js/vue.js"></script>
+        <script src="/js/profile.js" defer></script>
+        <script src="/js/profile_vue.js" defer></script>
         <script type="text/javascript" src="js/menu.js"></script> 
     </head>
     <body>
     <!-- User profile-page -->
         <main>
-            <h1>User-page base</h1>
             <div id="profilePicture">
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" title="profile-picture">
+                <img :src="profile.picture">
             </div>
+            
             <div id="profileInfo">
-                <h3>Lorem ipsum</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut nisl velit. Vivamus ac magna in erat ultrices dignissim. Nam consectetur erat lacinia, vehicula odio elementum, lacinia mi. Maecenas at diam eleifend, finibus turpis eu, luctus tortor. Duis sollicitudin euismod ligula, tempor blandit metus. Donec non metus non sapien consectetur semper. Nam in felis ligula. Curabitur et porta dolor, ut fringilla ante. Suspendisse ornare, tortor ut lacinia sagittis, lectus elit pellentesque est, ut suscipit est justo non nunc.</p>
+              <h2>{{ profile.name }}, {{ profile.age }} </h2>              
+              <p class="profileText">Bor i <span class="bold"> {{profile.location }} </span></p>
+              <p> {{ profile.description }}</p>
             </div>
+            
         </main>
     </body>
 </html>
