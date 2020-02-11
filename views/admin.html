@@ -5,16 +5,25 @@
         <meta charset="utf-8"/>
         <link rel="stylesheet" type="text/css" href="./css/admin.css">
         <script src="https://vuejs.org/js/vue.js"></script>
-        <script type="text/javascript" src="js/menu.js"></script> 
+        <script type="text/javascript" src="js/profile.js" defer></script> 
+        <script type="text/javascript" src="js/menu.js" defer></script> 
+        <script type="text/javascript" src="js/vue_menu.js" defer></script> 
     </head>
     <body>
     <!-- Admin-page -->
-        <main>
+        <main id="vue">
             <div id="grid">
                 <div class="box a"> 
                     <h1 class="boxText">Progress bar</h1>
                 </div>
-                <div class="box b">
+                <div class="matches">
+                    <div id="usergrid" class="usergrid">
+                        <div class="matchline" v-for="(match, index) in matches">
+                            <div class="userbox" v-for="(profile, index) in match.profiles" v-bind:class="getUserBoxClass(profile, index)">
+                                <p>{{ profile.name }}</p>
+                            </div>
+                        </div>
+                    </div>
                     <h1>Matchpanel</h1>
                 </div>
                 <div class="box c">
