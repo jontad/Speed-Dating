@@ -14,7 +14,10 @@
 .b {
     grid-column: 1 / span 2;
     text-align: center;
-    background-color: green;
+    
+    border: 2px solid black;
+    border-radius: 30px;
+    margin-left: 20px;
 } 
 
 .c {
@@ -26,7 +29,7 @@
 .d {
     grid-column: 1 / span 3;
     text-align: center;
-    background-color: yellow;
+    background-color: yellow;    
 }
 
 .buttons {
@@ -36,3 +39,51 @@
     float: left;
     background-color: aqua;
 }
+
+
+/** Grid in matchpanel (.b) **/
+/*.user, .heart  {
+    height: 80%;
+    width: 20%;
+    margin: 0% 0% 0% 10%;
+    float: left;
+    background-color: aqua;
+}
+*/
+
+#matchPanelGrid {
+    display: grid;
+    grid-gap: 3%;
+    grid-template-columns: 40% 10% 40%;
+    grid-template-rows: 2300%;
+    margin-left: 20px;
+}
+
+
+.col1 {
+    grid-column: 1;
+    text-align: center;
+    background-color: orange;
+}
+
+
+.col2 {
+    grid-column: 2;
+    text-align: center;
+    background-color: purple;
+}
+
+
+.col3 {
+    grid-column: 3;
+    text-align: center;
+    background-color: yellow;
+}
+
+
+
+
+
+
+
+
