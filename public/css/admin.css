@@ -39,6 +39,11 @@
     background-color: aqua;
 }
 
+#usergrid {
+    display: grid;
+    grid-gap: 10px;
+}
+
 .matchline {
     display: grid;
     grid-gap: 10px;
