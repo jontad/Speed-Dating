@@ -32,8 +32,6 @@ body {
 .d {
     grid-column: 1 / span 3;
     text-align: center;
-    background-color: yellow;    
-
 }
 
 .buttons {
