@@ -1,8 +1,8 @@
 #grid {
     display: grid;
     grid-gap: 3%;
-    grid-template-columns: 21% 31% 41%;
-    grid-template-rows: 30% 190% 30%;
+    grid-template-columns: 21% 31% 42%;
+    grid-template-rows: 40% 260% 40%;
 }
 
 .a {
@@ -27,4 +27,12 @@
     grid-column: 1 / span 3;
     text-align: center;
     background-color: yellow;
+}
+
+.buttons {
+    height: 60%;
+    width: 20%;
+    margin: 0% 0% 0% 10%;
+    float: left;
+    background-color: aqua;
 }
