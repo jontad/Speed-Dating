@@ -75,14 +75,6 @@ body {
 
 
 /** Grid in matchpanel (.b) **/
-/*.user, .heart  {
-    height: 80%;
-    width: 20%;
-    margin: 0% 0% 0% 10%;
-    float: left;
-    background-color: aqua;
-}
-*/
 
 #matchPanelGrid {
     display: grid;
