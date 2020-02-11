@@ -8,7 +8,6 @@
 .a {
     grid-column: 1 / span 3;
     text-align: center;
-    background-color: red;
 }
 
 .b {
@@ -26,13 +25,42 @@
 .d {
     grid-column: 1 / span 3;
     text-align: center;
-    background-color: yellow;
 }
 
 .buttons {
-    height: 60%;
-    width: 20%;
-    margin: 0% 0% 0% 10%;
+    height: 70%;
+    width: 10%;
+    margin: 0% 0% 0% 17%;
+    padding-top: 1%;
     float: left;
-    background-color: aqua;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid black;
+    box-shadow: 0px 0px 1px 2px grey;
 }
+
+.buttons:hover {
+    background-color: white;
+    padding-top: 10px;
+    box-shadow: inset 0px 0px 6px black;
+}
+
+#progressLine {
+    width: 100%;
+    z-index: -1;
+    margin-top: 1.5em;
+    border: 1px solid black;
+    position: absolute;
+}
+
+.progressBubble {
+    height: 60%;
+    width: 10%;
+    background-color: white;
+    margin: 0em 0% 0% 8%;
+    padding-top: 1%;
+    border-radius: 50%;
+    border: 1px solid black;
+    float: left;
+}
+
