@@ -1,6 +1,7 @@
-function Profile(name, description) {
+function Profile(name, description, image) {
     this.name = name;
     this.description = description;
+    this.image = image;
     this.matches = [];
 }
 
