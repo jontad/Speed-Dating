@@ -15,7 +15,7 @@
     grid-column: 1 / span 2;
     text-align: center;
     background-color: green;
-    padding: 1vh;
+    padding: 10px;
 } 
 
 
@@ -41,26 +41,25 @@
 
 #usergrid {
     display: grid;
-    grid-gap: 1vh;
+    grid-gap: 10px;
 }
 
 .matchline {
     max-width: 100%;
     max-height: 100%;
     display: grid;
-    grid-gap: 1vh;
+    grid-gap: 10px;
     
     overflow: hidden;
 }
 
 .userbox {
     width: 100%;
-    height: 6vh;
-    min-height: 2em;
+    height: 4em;
+    min-height: 4em;
     background-color: blue;
     vertical-align: middle;
     box-sizing: border-box;
-    display: table-cell;
     padding: 10px;
 }
 
@@ -68,11 +67,6 @@
     max-height: 100%;
 }
 
-.userbox:after {
-    content: "";
-    display: block;
-    clear: both;
-}
 
 .userbox-image {
     float: left;
@@ -81,10 +75,12 @@
     vertical-align: middle;
     margin: auto;
     padding: auto;
+    margin-right: 1em;
 }
 
 .userbox-name {
     text-align: left;
+    vertical-align: middle;
 }
 
 .userbox-left {

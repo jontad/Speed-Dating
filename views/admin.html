@@ -24,9 +24,9 @@
                         <div class="userbox" v-for="(profile, index) in match.profiles"
                                 v-bind:class="getUserBoxClass(profile, index)">
                             <img class="userbox-image" v-bind:src="profile.image">
-                            <p class="userbox-name">
-                                {{ profile.name }}
-                            </p>
+                            <div>
+                                <p class="userbox-name">{{ profile.name }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
