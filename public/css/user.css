@@ -7,24 +7,42 @@ body {
         display: contents;
         text-align: left;
         overflow: hidden;
-    }   
-    
+    }       
     #profilePicture {
         height: auto;
         width: 100%;
     }
-    
+    #profileInfo {
+        margin: 0vw 5vw;        
+    }
+    #profileQuestions {
+        widht: auto;
+        margin: 0 5vw;
+    }
+    #profileHeading {
+        margin: 0vw 0vw;
+    }   
     #profilePicture > img {
         height: 100%;
         width: 100%;
     }
-    #profileInfo {
-        margin: 0em 2em;        
-    }
     .profileText {
-        margin: 0.2em 0;  
+        margin: 0vw 0vw;  
     }
     .bold {
         font-weight: bold;
+    }
+    .questionLabel {
+        margin-top: 10%;
+    }
+    .radioInline {
+        width: 20%;
+        float: left;
+        text-align: center;
+        margin: 1% 0;
+    }
+    .button {
+        text-align: center;
+        margin-top: 12%
     }
 }

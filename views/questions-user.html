@@ -16,12 +16,21 @@
                 <img :src="profile.picture">
             </div>
             
-            <div id="profileInfo">
-              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>              
-              <p class="profileText">Bor i <span class="bold"> {{profile.location }} </span></p>
-              <p> {{ profile.description }}</p>
+            <div id="profileQuestions">
+              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>
+              <form>
+                <div v-for="(q,index) in questions">
+                  <label class="questionLabel" for="question"> {{ q.question }} </label><br />
+                  <div class="radioInline" v-for="i in range(5)">
+                    <input type="radio" id="index" name="index"> {{ i }}
+                  </div>
+                </div>
+                <div class="button">
+                  <button> Submit </button>
+                </div>
+              </form>
             </div>
-            
+           
         </main>
     </body>
 </html>
