@@ -27,7 +27,8 @@ body {
         width: 100%;
     }
     .profileText {
-        margin: 0vw 0vw;  
+        height: 20px;
+        margin: 1% 0%;
     }
     .bold {
         font-weight: bold;
@@ -45,4 +46,25 @@ body {
         text-align: center;
         margin-top: 12%
     }
+    .profileButtons {
+        background: none;
+        border: none;
+        font-weight: bold;
+        text-decoration: underline;
+        text-align: left;
+        padding-left: 0;
+        padding-down: 0;
+    }
+    .description {
+        margin: 1vw 0;;
+    }
+    #editDescription {
+        width: 98%;
+        height: 150px;
+        resize: none;
+    }
+    #editLocation {
+        margin: 0;
+    }
+    
 }
