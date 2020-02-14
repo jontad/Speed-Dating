@@ -26,7 +26,10 @@ body {
 .c {
     grid-column: 3;
     text-align: center;
-    background-color: blue;
+
+    border: 2px solid black;
+    border-radius: 30px;
+    margin-left: 20px;
 }
 
 .d {
@@ -78,7 +81,7 @@ body {
     display: grid;
     grid-gap: 3%;
     grid-template-columns: 40% 10% 40%;
-    grid-template-rows: 2300%;
+    grid-template-rows: 2000%;
     margin-left: 20px;
 }
 
@@ -103,8 +106,13 @@ body {
     background-color: yellow;
 }
 
+/** Infopanel **/
 
+#timer {
+    margin-top: 10px;
+    size: 200%;
 
+}
 
 
 
