@@ -6,10 +6,19 @@
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
     <script src="https://vuejs.org/js/vue.js"></script>
     <script type="text/javascript" src="js/menu.js"></script> 
+    <script type="text/javascript" src="js/admin.js" defer></script>
   </head>
   <body>
     <!-- Admin-page -->
         <main>
+			<div id="matchButton" class="tab matchTab" onclick="changeToMatch()">
+            	<h3>Match</h3>
+            </div>
+            <div id="unmatchButton" class="tab unmatchTab" onclick="changeToUnmatch()">
+            	<h3>Unmatch</h3>
+            </div>
+			<div class="tab hidden">
+			</div>
             <div id="grid">
                 <div class="box a"> 
                     <hr id="progressLine">
@@ -19,19 +28,26 @@
                     <div class="progressBubble">Möte 3</div>
                     <div class="progressBubble">Slut</div>
                 </div>
-                <div class="box b">
-                  <h1>Matchpanel</h1>
-		  <div id="matchPanelGrid">
- 		    <div class="col1">User 1</div>
-		    <div class="col2">Hearts</div>
-		    <div class="col3">User 2</div>
-		  </div>
+                <div id="matchPanel" class="box b">
+                    
+                    <div id="matchPanelGrid">
+                        <div class="col1">User 1</div>
+                        <div class="col2">Hearts</div>
+                        <div class="col3">User 2</div>
+                    </div>
+                </div>
+                <div id="unmatchPanel" class="box b">
+					<div id="unmatchPanelGrid">
+                        <div class="col4">
+							Unmatched profiles
+						</div>
+                    </div>
                 </div>
                 <div class="box c">
                     <h1>Infopanel</h1>
                 </div>
                 <div class="box d">
-                    <div class="buttons">Reset</div>
+                    <div class="buttons" onclick="document.getElementById('unmatchPanel').style.display='block'; document.getElementById('matchPanel').style.display='none';">Reset</div>
                     <div class="buttons">Avsluta</div>
                     <div class="buttons">Starta</div>
                 </div>
