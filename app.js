@@ -43,8 +43,14 @@ app.get('/questions-user', function(req, res) {
   res.sendFile(path.join(__dirname, 'views/questions-user.html'));
 });
 
+
 app.get('/user-contacts', function(req, res) {
   res.sendFile(path.join(__dirname, 'views/user-contacts.html'));
+});
+
+
+app.get('/waiting', function(req, res) {
+  res.sendFile(path.join(__dirname, 'views/waiting.html'));
 });
 
 // Store data in an object to keep the global namespace clean and
