@@ -22,7 +22,7 @@ body {
     #profileHeading {
         margin: 0vw 0vw;
     }   
-    #profilePicture > img {
+    #profilePicture > img{
         height: 100%;
         width: 100%;
     }
@@ -32,6 +32,9 @@ body {
     }
     .bold {
         font-weight: bold;
+    }
+    .italic {
+        font-style: italic;
     }
     .questionLabel {
         margin-top: 10%;
@@ -55,6 +58,9 @@ body {
         padding-left: 0;
         padding-down: 0;
     }
+    .profileButtons:hover {
+        cursor: pointer;
+    }
     .description {
         margin: 1vw 0;;
     }
@@ -62,9 +68,55 @@ body {
         width: 98%;
         height: 150px;
         resize: none;
+        font-size: 1em;
     }
     #editLocation {
         margin: 0;
+    }
+    #contacts {
+        padding-bottom: 1.5em;
+    }
+    .contactBlock {
+        display: grid;
+        grid-template-columns: 90px 70%;
+        grid-column-gap: 0;
+        margin: 5vw 5vw;
+        padding: 1% 1%;
+        border-radius: 10px;
+        vertical-align: middle;
+        height: auto;
+        background-color: LightGray;
+    }
+    #contactPicture {
+        border-radius: 5px;
+        margin: 1vw 1vw;
+        height: 80px;
+        width: 80px;
+    }
+
+    #contactsInfo {
+        margin-left: 0;
+        height: 100%;
+    }
+    #contactName {
+        font-size: 2em;
+        font-weight: bold;
+    }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        
+    }
+    #backButton {
+        font-size: 1em;
+        margin-bottom: 0.5em;
+        border-radius: 5px;
+    }
+    #backButton:hover {
+        cursor: pointer;
     }
     
 }

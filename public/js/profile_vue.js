@@ -5,7 +5,8 @@ const vm = new Vue({
         questions: dummyQuestions,
         editMode: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
-        editButtonText: "Redigera profil"
+        editButtonText: "Redigera profil",
+        dummyContacts: dummyContacts,
     },
     methods: {
         range: function(end) {
@@ -19,8 +20,7 @@ const vm = new Vue({
             }              
             else {
                 this.editButtonText = "Redigera profil";
-            }
-                
+            }                
         }
     }
 });

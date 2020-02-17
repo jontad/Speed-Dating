@@ -42,6 +42,11 @@ app.get('/user', function(req, res) {
 app.get('/questions-user', function(req, res) {
   res.sendFile(path.join(__dirname, 'views/questions-user.html'));
 });
+
+app.get('/user-contacts', function(req, res) {
+  res.sendFile(path.join(__dirname, 'views/user-contacts.html'));
+});
+
 // Store data in an object to keep the global namespace clean and
 // prepare for multiple instances of data if necessary
 function Data() {
