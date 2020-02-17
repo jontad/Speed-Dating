@@ -118,5 +118,12 @@ body {
     #backButton:hover {
         cursor: pointer;
     }
-    
+    #foundButton {
+        font-size: 1em;
+        margin-bottom: 1em;
+        border-radius: 5px;
+    }
+    #foundButton:hover {
+        cursor: pointer;
+    }
 }

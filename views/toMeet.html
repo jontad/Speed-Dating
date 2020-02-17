@@ -19,21 +19,13 @@
             <div id="profileInfo">
               <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>              
               <p class="profileText">Bor i
-                <span v-if="!editMode" class="bold"> {{ profile.location }} </span>
-                <input v-if="editMode" id="editLocation" type="text" v-bind:value="profile.location"> 
+                <span class="bold"> {{ profile.location }} </span>
               </p>
-              <button id="contactsButton" class="profileButtons"> Kontakter </button>
-              <button id="editProfileButton" class="profileButtons" v-on:click="editProfile()">
-                {{ editButtonText }}
-              </button>
-              <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode">
-                Byt profilbild
-              </button>
-              <br />
-              <div v-if="!editMode" id="description" class="description"> {{ profile.description }}</div>
-              <textarea v-if="editMode" id="editDescription" type="text" v-bind:value="profile.description"></textarea>
+              <div id="description" class="description"> {{ profile.description }}</div>
             </div>
-            
+            <div class="footer">
+              <button id="foundButton"> Hittad </button>
+            </div>
         </main>
     </body>
 </html>
