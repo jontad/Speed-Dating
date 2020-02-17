@@ -6,7 +6,7 @@ body {
     display: grid;
     grid-gap: 3%;
     grid-template-columns: 21% 31% 42%;
-    grid-template-rows: 40% 260% 40%;
+    grid-template-rows: 40% 110% 40%;
 }
 
 .box {
@@ -31,10 +31,12 @@ body {
 .c {
     grid-column: 3;
     text-align: center;
-    background-color: blue;
     border: 2px solid black;
     border-radius: 30px;
     margin-left: 20px;
+    border: 2px solid black;
+    border-radius: 30px;
+    margin-right: 50px;
 }
 
 .d {
@@ -43,7 +45,7 @@ body {
 }
 
 .buttons {
-    height: 70%;
+    height: 40%;
     width: 10%;
     margin: 0% 0% 0% 17%;
     padding-top: 1%;
@@ -86,7 +88,7 @@ body {
     display: grid;
     grid-gap: 3%;
     grid-template-columns: 40% 10% 40%;
-    grid-template-rows: 2300%;
+    grid-template-rows: 1500%;
     margin-left: 20px;
 }
 
@@ -172,7 +174,13 @@ body {
 }
 
 
+/** Infopanel **/
 
+#timer {
+    margin-top: 10px;
+    size: 200%;
+
+}
 
 
 

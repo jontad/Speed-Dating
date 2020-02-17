@@ -17,9 +17,21 @@
             </div>
             
             <div id="profileInfo">
-              <h2>{{ profile.name }}, {{ profile.age }} </h2>              
-              <p class="profileText">Bor i <span class="bold"> {{profile.location }} </span></p>
-              <p> {{ profile.description }}</p>
+              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>              
+              <p class="profileText">Bor i
+                <span v-if="!editMode" class="bold"> {{ profile.location }} </span>
+                <input v-if="editMode" id="editLocation" type="text" v-bind:value="profile.location"> 
+              </p>
+              <button id="contactsButton" class="profileButtons" v-if="myProfile"> Kontakter </button>
+              <button id="editProfileButton" class="profileButtons" v-if="myProfile" v-on:click="editProfile()">
+                {{ editButtonText }}
+              </button>
+              <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode">
+                Byt profilbild
+              </button>
+              <br />
+              <div v-if="!editMode" id="description" class="description"> {{ profile.description }}</div>
+              <textarea v-if="editMode" id="editDescription" type="text" v-bind:value="profile.description"></textarea>
             </div>
             
         </main>

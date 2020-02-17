@@ -5,6 +5,8 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
     <script src="https://vuejs.org/js/vue.js"></script>
+     <script src="/js/admin.js" defer></script>
+     <script src="/js/admin_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
     <script type="text/javascript" src="js/admin.js" defer></script>
   </head>
@@ -44,12 +46,20 @@
                     </div>
                 </div>
                 <div class="box c">
-                    <h1>Infopanel</h1>
-                </div>
+                  <h1>Infopanel</h1>
+		  <p id="info">{{info}}</p>
+
+		  <p>
+		    <h3>Timer</h3>
+		    <input type="number" required="required" placeholder="Längd på event" id="time"/>
+		    <div id="timer"></div> 
+		  </p>
+
+		</div>
                 <div class="box d">
                     <div class="buttons" onclick="document.getElementById('unmatchPanel').style.display='block'; document.getElementById('matchPanel').style.display='none';">Reset</div>
                     <div class="buttons">Avsluta</div>
-                    <div class="buttons">Starta</div>
+                    <div onclick="timer()" class="buttons">Starta</div>
                 </div>
             </div>
         </main>

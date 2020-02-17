@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>User page</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="./css/user.css">
+        <script src="https://vuejs.org/js/vue.js"></script>
+        <script src="/js/profile.js" defer></script>
+        <script src="/js/profile_vue.js" defer></script>
+        <script type="text/javascript" src="js/menu.js"></script> 
+    </head>
+    <body>
+    <!-- User profile-page -->
+        <main>
+            <div id="profilePicture">
+                <img :src="profile.picture">
+            </div>
+            
+            <div id="profileQuestions">
+              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>
+              <form>
+                <div v-for="(q,index) in questions">
+                  <label class="questionLabel" for="question"> {{ q.question }} </label><br />
+                  <div class="radioInline" v-for="i in range(5)">
+                    <input type="radio" id="index" name="index"> {{ i }}
+                  </div>
+                </div>
+                <div class="button">
+                  <button> Submit </button>
+                </div>
+              </form>
+            </div>
+           
+        </main>
+    </body>
+</html>
