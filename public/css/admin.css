@@ -124,25 +124,25 @@ body {
 	text-align: center;
     height: 10%;
     width: 10%;
-    z-index: 2;
+    z-index: 100;
     border: 2px solid black;
     background-color: white;
 }
 
 .matchTab {
     border-bottom: none;
-	margin: 4% 0% 0% 1.55%;
+	margin: 11% 0% 0% 1.55%;
 }
 
 .unmatchTab {
-    margin: 4% 0% 0% 11.68%;
+    margin: 11% 0% 0% 11.68%;
 	background-color: whitesmoke;
 }
 
 .hidden {
 	width: 32.82%;
-	height: 7.45%;
-	margin: 5.45% 0% 0% 21.9%;
+	height: 8.45%;
+	margin: 11.95% 0% 0% 21.9%;
 	border-top-right-radius: 30px; 
 	border-top: none;
 	border-right: none;
