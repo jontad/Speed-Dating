@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
     <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script type="text/javascript" src="js/profile.js" defer></script>
     <script type="text/javascript" src="js/menu.js" defer></script>
     <script type="text/javascript" src="js/vue_menu.js" defer></script>
@@ -21,7 +22,7 @@
             <div class="matches">
                 <div id="usergrid" class="usergrid">
                     <div class="matchline" v-for="(match, index) in matches">
-                        <div class="userbox" v-for="(profile, index) in match.profiles"
+                        <div class="userbox draggable" v-for="(profile, index) in match.profiles"
                                 v-bind:class="getUserBoxClass(profile, index)">
                             <img class="userbox-image" v-bind:src="profile.image">
                             <div>
