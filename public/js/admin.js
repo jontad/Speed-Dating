@@ -1,39 +1,39 @@
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
 async function timer() {
-    //choosen time in seconds
-    let time = (document.getElementById('time').value) * 60;
-    let diff = time;
+	//choosen time in seconds
+	let time = (document.getElementById('time').value) * 60;
+	let diff = time;
 
-    if(diff > 0){
-	while(diff > 0){
-	    let minutes = Math.floor(diff / 60);
-	    let seconds = diff % 60;
-	    
-	    // Display the result in the element with id="timer"
-	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
-	    
-	    // Give page time to print
-	    await sleep(1000);
+	if (diff > 0) {
+		while (diff > 0) {
+			let minutes = Math.floor(diff / 60);
+			let seconds = diff % 60;
 
-	    // Decrement difference 
-	    diff--;
+			// Display the result in the element with id="timer"
+			document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
-	    // If the count down is finished, write some text 
-	    if (diff == 0) {
-		document.getElementById("timer").innerHTML = "Mötet är över";
-		await sleep(4000);
-		document.getElementById("timer").innerHTML = "";
-		document.getElementById("time").innerHTML = "Längd på event";
-	    }
+			// Give page time to print
+			await sleep(1000);
+
+			// Decrement difference 
+			diff--;
+
+			// If the count down is finished, write some text 
+			if (diff == 0) {
+				document.getElementById("timer").innerHTML = "Mötet är över";
+				await sleep(4000);
+				document.getElementById("timer").innerHTML = "";
+				document.getElementById("time").innerHTML = "Längd på event";
+			}
+		}
+	} else {
+		document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
 	}
-    } else {
-	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
-    }
 }
 
 if (!Modernizr.draganddrop)
@@ -53,8 +53,7 @@ function getOppositeColumn(element) {
 function getColumnClass(element) {
 	var classList = element.classList;
 
-	for (var i = 0; i < classList.length; i++)
-	{
+	for (var i = 0; i < classList.length; i++) {
 		var currentClass = classList[i];
 		if (!columnClasses.includes(currentClass))
 			continue;
@@ -85,8 +84,7 @@ function handleDragStart(event) {
 }
 
 function getTargetContainer(element) {
-	while (element != null)
-	{
+	while (element != null) {
 		if (element.parentNode == window.document || element.classList == null)
 			return null;
 
@@ -115,27 +113,29 @@ function handleDrop(event) {
 
 	var unmatchedContainer = document.getElementById("unmatchedGrid");
 
+	var newDivHtml = overwrittenHtml;
+	if (overwrittenType !== "unmatched-col") 
+		target.innerHTML = sourceHtml;
+	else
+		newDivHtml = source.innerHTML;
+
 	if (sourceType === "unmatched-col")
 		unmatchedContainer.removeChild(source);
 	else {
 		source.innerHTML = "";
 	}
 
-	if (overwrittenType !== "unmatched-col") {
-		target.innerHTML = sourceHtml;
-
+	if (overwrittenHtml !== "") {
 		var newDiv = document.createElement("div");
 
-		if (overwrittenHtml !== "")
-		{
-			newDiv.classList.add("unmatched-col");
-			newDiv.classList.add("column");
-			newDiv.draggable = true;
-			newDiv.innerHTML = overwrittenHtml;
-		}
-	
+		newDiv.classList.add("unmatched-col");
+		newDiv.classList.add("column");
+		newDiv.draggable = true;
+		newDiv.innerHTML = newDivHtml;
+
 		unmatchedContainer.appendChild(newDiv);
 	}
+
 
 	target.style.opacity = 1;
 
@@ -175,8 +175,7 @@ function handleDragLeave(event) {
 
 var columns = document.querySelectorAll("#matchPanelGrid .column");
 
-for (var i = 0; i < columns.length; i++)
-{
+for (var i = 0; i < columns.length; i++) {
 	var column = columns[i];
 }
 
