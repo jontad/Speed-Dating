@@ -52,12 +52,12 @@ async function timer() {
 	while(diff > 0){
 	    let minutes = Math.floor(diff / 60);
 	    let seconds = diff % 60;
-
-	    // Give page time to print
-	    await sleep(1000);
 	    
 	    // Display the result in the element with id="timer"
 	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+	    
+	    // Give page time to print
+	    await sleep(1000);
 
 	    // Decrement difference 
 	    diff--;

@@ -22,7 +22,7 @@
                 <div v-for="(q,index) in questions">
                   <label class="questionLabel" for="question"> {{ q.question }} </label><br />
                   <div class="radioInline" v-for="i in range(5)">
-                    <input type="radio" id="index" name="index"> {{ i }}
+                    <input type="radio" v-bind:name="index"> {{ i }}
                   </div>
                 </div>
                 <div class="button">

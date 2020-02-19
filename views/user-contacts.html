@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contacts</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
+    <!-- User contacts-page -->
+    <main>
+
+      <div id="contacts">
+        <div class="contactBlock" v-for="(c,index) in dummyContacts">
+          <img id="contactPicture" :src="c.picture">
+
+          <div id="contactsInfo">
+            <span id="contactName">{{ c.name }} </span> <br/>            
+            <span class="italic">
+              <i class="fa fa-envelope-o" style="font-size:1em"></i> {{ c.email }} <br/>
+              <i class="fa fa-phone" style="font-size:1em"></i> {{ c.phoneNumber }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <button id="backButton"> Tillbaka </button>
+      </div>
+    </main>
+  </body>
+</html>
