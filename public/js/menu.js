@@ -19,14 +19,26 @@ let matches = [
     new Match(profiles[2], profiles[3])
 ]
 
+let areaElements = document.getElementsByClassName("draggable");
+let areas = [];
+
+for (var i = 0; i < areaElements.length; i++) {
+  var area = areaElements[i];
+
+  areas.push({
+    x: area.x,
+    y: area.y
+  });
+}
+
 interact.maxInteractions(Infinity);
 
 // interact.js example code below!
 let transformProp;
-const dragPositions = [1, 2, 3, 4].reduce((acc, n) => {
+const dragPositions = areas; /*[1, 2, 3, 4].reduce((acc, n) => {
   acc[`drag${n}`] = { x: 0, y: 0 }
   return acc
-}, {})
+}, {})*/
 
 // setup draggable elements.
 interact('.draggable')
