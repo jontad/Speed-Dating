@@ -106,32 +106,38 @@ function handleDrop(event) {
 	if (!isOpposite(target, draggedElement))
 		return;
 
-	var targetElementType = getColumnClass(target);
-	var draggedElementType = getColumnClass(draggedElement);
+	var source = draggedElement;
 
-	target.style.opacity = 1;
-	var removedHtml = target.innerHTML;
-	target.innerHTML = draggedElement.innerHTML;
+	var overwrittenHtml = target.innerHTML;
+	var sourceHtml = draggedElement.innerHTML;
+	var overwrittenType = getColumnClass(target);
+	var sourceType = getColumnClass(draggedElement);
 
-	if (draggedElementType === "unmatched-col")
-	{
-		draggedElement.parentNode.removeChild(draggedElement);
+	var unmatchedContainer = document.getElementById("unmatchedGrid");
+
+	if (sourceType === "unmatched-col")
+		unmatchedContainer.removeChild(source);
+	else {
+		source.innerHTML = "";
 	}
 
-	draggedElement.innerHTML = "";
+	if (overwrittenType !== "unmatched-col") {
+		target.innerHTML = sourceHtml;
 
-	if (targetElementType !== "unmatched-col")
-	{
 		var newDiv = document.createElement("div");
 
-		newDiv.classList.add("unmatched-col");
-		newDiv.classList.add("column");
-		newDiv.draggable = true;
-		newDiv.innerHTML = removedHtml;
+		if (overwrittenHtml !== "")
+		{
+			newDiv.classList.add("unmatched-col");
+			newDiv.classList.add("column");
+			newDiv.draggable = true;
+			newDiv.innerHTML = overwrittenHtml;
+		}
 	
-		var unmatchedContainer = document.getElementById("unmatchedGrid");
 		unmatchedContainer.appendChild(newDiv);
 	}
+
+	target.style.opacity = 1;
 
 	// target.parentNode.replaceChild(draggedElement, target);
 	draggedElement = null;
