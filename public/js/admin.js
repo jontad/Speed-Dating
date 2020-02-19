@@ -1,43 +1,4 @@
 
-function changeToUnmatch() {
-	'use strict';
-	let unmatch = document.getElementById('unmatchPanel');
-	let unmatchButton = document.getElementById('unmatchButton');
-	let match = document.getElementById('matchPanel');
-	let matchButton = document.getElementById('matchButton');
-	
-	unmatch.style.display='block';
-	unmatchButton.style.borderBottom='none';
-	matchButton.style.borderBottom='solid 2px black';
-	match.style.display='none';
-	match.style.borderBottom='display';
-	matchButton.style.backgroundColor='whitesmoke';
-	matchButton.style.height='8%';
-	matchButton.style.marginTop='12%';
-	unmatchButton.style.marginTop='11%';
-	unmatchButton.style.backgroundColor='white';
-};
-
-function changeToMatch() {
-	'use strict';
-	let unmatch = document.getElementById('unmatchPanel');
-	let unmatchButton = document.getElementById('unmatchButton');
-	let match = document.getElementById('matchPanel');
-	let matchButton = document.getElementById('matchButton');
-	
-	match.style.display='block';
-	matchButton.style.borderBottom='none';
-	unmatchButton.style.borderBottom='solid 2px black';
-	unmatch.style.display='none';
-	unmatch.style.borderBottom='display';
-	unmatchButton.style.backgroundColor='whitesmoke';
-	unmatchButton.style.height='8%';
-	unmatchButton.style.marginTop='12%';
-	matchButton.style.height='10%';
-	matchButton.style.marginTop='11%';
-	matchButton.style.backgroundColor='white';
-};
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -75,10 +36,72 @@ async function timer() {
     }
 }
 
+if (!Modernizr.draganddrop)
+	alert("Your browser does not support drag and drop!");
 
+var draggedElement = null;
+var draggedOverElement = null;
 
+function getOppositeColumn(element) {
+	return element.classList.contains("col1")
+		? "col3"
+		: "col1";
+}
 
+function handleDragStart(event) {
+	draggedElement = event.target;
+}
 
+function handleDrop(event) {
+	event.preventDefault();
 
+	var target = event.target;
+	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+		return;
 
+	target.innerHTML = draggedElement.innerHTML;
+	draggedElement.innerHTML = "";
 
+	// target.parentNode.replaceChild(draggedElement, target);
+	draggedElement = null;
+}
+
+function preventEvent(event) {
+	event.preventDefault();
+}
+
+function handleDragEnter(event) {
+	if (draggedElement == null)
+		return;
+
+	var target = event.target;
+
+	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+		return;
+
+	draggedOverElement = target;
+}
+
+function handleDragLeave(event) {
+	var target = event.target;
+
+	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+		return;
+
+	draggedOverElement = null;
+}
+
+var columns = document.querySelectorAll("#matchPanelGrid .column");
+
+for (var i = 0; i < columns.length; i++)
+{
+	var column = columns[i];
+}
+
+document.addEventListener("dragstart", handleDragStart, false);
+document.addEventListener("dragstop", preventEvent, false);
+document.addEventListener("dragover", preventEvent, false);
+document.addEventListener("drop", handleDrop, false);
+
+//document.addEventListener("dragenter", handleDragEnter, false);
+//document.addEventListener("dragleave", handleDragLeave, false);
