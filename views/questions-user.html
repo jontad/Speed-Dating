@@ -3,6 +3,7 @@
     <head>
         <title>User page</title>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="./css/user.css">
         <script src="https://vuejs.org/js/vue.js"></script>
         <script src="/js/profile.js" defer></script>
@@ -23,6 +24,12 @@
                   <label class="questionLabel" for="question"> {{ q.question }} </label><br />
                   <div class="radioInline" v-for="i in range(5)">
                     <input type="radio" v-bind:name="index"> {{ i }}
+                  </div>
+                </div>
+                <div id="makeContact">
+                  <label for="makeContact"> Dela dina kontaktuppgifter med {{profile.name}}</label> </br>
+                  <div class="radioMakeContact">
+                    <input type="radio" name="makeContact"> Ja <input type="radio" name="makeContact"> Nej
                   </div>
                 </div>
                 <div class="button">

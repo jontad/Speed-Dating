@@ -1,129 +1,136 @@
+
+
+main {
+    max-width: 414px;
+    max-height: 736px;
+}
 body {
-    display: none;
+    display: contents;
+    text-align: left;
+    overflow: hidden;
+    font-family: "Arial", Helvetica, sans-serif;
+
+}       
+#profilePicture {
+    height: auto;
+    width: 100%;
+}
+#profileInfo {
+    margin: 0vw 5vw;
+    margin-bottom: 45px;
+}
+#profileQuestions {
+    widht: auto;
+    margin: 0 5vw;
+}
+#profileHeading {
+    margin: 0vw 0vw;
+}   
+#profilePicture > img{
+    height: 100%;
+    width: 100%;
+}
+.profileText {
+    height: 20px;
+    margin: 1% 0%;
+}
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.questionLabel {
+    margin-top: 10%;
+}
+.radioInline {
+    width: 20%;
+    float: left;
+    text-align: center;
+    margin: 1% 0;
+}
+.radioMakeContact {
+    text-align: center;
+}
+.button {
+    text-align: center;
+    margin-top: 5%
+}
+.profileButtons {
+    background: none;
+    border: none;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: left;
+    padding-left: 0;
+    padding-down: 0;
+}
+.profileButtons:hover {
+    cursor: pointer;
+}
+.description {
+    margin: 1vw 0;;
+}
+#editDescription {
+    width: 98%;
+    height: 150px;
+    resize: none;
+    font-size: 1em;
+}
+#editLocation {
+    margin: 0;
+}
+#contacts {
+    padding-bottom: 1.5em;
+}
+.contactBlock {
+    display: grid;
+    grid-template-columns: 90px 70%;
+    grid-column-gap: 0;
+    margin: 5vw 5vw;
+    padding: 1% 1%;
+    border-radius: 10px;
+    vertical-align: middle;
+    height: auto;
+    background-color: LightGray;
+}
+#contactPicture {
+    border-radius: 5px;
+    margin: 1vw 1vw;
+    height: 80px;
+    width: 80px;
 }
 
-@media only screen and (max-width: 600px) {
-    body {
-        display: contents;
-        text-align: left;
-        overflow: hidden;
-    }       
-    #profilePicture {
-        height: auto;
-        width: 100%;
-    }
-    #profileInfo {
-        margin: 0vw 5vw;        
-    }
-    #profileQuestions {
-        widht: auto;
-        margin: 0 5vw;
-    }
-    #profileHeading {
-        margin: 0vw 0vw;
-    }   
-    #profilePicture > img{
-        height: 100%;
-        width: 100%;
-    }
-    .profileText {
-        height: 20px;
-        margin: 1% 0%;
-    }
-    .bold {
-        font-weight: bold;
-    }
-    .italic {
-        font-style: italic;
-    }
-    .questionLabel {
-        margin-top: 10%;
-    }
-    .radioInline {
-        width: 20%;
-        float: left;
-        text-align: center;
-        margin: 1% 0;
-    }
-    .button {
-        text-align: center;
-        margin-top: 12%
-    }
-    .profileButtons {
-        background: none;
-        border: none;
-        font-weight: bold;
-        text-decoration: underline;
-        text-align: left;
-        padding-left: 0;
-        padding-down: 0;
-    }
-    .profileButtons:hover {
-        cursor: pointer;
-    }
-    .description {
-        margin: 1vw 0;;
-    }
-    #editDescription {
-        width: 98%;
-        height: 150px;
-        resize: none;
-        font-size: 1em;
-    }
-    #editLocation {
-        margin: 0;
-    }
-    #contacts {
-        padding-bottom: 1.5em;
-    }
-    .contactBlock {
-        display: grid;
-        grid-template-columns: 90px 70%;
-        grid-column-gap: 0;
-        margin: 5vw 5vw;
-        padding: 1% 1%;
-        border-radius: 10px;
-        vertical-align: middle;
-        height: auto;
-        background-color: LightGray;
-    }
-    #contactPicture {
-        border-radius: 5px;
-        margin: 1vw 1vw;
-        height: 80px;
-        width: 80px;
-    }
-
-    #contactsInfo {
-        margin-left: 0;
-        height: 100%;
-    }
-    #contactName {
-        font-size: 2em;
-        font-weight: bold;
-    }
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        
-    }
-    #backButton {
-        font-size: 1em;
-        margin-bottom: 0.5em;
-        border-radius: 5px;
-    }
-    #backButton:hover {
-        cursor: pointer;
-    }
-    #foundButton {
-        font-size: 1em;
-        margin-bottom: 1em;
-        border-radius: 5px;
-    }
-    #foundButton:hover {
-        cursor: pointer;
-    }
+#contactsInfo {
+    margin-left: 0;
+    height: 100%;
 }
+#contactName {
+    font-size: 2em;
+    font-weight: bold;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    
+}
+#backButton {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+}
+#backButton:hover {
+    cursor: pointer;
+}
+#foundButton {
+    font-size: 1em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+}
+#foundButton:hover {
+    cursor: pointer;
+}
+
