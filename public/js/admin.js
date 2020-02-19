@@ -12,6 +12,9 @@ function changeToUnmatch() {
 	match.style.display='none';
 	match.style.borderBottom='display';
 	matchButton.style.backgroundColor='whitesmoke';
+	matchButton.style.height='8%';
+	matchButton.style.marginTop='12%';
+	unmatchButton.style.marginTop='11%';
 	unmatchButton.style.backgroundColor='white';
 };
 
@@ -28,6 +31,10 @@ function changeToMatch() {
 	unmatch.style.display='none';
 	unmatch.style.borderBottom='display';
 	unmatchButton.style.backgroundColor='whitesmoke';
+	unmatchButton.style.height='8%';
+	unmatchButton.style.marginTop='12%';
+	matchButton.style.height='10%';
+	matchButton.style.marginTop='11%';
 	matchButton.style.backgroundColor='white';
 };
 
