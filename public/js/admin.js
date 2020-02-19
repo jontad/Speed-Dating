@@ -42,25 +42,96 @@ if (!Modernizr.draganddrop)
 var draggedElement = null;
 var draggedOverElement = null;
 
+var columnClasses = ["col1", "col3", "unmatched-col"];
+
 function getOppositeColumn(element) {
 	return element.classList.contains("col1")
 		? "col3"
 		: "col1";
 }
 
+function getColumnClass(element) {
+	var classList = element.classList;
+
+	for (var i = 0; i < classList.length; i++)
+	{
+		var currentClass = classList[i];
+		if (!columnClasses.includes(currentClass))
+			continue;
+
+		return currentClass;
+	}
+
+	return null;
+}
+
+function isOpposite(a, b) {
+	if (a == null || b == null)
+		return false;
+
+	var classA = getColumnClass(a);
+	var classB = getColumnClass(b);
+
+	return classA !== classB;
+}
+
 function handleDragStart(event) {
-	draggedElement = event.target;
+	var target = getTargetContainer(event.target);
+
+	if (target == null)
+		return;
+
+	draggedElement = target;
+}
+
+function getTargetContainer(element) {
+	while (element != null)
+	{
+		if (element.parentNode == window.document || element.classList == null)
+			return null;
+
+		if (element.classList.contains("column"))
+			return element;
+
+		element = element.parentNode;
+	}
+
+	return null;
 }
 
 function handleDrop(event) {
 	event.preventDefault();
 
-	var target = event.target;
-	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+	var target = getTargetContainer(event.target);
+	if (!isOpposite(target, draggedElement))
 		return;
 
+	var targetElementType = getColumnClass(target);
+	var draggedElementType = getColumnClass(draggedElement);
+
+	target.style.opacity = 1;
+	var removedHtml = target.innerHTML;
 	target.innerHTML = draggedElement.innerHTML;
+
+	if (draggedElementType === "unmatched-col")
+	{
+		draggedElement.parentNode.removeChild(draggedElement);
+	}
+
 	draggedElement.innerHTML = "";
+
+	if (targetElementType !== "unmatched-col")
+	{
+		var newDiv = document.createElement("div");
+
+		newDiv.classList.add("unmatched-col");
+		newDiv.classList.add("column");
+		newDiv.draggable = true;
+		newDiv.innerHTML = removedHtml;
+	
+		var unmatchedContainer = document.getElementById("unmatchedGrid");
+		unmatchedContainer.appendChild(newDiv);
+	}
 
 	// target.parentNode.replaceChild(draggedElement, target);
 	draggedElement = null;
@@ -74,21 +145,26 @@ function handleDragEnter(event) {
 	if (draggedElement == null)
 		return;
 
-	var target = event.target;
+	var target = getTargetContainer(event.target);
 
-	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+	if (target == draggedElement)
 		return;
 
-	draggedOverElement = target;
+	event.stopPropagation();
+	if (!isOpposite(target, draggedElement))
+		return;
+
+	target.style.opacity = 0.4;
 }
 
 function handleDragLeave(event) {
-	var target = event.target;
+	var target = getTargetContainer(event.target);
 
-	if (!target.classList.contains(getOppositeColumn(draggedElement)))
+	event.stopPropagation();
+	if (!isOpposite(target, draggedElement))
 		return;
 
-	draggedOverElement = null;
+	target.style.opacity = 1;
 }
 
 var columns = document.querySelectorAll("#matchPanelGrid .column");
@@ -103,5 +179,5 @@ document.addEventListener("dragstop", preventEvent, false);
 document.addEventListener("dragover", preventEvent, false);
 document.addEventListener("drop", handleDrop, false);
 
-//document.addEventListener("dragenter", handleDragEnter, false);
-//document.addEventListener("dragleave", handleDragLeave, false);
+document.addEventListener("dragenter", handleDragEnter, false);
+document.addEventListener("dragleave", handleDragLeave, false);
