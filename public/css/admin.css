@@ -9,6 +9,10 @@ body {
     grid-template-rows: 40% 110% 40%;
 }
 
+.box {
+	overflow: scroll;
+}
+
 .a {
     grid-column: 1 / span 3;
     text-align: center;
@@ -21,12 +25,15 @@ body {
     border: 2px solid black;
     border-radius: 30px;
     margin-left: 20px;
+	padding-top: 10%;
 } 
 
 .c {
     grid-column: 3;
     text-align: center;
-
+    border: 2px solid black;
+    border-radius: 30px;
+    margin-left: 20px;
     border: 2px solid black;
     border-radius: 30px;
     margin-right: 50px;
@@ -105,6 +112,71 @@ body {
     text-align: center;
     background-color: yellow;
 }
+
+/** Unmatch panel **/
+
+#unmatchPanel {
+    display: none;
+}
+
+.tab {
+	position: absolute;
+	text-align: center;
+    height: 10%;
+    width: 10%;
+    z-index: 100;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.tab:hover {
+	text-decoration: underline;
+}
+
+.matchTab {
+    border-bottom: none;
+	margin: 11% 0% 0% 1.55%;
+}
+
+.unmatchTab {
+    margin: 11% 0% 0% 11.68%;
+	background-color: whitesmoke;
+}
+
+.hidden {
+	width: 32.82%;
+	height: 8.45%;
+	margin: 11.95% 0% 0% 21.9%;
+	border-top-right-radius: 30px; 
+	border-top: none;
+	border-right: none;
+	backface-visibility: hidden;
+	background-color: whitesmoke;
+}
+
+/*
+#unmatchProfiles {
+	display: grid;
+	grid-gap: 3%;
+    grid-template-columns: 10em;
+	height: 100%;
+	margin-left: 10%;
+}
+*/
+
+#unmatchPanelGrid {
+    display: grid;
+    grid-gap: 3%;
+    grid-template-columns: 80%;
+    grid-template-rows: 2300%;
+    margin-left: 15%;
+}
+
+.col4 {
+	grid-column: 1;
+	background-color: cornflowerblue;
+}
+
 
 /** Infopanel **/
 
