@@ -14,12 +14,12 @@
     <!-- User profile-page -->
         <main>
             <div id="profilePicture">
-                <img :src="profile.picture">
+                <img :src="date.picture">
             </div>
             
             <div id="profileQuestions">
-              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>
-              <form>
+              <h2 id="profileHeading">{{ date.name }}, {{ date.age }} </h2>
+              <form action="/user">
                 <div v-for="(q,index) in questions">
                   <label class="questionLabel" for="question"> {{ q.question }} </label><br />
                   <div class="radioInline" v-for="i in range(5)">
@@ -27,13 +27,13 @@
                   </div>
                 </div>
                 <div id="makeContact">
-                  <label for="makeContact"> Dela dina kontaktuppgifter med {{profile.name}}</label> </br>
+                  <label for="makeContact"> Dela dina kontaktuppgifter med {{date.name}}</label> </br>
                   <div class="radioMakeContact">
                     <input type="radio" name="makeContact"> Ja <input type="radio" name="makeContact"> Nej
                   </div>
                 </div>
                 <div class="button">
-                  <button> Submit </button>
+                  <button> Skicka </button>
                 </div>
               </form>
             </div>

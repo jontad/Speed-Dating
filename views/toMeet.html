@@ -14,19 +14,21 @@
     <!-- User profile-page -->
         <main>
             <div id="profilePicture">
-                <img :src="profile.picture">
+                <img :src="date.picture">
             </div>
             
             <div id="profileInfo">
-              <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>              
+              <h2 id="profileHeading">{{ date.name }}, {{ date.age }} </h2>              
               <p class="profileText">Bor i
-                <span class="bold"> {{ profile.location }} </span>
+                <span class="bold"> {{ date.location }} </span>
               </p>
-              <div id="description" class="description"> {{ profile.description }}</div>
+              <div id="description" class="description"> {{ date.description }}</div>
             </div>
-            <div class="footer">
-              <button id="foundButton"> Hittad </button>
-            </div>
+            <a href="/questions-user">
+              <div class="footer">
+                <button id="foundButton"> Hittad </button>
+              </div>
+            </a>
         </main>
     </body>
 </html>

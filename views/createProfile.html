@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Skapa profil</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
+    <!-- User profile-page -->
+    <main>
+      <div id="createProfileBox">
+        <form id="createProfileData" action="/user">
+
+          <div v-for="(info, index) in createProfileData">
+            <label for="info"> {{ info }} </label><br/>
+            <input v-if="info == 'Lösenord'" class="inputText" type="password" required="required">
+            <input v-else-if="index > 4" class="inputText" type="text" required="required" placeholder="Visas bara för valda kontakter">
+            <input v-else class="inputText" type="text" required="required">
+            </br>
+          </div>
+
+          <label for="descriptionTextarea"> Om dig </label></br>
+          <textarea id="descriptionTextarea">
+          </textarea><br/>
+          <a href="user">
+            <button id="createProfileButton">Skapa profil</button>
+          </a>
+
+        </form>
+
+      </div>
+      
+    </main>
+  </body>
+</html>
