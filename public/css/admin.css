@@ -91,14 +91,14 @@ body {
     grid-gap: 3%;
     grid-template-columns: 40% 10% 40%;
     grid-template-rows: 1500%;
-    margin-top: 40px;
-    margin-bottom: 10px;
     width: 40%;
-    margin-left: 26.5%; /* TODO: Center this properly */
+    
     background-color: lightgray;
     border-radius: 10px;
     padding: 10px;
     min-height: 3em;
+    max-width: 40%;
+    margin: 40px auto 10px auto;
 }
 
 
