@@ -46,12 +46,6 @@ var unmatchedEnters = 0;
 
 var columnClasses = ["col1", "col3", "unmatched-col"];
 
-function getOppositeColumn(element) {
-	return element.classList.contains("col1")
-		? "col3"
-		: "col1";
-}
-
 function getColumnClass(element) {
 	var classList = element.classList;
 
@@ -64,16 +58,6 @@ function getColumnClass(element) {
 	}
 
 	return null;
-}
-
-function isOpposite(a, b) {
-	if (a == null || b == null)
-		return false;
-
-	var classA = getColumnClass(a);
-	var classB = getColumnClass(b);
-
-	return classA !== classB;
 }
 
 function applyTargetEffect(element) {
@@ -137,7 +121,7 @@ function handleDrop(event) {
 	event.preventDefault();
 
 	var target = getTargetContainer(event.target, false);
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	var source = draggedElement;
@@ -190,7 +174,7 @@ function handleDragEnter(event) {
 	if (target == draggedElement)
 		return;
 
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	previousTarget = target;
@@ -201,7 +185,7 @@ function handleDragLeave(event) {
 	event.stopPropagation();
 	var target = getTargetContainer(event.target, false);
 
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	removeTargetEffect(target);
