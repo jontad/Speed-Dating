@@ -6,7 +6,6 @@ const vm = new Vue({
     el: 'main',
     data: {
 	info: loremIpsum,
-	time: ""
     }
 });
 
