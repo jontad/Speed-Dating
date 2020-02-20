@@ -2,6 +2,33 @@ body {
     margin: 1% auto;
 }
 
+/** Fonts **/
+h1 {
+    font-family: Arvo; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 300; line-height: 26.4px;
+}
+
+
+h3 {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 15.4px;
+}
+
+
+#timer {
+    font-family: Arvo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
+}
+
+
+p {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+}
+
+
+.progressBubble, .buttons  {
+    font-family: Arvo; font-size: 14px; font-style: bold; font-variant: normal; font-weight: 500; line-height: 75px;
+}
+
+/****/
+
 #grid {
     display: grid;
     grid-gap: 3%;
