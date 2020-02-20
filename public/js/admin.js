@@ -42,6 +42,7 @@ if (!Modernizr.draganddrop)
 var draggedElement = null;
 var draggedOverElement = null;
 var previousTarget = null;
+var unmatchedEnters = 0;
 
 var columnClasses = ["col1", "col3", "unmatched-col"];
 
@@ -76,11 +77,30 @@ function isOpposite(a, b) {
 }
 
 function applyTargetEffect(element) {
-	element.style.border = "2px dashed #000";
+	
+	var effectTarget = element;
+	effectTarget = getTargetContainer(effectTarget, false);
+
+	if (effectTarget == document.getElementById("unmatchedGrid"))
+		unmatchedEnters++;
+
+	effectTarget.style.border = "2px dashed #000";
 }
 
 function removeTargetEffect(element) {
-	element.style.border = "";
+	
+	var effectTarget = element;
+	effectTarget = getTargetContainer(effectTarget, false);
+
+	if (effectTarget == document.getElementById("unmatchedGrid"))
+	{
+		unmatchedEnters--;
+		if (unmatchedEnters > 0)
+			return;
+	}
+		
+
+	effectTarget.style.border = "";
 }
 
 function handleDragStart(event) {
