@@ -2,6 +2,38 @@ body {
     margin: 1% auto;
 }
 
+input {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+/** Fonts **/
+h1 {
+    font-family: Arvo; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 300; line-height: 26.4px;
+}
+
+
+h3 {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 15.4px;
+}
+
+
+#timer {
+    font-family: Arvo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
+}
+
+
+p {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+}
+
+
+.progressBubble, .buttons  {
+    font-family: Arvo; font-size: 14px; font-style: bold; font-variant: normal; font-weight: 500; line-height: 75px;
+}
+
+/****/
+
 #grid {
     display: grid;
     grid-gap: 3%;
@@ -20,16 +52,20 @@ body {
     
     border: 2px solid black;
     border-radius: 30px;
+    box-shadow: 0px 0px 1px 1px grey;
     margin-left: 20px;
+    padding: 10px;
 } 
 
 .c {
     grid-column: 3;
     text-align: center;
-
+    
     border: 2px solid black;
     border-radius: 30px;
+    box-shadow: 0px 0px 1px 1px grey;
     margin-right: 50px;
+    margin-bottom: 10px;
 }
 
 .d {
@@ -64,13 +100,14 @@ body {
 }
 
 .progressBubble {
-    height: 60%;
+    height: 50%;
     width: 10%;
     background-color: white;
     margin: 0em 0% 0% 8%;
     padding-top: 1%;
     border-radius: 50%;
     border: 1px solid black;
+    box-shadow: 0px 0px 1px 1px grey;
     float: left;
 }
 
@@ -89,14 +126,14 @@ body {
     grid-gap: 3%;
     grid-template-columns: 40% 10% 40%;
     grid-template-rows: 1500%;
-    margin-top: 40px;
-    margin-bottom: 10px;
     width: 40%;
-    margin-left: 26.5%; /* TODO: Center this properly */
+    
     background-color: lightgray;
     border-radius: 10px;
     padding: 10px;
     min-height: 3em;
+    max-width: 40%;
+    margin: 40px auto 10px auto;
 }
 
 
@@ -127,8 +164,15 @@ body {
 #timer {
     margin-top: 10px;
     size: 200%;
+}
+
+#info {
+    text-align: center;
+    padding-left: 45px;
+    width: 80%;
 
 }
+
 
 [draggable] {
     -moz-user-select: none;

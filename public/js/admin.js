@@ -1,39 +1,45 @@
 
 function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+let timerOn = false;
 async function timer() {
-	//choosen time in seconds
-	let time = (document.getElementById('time').value) * 60;
-	let diff = time;
+    //choosen time in seconds
+    let time = (document.getElementById('time').value) * 60;
+    let countDown = time;
 
-	if (diff > 0) {
-		while (diff > 0) {
-			let minutes = Math.floor(diff / 60);
-			let seconds = diff % 60;
+    if (countDown > 0 && !timerOn) {
+	timerOn = true;
+	
+	while (countDown > 0) {
+	    let minutes = Math.floor(countDown / 60);
+	    let seconds = countDown % 60;
 
-			// Display the result in the element with id="timer"
-			document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+	    // Display the result in the element with id="timer"
+	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
-			// Give page time to print
-			await sleep(1000);
+	    // Give page time to print
+	    await sleep(1000);
 
-			// Decrement difference 
-			diff--;
+	    // Decrement difference 
+	    countDown--;
 
-			// If the count down is finished, write some text 
-			if (diff == 0) {
-				document.getElementById("timer").innerHTML = "Mötet är över";
-				await sleep(4000);
-				document.getElementById("timer").innerHTML = "";
-				document.getElementById("time").innerHTML = "Längd på event";
-			}
-		}
-	} else {
-		document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
+	    // If the count down is finished, write some text 
+	    if (countDown == 0) {
+		document.getElementById("timer").innerHTML = "Mötet är över";
+		await sleep(4000);
+		document.getElementById("timer").innerHTML = "";
+		document.getElementById("time").innerHTML = "Längd på event";
+		timerOn = false;
+	    }
 	}
+    } else if(timerOn){
+	document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";	
+	await sleep(20000);
+    } else {
+	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
+    }
 }
 
 if (!Modernizr.draganddrop)
@@ -45,12 +51,6 @@ var previousTarget = null;
 var unmatchedEnters = 0;
 
 var columnClasses = ["col1", "col3", "unmatched-col"];
-
-function getOppositeColumn(element) {
-	return element.classList.contains("col1")
-		? "col3"
-		: "col1";
-}
 
 function getColumnClass(element) {
 	var classList = element.classList;
@@ -64,16 +64,6 @@ function getColumnClass(element) {
 	}
 
 	return null;
-}
-
-function isOpposite(a, b) {
-	if (a == null || b == null)
-		return false;
-
-	var classA = getColumnClass(a);
-	var classB = getColumnClass(b);
-
-	return classA !== classB;
 }
 
 function applyTargetEffect(element) {
@@ -137,7 +127,7 @@ function handleDrop(event) {
 	event.preventDefault();
 
 	var target = getTargetContainer(event.target, false);
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	var source = draggedElement;
@@ -190,7 +180,7 @@ function handleDragEnter(event) {
 	if (target == draggedElement)
 		return;
 
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	previousTarget = target;
@@ -201,7 +191,7 @@ function handleDragLeave(event) {
 	event.stopPropagation();
 	var target = getTargetContainer(event.target, false);
 
-	if (!isOpposite(target, draggedElement))
+	if (target == draggedElement)
 		return;
 
 	removeTargetEffect(target);

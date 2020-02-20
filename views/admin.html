@@ -5,6 +5,7 @@
     <title>Admin page</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <script src="/js/admin.js" defer></script>
@@ -31,6 +32,7 @@
                         <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic">
                         <p class="column-child">User 1</p>
                     </div>
+
 
                     <div class="col2">
                         <p>Hearts</p>
@@ -67,13 +69,17 @@
                     <div class="col3 column" draggable="true">
                         <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
                         <p class="column-child">User 6</p>
-                    </div>
-                </div>
 
-                <br>
-                <h1>Omatchade</h1>
-                <div id="unmatchedGrid">
-                    
+                    </div>
+
+                </div>
+                <div id="unmatchPanel">
+
+                    <br>
+                    <h1>Omatchade</h1>
+                    <div id="unmatchedGrid">
+
+                    </div>
                 </div>
             </div>
 
@@ -82,9 +88,8 @@
                 <p id="info">{{info}}</p>
 
                 <p>
-                    <h3>Timer</h3>
+                    <h3 id="timer">Timer</h3>
                     <input type="number" required="required" placeholder="Längd på event" id="time" />
-                    <div id="timer"></div>
                 </p>
 
             </div>
@@ -93,7 +98,6 @@
                 <div class="buttons">Avsluta</div>
                 <div onclick="timer()" class="buttons">Starta</div>
             </div>
-        </div>
     </main>
 </body>
 
