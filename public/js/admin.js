@@ -41,6 +41,8 @@ if (!Modernizr.draganddrop)
 
 var draggedElement = null;
 var draggedOverElement = null;
+var previousTarget = null;
+var unmatchedEnters = 0;
 
 var columnClasses = ["col1", "col3", "unmatched-col"];
 
@@ -74,8 +76,35 @@ function isOpposite(a, b) {
 	return classA !== classB;
 }
 
+function applyTargetEffect(element) {
+	
+	var effectTarget = element;
+	effectTarget = getTargetContainer(effectTarget, false);
+
+	if (effectTarget == document.getElementById("unmatchedGrid"))
+		unmatchedEnters++;
+
+	effectTarget.style.border = "2px dashed #000";
+}
+
+function removeTargetEffect(element) {
+	
+	var effectTarget = element;
+	effectTarget = getTargetContainer(effectTarget, false);
+
+	if (effectTarget == document.getElementById("unmatchedGrid"))
+	{
+		unmatchedEnters--;
+		if (unmatchedEnters > 0)
+			return;
+	}
+		
+
+	effectTarget.style.border = "";
+}
+
 function handleDragStart(event) {
-	var target = getTargetContainer(event.target);
+	var target = getTargetContainer(event.target, true);
 
 	if (target == null)
 		return;
@@ -83,13 +112,20 @@ function handleDragStart(event) {
 	draggedElement = target;
 }
 
-function getTargetContainer(element) {
+function getTargetContainer(element, includeUnmatchedCards) {
 	while (element != null) {
 		if (element.parentNode == window.document || element.classList == null)
 			return null;
 
-		if (element.classList.contains("column"))
+		if (!includeUnmatchedCards) {
+			if (element.id === "unmatchedGrid")
+				return element;
+
+			if (element.classList.contains("column") && !element.classList.contains("unmatched-col"))
+				return element;
+		} else if (element.classList.contains("column")) {
 			return element;
+		}
 
 		element = element.parentNode;
 	}
@@ -100,7 +136,7 @@ function getTargetContainer(element) {
 function handleDrop(event) {
 	event.preventDefault();
 
-	var target = getTargetContainer(event.target);
+	var target = getTargetContainer(event.target, false);
 	if (!isOpposite(target, draggedElement))
 		return;
 
@@ -114,7 +150,7 @@ function handleDrop(event) {
 	var unmatchedContainer = document.getElementById("unmatchedGrid");
 
 	var newDivHtml = overwrittenHtml;
-	if (overwrittenType !== "unmatched-col") 
+	if (overwrittenType != null)
 		target.innerHTML = sourceHtml;
 	else
 		newDivHtml = source.innerHTML;
@@ -125,7 +161,7 @@ function handleDrop(event) {
 		source.innerHTML = "";
 	}
 
-	if (overwrittenHtml !== "") {
+	if (overwrittenHtml != "" || overwrittenType == null) {
 		var newDiv = document.createElement("div");
 
 		newDiv.classList.add("unmatched-col");
@@ -136,10 +172,7 @@ function handleDrop(event) {
 		unmatchedContainer.appendChild(newDiv);
 	}
 
-
-	target.style.opacity = 1;
-
-	// target.parentNode.replaceChild(draggedElement, target);
+	removeTargetEffect(target);
 	draggedElement = null;
 }
 
@@ -148,29 +181,30 @@ function preventEvent(event) {
 }
 
 function handleDragEnter(event) {
+	event.stopPropagation();
 	if (draggedElement == null)
 		return;
 
-	var target = getTargetContainer(event.target);
+	var target = getTargetContainer(event.target, false);
 
 	if (target == draggedElement)
 		return;
 
-	event.stopPropagation();
 	if (!isOpposite(target, draggedElement))
 		return;
 
-	target.style.opacity = 0.4;
+	previousTarget = target;
+	applyTargetEffect(target);
 }
 
 function handleDragLeave(event) {
-	var target = getTargetContainer(event.target);
-
 	event.stopPropagation();
+	var target = getTargetContainer(event.target, false);
+
 	if (!isOpposite(target, draggedElement))
 		return;
 
-	target.style.opacity = 1;
+	removeTargetEffect(target);
 }
 
 var columns = document.querySelectorAll("#matchPanelGrid .column");
