@@ -93,6 +93,10 @@ body {
     margin-bottom: 10px;
     width: 40%;
     margin-left: 26.5%; /* TODO: Center this properly */
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 3em;
 }
 
 
@@ -115,6 +119,7 @@ body {
 
 .unmatched-col {
     background-color: gray;
+    margin-bottom: 5px;
 }
 
 /** Infopanel **/
@@ -144,6 +149,15 @@ body {
     height: 3em;
     max-height: 3em;
     text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px grey;
+    cursor: move;
+    box-sizing: border-box;
+}
+
+.column:hover {
+    filter: brightness(85%);
 }
 
 .column-child {
