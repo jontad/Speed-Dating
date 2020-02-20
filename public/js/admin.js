@@ -7,14 +7,14 @@ let timerOn = false;
 async function timer() {
     //choosen time in seconds
     let time = (document.getElementById('time').value) * 60;
-    let diff = time;
+    let countDown = time;
 
-    if (diff > 0 && !timerOn) {
+    if (countDown > 0 && !timerOn) {
 	timerOn = true;
 	
-	while (diff > 0) {
-	    let minutes = Math.floor(diff / 60);
-	    let seconds = diff % 60;
+	while (countDown > 0) {
+	    let minutes = Math.floor(countDown / 60);
+	    let seconds = countDown % 60;
 
 	    // Display the result in the element with id="timer"
 	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
@@ -23,10 +23,10 @@ async function timer() {
 	    await sleep(1000);
 
 	    // Decrement difference 
-	    diff--;
+	    countDown--;
 
 	    // If the count down is finished, write some text 
-	    if (diff == 0) {
+	    if (countDown == 0) {
 		document.getElementById("timer").innerHTML = "Mötet är över";
 		await sleep(4000);
 		document.getElementById("timer").innerHTML = "";
