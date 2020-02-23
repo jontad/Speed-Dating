@@ -36,7 +36,7 @@ async function timer() {
 	}
     } else if(timerOn){
 	document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";	
-	await sleep(20000);
+	await sleep(40000);
     } else {
 	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
     }
