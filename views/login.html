@@ -12,10 +12,10 @@
     </head>
     <body>
     <!-- User profile-page -->
-        <main>
+        <main id="site">
           <div id="login">
             <div id="loginData">
-              <label for="username"> Användarnam </label><br/>
+              <label v-model="userName" for="username"> Användarnam </label><br/>
               <input type="text"> <br />
               <label for="password"> Lösenord </label><br/>
               <input type="password"><br/>
@@ -25,7 +25,8 @@
                 </button>                
               </a><br/>
               <a href="user">
-                <button id="loginButton">Login</button>
+                <button v-on:click="checkUserName" id="loginButton">Login</button>
+                
               </a>
             </div>
           </div>
