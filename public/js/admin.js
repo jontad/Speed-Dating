@@ -30,7 +30,7 @@ async function timer() {
 		document.getElementById("timer").innerHTML = "Mötet är över";
 		await sleep(4000);
 		document.getElementById("timer").innerHTML = "";
-		document.getElementById("time").innerHTML = "Längd på event";
+		document.getElementById("time").innerHTML = "Längd på event (min)";
 		timerOn = false;
 	    }
 	}
