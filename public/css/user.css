@@ -49,12 +49,16 @@ body {
     text-align: center;
     margin: 1% 0;
 }
-.radioMakeContact {
+#placementQuestion{
+    padding-top: 2.2em;
     text-align: center;
 }
-.button {
+.radioPlacementQuestion {
     text-align: center;
-    margin-top: 5%
+}
+#profileQuestionsButton {
+    text-align: center;
+    padding: 0.5em;
 }
 .profileButtons {
     background: none;
