@@ -247,4 +247,27 @@ p {
     pointer-events: none;
 }
 
+#tableLayout{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 90%;
+    height: 30%;
+    margin: 5%;
+    padding: 2%;
+    border: 1px solid;
+    text-align: center;
+    border-radius: 5px;
+    justify-items: center;
+    align-items: center;
+}
 
+.table {
+    background-color: red;
+    width: 40px;
+    height: 30px;
+    max-height: 40px;
+    margin: 5%;
+    border-radius: 2px;
+    text-align: center;
+    padding-top: 10px;
+}

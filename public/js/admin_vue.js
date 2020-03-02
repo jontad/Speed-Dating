@@ -5,7 +5,13 @@ let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
 const vm = new Vue({
     el: 'main',
     data: {
-	info: loremIpsum,
+	      info: loremIpsum,
+        tables: 10,
+    },
+    methods: {
+        range: function(end) {
+            return Array(end).fill().map((_, idx) => 1 + idx)
+        },
     }
 });
 
