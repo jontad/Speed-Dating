@@ -13,6 +13,7 @@ const vm = new Vue({
         editButtonText: "Redigera profil",
         dummyContacts: dummyContacts,
         createProfileData: createProfileData,
+        tablesMapOrder: [6,1,7,2,8,3,9,4,10,5]
     },
     methods: {
         range: function(end) {
@@ -30,7 +31,12 @@ const vm = new Vue({
         },
         createProfile: function(){
             window.location.href="/user";
-            console.log("hej");
+        },
+        showTableMap: function(){
+            document.getElementById("tableMap").style.display= 'inline';            
+        },
+        closeTableMap: function(){
+            document.getElementById("tableMap").style.display= 'none'; 
         }
     }
 });
