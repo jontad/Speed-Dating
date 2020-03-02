@@ -5,8 +5,17 @@ let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
 const vm = new Vue({
     el: 'main',
     data: {
-	info: loremIpsum,
-    }
+		info: loremIpsum,
+		eventState: 0,
+    },
+	methods: {
+		changeState: function (){
+			let time = (document.getElementById('time').value) * 60;
+			if(time > 0 && this.eventState < 4) {
+				this.eventState += 1;
+			}
+		}	
+	},
 });
 
   

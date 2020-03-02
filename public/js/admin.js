@@ -210,3 +210,7 @@ document.addEventListener("drop", handleDrop, false);
 
 document.addEventListener("dragenter", handleDragEnter, false);
 document.addEventListener("dragleave", handleDragLeave, false);
+
+/*Buttons och progressbar*/
+var gameState = 0;
+
