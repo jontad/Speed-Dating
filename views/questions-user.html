@@ -26,18 +26,15 @@
                     <input type="radio" v-bind:name="index"> {{ i }}
                   </div>
                 </div>
-                <div id="makeContact">
-                  <label for="makeContact"> Dela dina kontaktuppgifter med {{date.name}}</label> </br>
-                  <div class="radioMakeContact">
-                    <input type="radio" name="makeContact"> Ja <input type="radio" name="makeContact"> Nej
-                  </div>
+                <div id="placementQuestion">
+                  Övrigt angående er date <br/>
+                  <input id="inputPlacementQuestion" type="text" placeholder="T.ex. bordsplacering">
                 </div>
-                <div class="button">
+                <div id="profileQuestionsButton">
                   <button> Skicka </button>
                 </div>
               </form>
-            </div>
-           
+            </div>           
         </main>
     </body>
 </html>
