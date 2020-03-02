@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
-    <script src="/js/profile.js" defer></script>
-    <script src="/js/profile_vue.js" defer></script>
+    <script src="/js/createProfile_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
   </head>
   <body>
@@ -16,19 +15,47 @@
       <div id="createProfileBox">
         <form id="createProfileData" action="/user">
 
-          <div v-for="(info, index) in createProfileData">
-            <label for="info"> {{ info }} </label><br/>
-            <input v-if="info == 'Lösenord'" class="inputText" type="password" required="required">
-            <input v-else-if="index > 4" class="inputText" type="text" required="required" placeholder="Visas bara för valda kontakter">
-            <input v-else class="inputText" type="text" required="required">
-            </br>
-          </div>
+	  <section class="form">
+	    <p>
+	      <form action="upload.php" method="post">
+		<input type="file" name="file" id="file"/>
+	      </form>
+	    </p>
+	    <p>
+	      <label>Användarnamn</label><br>
+	      <input type="text" class="input" id="username" required="required" placeholder="User name" v-model="name"/>
+	    </p>
+	    <p>
+	      <label>Lösenord</label><br>
+	      <input type="password" class="input" id="password" required="required" placeholder="Lösenord" v-model="password"/>
+	    </p>
+	    <p>
+	      <label>Fullt Namn</label><br>
+	      <input type="text" class="input" id="fullName" required="required" placeholder="Namn -och efternamn" v-model="fullName"/>
+	    </p>
+	    <p>
+	      <label>Ålder</label><br>
+	      <input type="number" class="input" id="email" name="em" required="required" placeholder="Ålder" v-model="age"/>
+	    </p>
+	    <p>
+	      <label>Bor i</label><br>
+	      <input type="text" class="input" id="address" required="required" placeholder="Adress" v-model="address"/>
+	    </p>
+	    <p>
+	      <label>E-mail</label><br>
+	      <input type="text" class="input" id="mail" required="required" placeholder="E-mail" v-model="mail"/>
+	    </p>
+	    <p>
+	      <label>Telefonnummer</label><br>
+	      <input type="number" class="input" id="tel" name="em" required="required" placeholder="Nummer" v-model="number"/>
+	    </p>
+	  </section>
 
           <label for="descriptionTextarea"> Om dig </label></br>
-          <textarea id="descriptionTextarea">
-          </textarea><br/>
+	  <textarea id="descriptionTextarea"></textarea><br/>
+
           <a href="user">
-            <button id="createProfileButton">Skapa profil</button>
+            <button id="createProfileButton" v-on:click="addUser()">Skapa profil</button>
           </a>
 
         </form>

@@ -5,7 +5,7 @@ USER
 
 Knappar och text är lite nära (svårt att trycka accurately)
 
-Dead space på beskrivningen
+Dead space på beskrivningen (mobile view)
 
 Mer uttrymme åt bilden
 
@@ -13,7 +13,7 @@ Mer uttrymme åt bilden
 ADMIN
 -----
 
-Svårt att se att man kan droppa i omatchade
+Svårt att se att man kan droppa profilboxar i omatchade
 
 Oklar enhet på timern
 
@@ -36,9 +36,6 @@ Bra basmeny. Enkelt att redigera
 Knapp för att gå tillbaka till startsidan
 
 Kan dra tomma profilboxar 
-
-
-
 
 
 
