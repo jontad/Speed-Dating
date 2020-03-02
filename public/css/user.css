@@ -17,7 +17,7 @@ body {
 }
 #profileInfo {
     margin: 0vw 5vw;
-    margin-bottom: 45px;
+    margin-bottom: 0.5em;
 }
 #profileQuestions {
     widht: auto;
@@ -64,6 +64,7 @@ body {
     text-align: left;
     padding-left: 0;
     padding-down: 0;
+    font-size: 1em;
 }
 #createNewProfileButton {
     background: none;
@@ -116,6 +117,15 @@ body {
     font-size: 2em;
     font-weight: bold;
 }
+
+#SDButton {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
 .footer {
     position: fixed;
     left: 0;
