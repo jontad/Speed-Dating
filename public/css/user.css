@@ -51,10 +51,10 @@ body {
 }
 #placementQuestion{
     padding-top: 2.2em;
-    text-align: center;
+    /text-align: center;
 }
-.radioPlacementQuestion {
-    text-align: center;
+#inputPlacementQuestion {
+    width: 80%;
 }
 #profileQuestionsButton {
     text-align: center;
