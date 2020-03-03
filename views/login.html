@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="./css/user.css">
         <script src="https://vuejs.org/js/vue.js"></script>
+	<script src="/js/login.js" defer></script>
+
         <script src="/js/login_vue.js" defer></script>
         <script type="text/javascript" src="js/menu.js"></script> 
     </head>
@@ -18,16 +20,19 @@
               <input v-model="userName" type="text"> <br />
               <label for="password"> Lösenord </label><br/>
               <input v-model="password" type="password"><br/>
-              <a href="createProfile">
+
+	      <a href="createProfile">
                 <button id="createNewProfileButton">
                   Skapa profil
                 </button>                
               </a><br/>
+
 	      <a href="user">
-              <button v-on:click="checkUserName" id="loginButton">Login</button>
-		<div id="loginInfo"></div>
-                
+		<button v-on:click="checkUserName" id="loginButton">Login</button>
               </a>
+
+	      <div id="loginInfo"></div>
+	      
             </div>
           </div>
             
