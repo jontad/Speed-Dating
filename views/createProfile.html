@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="/js/createProfile_vue.js" defer></script>
-     <script src="/js/createProfile.js" defer></scrip>t
+    <script src="/js/createProfile.js" defer></scrip>t
     <script type="text/javascript" src="js/menu.js"></script> 
   </head>
   <body>
@@ -17,15 +17,14 @@
         <form id="createProfileData" action="/user">
 
 	  <section class="form">
-	    <p>
+	   <!-- <p>
 	      <form action="upload.php" method="post">
 		<input type="file" name="file" id="userPicture"/>
-		
 	      </form>
-	    </p>
+	    </p> BILD -->
 	    <p>
 	      <label>Användarnamn</label><br>
-	      <input type="text" class="input" id="username" required="required" placeholder="User name" v-model="name"/>
+	      <input type="text" class="input" id="username" required="required" placeholder="User name" v-model="userName"/>
 	    </p>
 	    <p>
 	      <label>Lösenord</label><br>
@@ -33,7 +32,7 @@
 	    </p>
 	    <p>
 	      <label>Fullt Namn</label><br>
-	      <input type="text" class="input" id="fullName" required="required" placeholder="Namn -och efternamn" v-model="fullName"/>
+	      <input type="text" class="input" id="fullName" required="required" placeholder="Namn -och efternamn" v-model="name"/>
 	    </p>
 	    <p>
 	      <label>Ålder</label><br>
@@ -56,10 +55,10 @@
           <label for="descriptionTextarea"> Om dig </label></br>
 	  <textarea id="descriptionTextarea"></textarea><br/>
 
-          <a href="user">
+          <a href="login">
             <button id="createProfileButton" v-on:click="addUser()">Skapa profil</button>
           </a>
-
+	  
         </form>
 
       </div>

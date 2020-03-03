@@ -1,4 +1,4 @@
-function Profile(name, age, description, location, picture, phoneNumber, email, password) {
+function Profile(name, age, description, location, picture, phoneNumber, email, password, userName) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -9,6 +9,7 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
+    this.userName = userName;
 }
 
 function Contact(name, age, phoneNumber, email, picture) {
@@ -46,3 +47,21 @@ let dummyC = new Contact(dummy.name,
                          dummy.picture);
 let dummyContacts = [dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC];
 
+/*var allUsers = new Array(); //stores all users
+function addUser() {
+    let userProfile = document.getElementsByClassName("input");
+    
+    let name = userProfile[0];
+    let password = userProfile[1];
+    let fullName = userProfile[2];
+    let age = userProfile[3];
+    let address = userProfile[4];
+    let mail = userProfile[5];
+    let number = userProfile[6];
+    let description = document.getElementsById("descriptiontextarea");
+    
+    let user = new Profile(name, age, description, address, , number, mail, password);
+
+    allUsers.push(user);
+}
+*/
