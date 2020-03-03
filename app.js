@@ -66,34 +66,35 @@ app.get('/createProfile', function(req, res) {
 // Store data in an object to keep the global namespace clean and
 // prepare for multiple instances of data if necessary
 function Data() {
-  this.orders = {};
+    this.afterDateAnswers = {};
 }
 
-/*
-  Adds an order to to the queue
-*/
-Data.prototype.addOrder = function(order) {
-  // Store the order in an "associative array" with orderId as key
-  this.orders[order.orderId] = order;
-};
+// Adds after date answers to the "database"
+Data.prototype.addAfterDateAnswer = function(afterDateAnswer) {
+    this.afterDateAnswers[afterDateAnswer.key] = afterDateAnswer;
+}
 
-Data.prototype.getAllOrders = function() {
-  return this.orders;
-};
+Data.prototype.getAllAfterDateAnswers = function() {
+    return this.afterDateAnswers;
+}
 
 const data = new Data();
 
 io.on('connection', function(socket) {
-  // Send list of orders when a client connects
-  socket.emit('initialize', { orders: data.getAllOrders() });
+    // Send list of orders and after date answers when a client connects
+    socket.emit('initialize', { afterDateAnswers: data.getAllAfterDateAnswers()
+               });
 
-  // When a connected client emits an "addOrder" message
-  socket.on('addOrder', function(order) {
-    data.addOrder(order);
-    // send updated info to all connected clients,
-    // note the use of io instead of socket
-    io.emit('currentQueue', { orders: data.getAllOrders() });
-  });
+    // When a connecter client emits an "addAfterDateAnswer" message
+    socket.on('addAfterDateAnwsers', function(answers){
+        // Add the data to the "database"
+        data.addAfterDateAnswer(answers);
+        // Send an updated "database" to all connected clients
+        io.emit('currentAfterDateAnswers', {afterDateAnswers: data.getAllAfterDateAnswers()});
+    });
+
+             
+    
 
 });
 
