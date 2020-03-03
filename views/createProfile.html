@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
-    <script src="/js/createProfile_vue.js" defer></script>
-    <script src="/js/createProfile.js" defer></scrip>t
+    <script src="/js/login_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
   </head>
   <body>
     <!-- User profile-page -->
     <main>
       <div id="createProfileBox">
-        <form id="createProfileData" action="/user">
+        <form id="createProfileData" <!--action="/login"-->>
 
 	  <section class="form">
 	   <!-- <p>
@@ -53,7 +52,7 @@
 	  </section>
 
           <label for="descriptionTextarea"> Om dig </label></br>
-	  <textarea id="descriptionTextarea"></textarea><br/>
+	  <textarea id="descriptionTextarea" v-model="description"></textarea><br/>
 
           <a href="login">
             <button id="createProfileButton" v-on:click="addUser()">Skapa profil</button>
