@@ -5,6 +5,9 @@ function sleep(ms) {
 
 let timerOn = false;
 async function timer() {
+	if (isStartDisabled())
+		return;
+
     //choosen time in seconds
     let time = (document.getElementById('time').value) * 60;
     let countDown = time;
@@ -70,6 +73,9 @@ function applyTargetEffect(element) {
 	
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
+		
+	if (effectTarget == null)
+		return;
 
 	if (effectTarget == document.getElementById("unmatchedGrid"))
 		unmatchedEnters++;
@@ -81,6 +87,9 @@ function removeTargetEffect(element) {
 	
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
+		
+	if (effectTarget == null)
+		return;
 
 	if (effectTarget == document.getElementById("unmatchedGrid"))
 	{
@@ -88,7 +97,6 @@ function removeTargetEffect(element) {
 		if (unmatchedEnters > 0)
 			return;
 	}
-		
 
 	effectTarget.style.border = "";
 }
@@ -98,6 +106,9 @@ function handleDragStart(event) {
 
 	if (target == null)
 		return;
+
+	if (target.innerHTML == "")
+		target = null;
 
 	draggedElement = target;
 }
@@ -123,7 +134,29 @@ function getTargetContainer(element, includeUnmatchedCards) {
 	return null;
 }
 
+function isStartDisabled()
+{
+	return document.getElementById("startbutton").hasAttribute("disabled");
+}
+
+function disableStart() {
+	var button = document.getElementById("startbutton");
+
+	button.setAttribute("disabled", "disabled");
+	button.style.opacity = 0.5;
+}
+
+function enableStart() {
+	var button = document.getElementById("startbutton");
+
+	button.removeAttribute("disabled");
+	button.style.opacity = 1;
+}
+
 function handleDrop(event) {
+	if (draggedElement == null)
+		return;
+
 	event.preventDefault();
 
 	var target = getTargetContainer(event.target, false);
@@ -146,7 +179,12 @@ function handleDrop(event) {
 		newDivHtml = source.innerHTML;
 
 	if (sourceType === "unmatched-col")
+	{
 		unmatchedContainer.removeChild(source);
+		
+		if (unmatchedContainer.children.length == 0)
+			enableStart();
+	}
 	else {
 		source.innerHTML = "";
 	}
@@ -160,6 +198,9 @@ function handleDrop(event) {
 		newDiv.innerHTML = newDivHtml;
 
 		unmatchedContainer.appendChild(newDiv);
+
+		if (unmatchedContainer.children.length != 0)
+			disableStart();
 	}
 
 	removeTargetEffect(target);
@@ -188,6 +229,9 @@ function handleDragEnter(event) {
 }
 
 function handleDragLeave(event) {
+	if (draggedElement == null)
+		return;
+
 	event.stopPropagation();
 	var target = getTargetContainer(event.target, false);
 
