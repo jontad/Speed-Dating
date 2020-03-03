@@ -94,7 +94,7 @@ p {
 	margin-left: 37%;
 }
 
-.buttons:hover {
+.buttons:not([disabled]):hover  {
     background-color: white;
     padding-top: 10px;
     box-shadow: inset 0px 0px 6px black;
