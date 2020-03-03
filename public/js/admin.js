@@ -99,6 +99,9 @@ function handleDragStart(event) {
 	if (target == null)
 		return;
 
+	if (target.innerHTML == "")
+		target = null;
+
 	draggedElement = target;
 }
 
@@ -124,6 +127,9 @@ function getTargetContainer(element, includeUnmatchedCards) {
 }
 
 function handleDrop(event) {
+	if (draggedElement == null)
+		return;
+
 	event.preventDefault();
 
 	var target = getTargetContainer(event.target, false);
@@ -188,6 +194,9 @@ function handleDragEnter(event) {
 }
 
 function handleDragLeave(event) {
+	if (draggedElement == null)
+		return;
+
 	event.stopPropagation();
 	var target = getTargetContainer(event.target, false);
 
