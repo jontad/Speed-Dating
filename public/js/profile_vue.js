@@ -20,7 +20,8 @@ const vm = new Vue({
         dummyContacts: dummyContacts,
         createProfileData: createProfileData,
     },
-    mounted() {
+    //gets user logged in to site and puts in variables below
+    mounted() { 
 	if (sessionStorage.getItem("user")) {
 	    try {
 		this.profile = JSON.parse(sessionStorage.getItem("user"));
@@ -42,26 +43,34 @@ const vm = new Vue({
             }              
             else {
                 this.editButtonText = "Redigera profil";
-		let userProfile = new Profile(this.profile.name, this.profile.age,
-					      this.profileDesc, this.profileLocation, this.profile.picture,
-					      this.profile.phoneNumber, this.profile.email,
-					      this.profile.password, this.profile.userName);		
-		sessionStorage.setItem("user", JSON.stringify(userProfile));
+		this.editUser();
+	    }
+	},
+	//user saving new profile
+	editUser: function(){
+	    let userProfile = new Profile(this.profile.name, this.profile.age,
+					  this.profileDesc, this.profileLocation, this.profile.picture,
+					  this.profile.phoneNumber, this.profile.email,
+					  this.profile.password, this.profile.userName);		
 
-		let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
-		for (var i = 0; i < userArray.length; i++) {
-		    let userNameCompare = userArray[i].userName.localeCompare(userProfile.userName) == 0;
-		    if (userNameCompare) {
-			userArray[i] = userProfile;
-			break;
-		    }
+	    sessionStorage.setItem("user", JSON.stringify(userProfile));
+	    this.inputUserInArray(userProfile); 
+        },
+	//input edited userprofile in array containing all users
+	inputUserInArray: function(userProfile){ 
+	    let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
+	    for (var i = 0; i < userArray.length; i++) {
+		let userNameCompare = userArray[i].userName.localeCompare(userProfile.userName) == 0;
+		if (userNameCompare) {
+		    userArray[i] = userProfile;
+		    break;
+
 		}
-		sessionStorage.setItem("userArray", JSON.stringify(userArray));
-	    }                
-        },
-        createProfile: function(){
-            window.location.href="/user";
-            console.log("hej");
-        },
-    }
+	    }
+	    sessionStorage.setItem("userArray", JSON.stringify(userArray));
+	}                
+    },
+    createProfile: function(){
+        window.location.href="/user";
+    },
 });

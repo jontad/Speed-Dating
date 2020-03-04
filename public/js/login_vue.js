@@ -48,12 +48,12 @@ const userProfile = new Vue({
 				   this.number, this.mail,
 				   this.password, this.userName);
 
+	    window.location.href = "/login";
 	    this.allUsers.push(user);
 	    sessionStorage.setItem("userArray", JSON.stringify(this.allUsers));
 	},
 	checkUserName: function () {
  	    let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
-	    console.log(userArray)
 
 	    if(userArray){
 		for (let i = 0; i < userArray.length; i++) {
@@ -80,13 +80,12 @@ const userProfile = new Vue({
 	    } else {
 		document.getElementById("loginInfo").innerHTML = "Please create an account!";
 	    }
-	}
+	    this.passwordChecker();
+	},
+	passwordChecker: function() {
+	    if (correctPassword) {
+		window.location.href = "/user";    
+	    }   
+	},
     },
-
-    /*
-    passwordChecker: function () {
-	if (correctPassword) {
-            this.Login = "user"    
-	}
-    },*/
 });
