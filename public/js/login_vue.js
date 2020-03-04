@@ -28,8 +28,6 @@ const userProfile = new Vue({
 
 	registeredUser: false,
 	correctPassword: false,
-
-	Login: "",
     },
     mounted() {
 	if (sessionStorage.getItem("userArray")) {
@@ -64,24 +62,24 @@ const userProfile = new Vue({
 		    let passwordCompare = this.password.localeCompare(userArray[i].password) == 0;
 		    
 		    if(fullNameCompare || userNameCompare){
+			this.registeredUser = true;
+
 			if (passwordCompare) {
-			    sessionStorage.setItem("user", JSON.stringify(userArray[i]));
-			    document.getElementById("loginInfo").innerHTML = "";
 			    correctPassword = true;
+			    sessionStorage.setItem("user", JSON.stringify(userArray[i]));
 			} else {
 			    document.getElementById("loginInfo").innerHTML = "Wrong Password";
 			}
-			this.registeredUser = true;
 			break;
 		    }
 		}
 		if (!this.registeredUser) {
 		    document.getElementById("loginInfo").innerHTML = "Username not in database";
 		}
-		registeredUser = false;
 	    } else {
 		document.getElementById("loginInfo").innerHTML = "Please create an account!";
 	    }
+	    registeredUser = false;
 	    this.passwordChecker();
 	},
 	//check if password if correct during login

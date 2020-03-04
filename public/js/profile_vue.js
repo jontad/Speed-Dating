@@ -40,21 +40,18 @@ const vm = new Vue({
 	    this.editMode = !this.editMode;
             if(this.editMode){
                 this.editButtonText = "Spara profil";		
-            }              
-            else {
+            } else {
                 this.editButtonText = "Redigera profil";
 		this.editUser();
 	    }
 	},
 	//user saving new profile
 	editUser: function(){
-	    let userProfile = new Profile(this.profile.name, this.profile.age,
-					  this.profileDesc, this.profileLocation, this.profile.picture,
-					  this.profile.phoneNumber, this.profile.email,
-					  this.profile.password, this.profile.userName);		
+	    this.profile.description = this.profileDesc;
+	    this.profile.location = this.profileLocation;
 
-	    sessionStorage.setItem("user", JSON.stringify(userProfile));
-	    this.inputUserInArray(userProfile); 
+	    sessionStorage.setItem("user", JSON.stringify(this.profile));
+	    this.inputUserInArray(this.profile); 
         },
 	//input edited userprofile in array containing all users
 	inputUserInArray: function(userProfile){ 
