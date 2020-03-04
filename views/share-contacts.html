@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contacts</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
+    <!-- User contacts-page -->
+    <main>
+
+      <div id="contacts">
+        <div>
+          <h3 id="shareContactQuestion">Vill du dela din kontaktsuppgifter med?</h3>
+    
+          <div class="contactBlock"  v-for="(c,index) in shareContacts">
+           
+             <img id="contactPicture" :src="c.picture">
+            <div id="contactsInfo">
+              <span id="contactName">{{ c.name }} </span> <br/>            
+              <span class="italic">
+                <i class="fa fa-envelope-o" style="font-size:1em"></i> {{ c.email }} <br/>
+                <i class="fa fa-phone" style="font-size:1em"></i> {{ c.phoneNumber }} </span>
+              
+              <input type="checkbox" id="shareButton" name="yesButton"  v-model="contactList"
+                     :value="c">
+            </div>
+          </div>
+          
+  
+      </div>
+      <div class="footer">
+        <a href="user">
+          <button id="finishButton"> Klar </button>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

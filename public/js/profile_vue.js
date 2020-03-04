@@ -13,6 +13,8 @@ const vm = new Vue({
         editButtonText: "Redigera profil",
         dummyContacts: dummyContacts,
         createProfileData: createProfileData,
+        shareContacts: shareContacts,
+        contactList: [],
     },
     methods: {
         range: function(end) {
@@ -31,6 +33,6 @@ const vm = new Vue({
         createProfile: function(){
             window.location.href="/user";
             console.log("hej");
-        }
+        },
     }
 });

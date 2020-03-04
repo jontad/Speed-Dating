@@ -45,3 +45,48 @@ let dummyC = new Contact(dummy.name,
                          dummy.picture);
 let dummyContacts = [dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC];
 
+let firstProfile = new Profile("Anders",
+                               23,
+                               "Giller färgen grå",
+                               "Täby",
+                               "https://image.shutterstock.com/z/stock-vector-male-silhouette-avatar-profile-picture-199246382.jpg",
+                               123456789,
+                               "mail@mail.se");
+
+let secondProfile = new Profile("Tommy",
+                               30,
+                               "Giller färgen blå",
+                               "Arboga",
+                               "https://image.shutterstock.com/z/stock-vector-male-silhouette-avatar-profile-picture-199246382.jpg",
+                               123456789,
+                               "mail@mail.se");
+
+let thirdProfile = new Profile("Karl",
+                               28,
+                               "Giller färgen grå",
+                               "Lund",
+                               "https://image.shutterstock.com/z/stock-vector-male-silhouette-avatar-profile-picture-199246382.jpg",
+                               123456789,
+                               "mail@mail.se");
+
+
+let firstContact = new Contact(firstProfile.name,
+                               firstProfile.age,
+                               firstProfile.phoneNumber,
+                               firstProfile.email,
+                               firstProfile.picture);
+
+let secondContact = new Contact(secondProfile.name,
+                                secondProfile.age,
+                                secondProfile.phoneNumber,
+                                secondProfile.email,
+                                secondProfile.picture);
+
+let thirdContact = new Contact(thirdProfile.name,
+                               thirdProfile.age,
+                               thirdProfile.phoneNumber,
+                               thirdProfile.email,
+                               thirdProfile.picture);
+
+let shareContacts = [firstContact, secondContact, thirdContact];
+

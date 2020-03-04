@@ -95,6 +95,9 @@ body {
 #contacts {
     padding-bottom: 1.5em;
 }
+.contactBlock:hover {
+    background: #808080;
+}
 .contactBlock {
     display: grid;
     grid-template-columns: 90px 70%;
@@ -189,3 +192,35 @@ body {
 #createProfileData{
     padding: 5vw 0vw; 
 }
+
+#shareContactQuestion {
+    text-align: center;
+
+    font-size: 1.45em;
+    font-family: Arvo;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 15.4px;
+}
+
+#checkBoxDiv {
+    position: absolute;
+    left: 80%;
+}
+
+#shareButton {
+    zoom: 2;
+    left: 90%;
+}
+
+#finishButton {
+    font-size: 1em;
+    margin-bottom: 2em;
+    border-radius: 5px;
+    zoom: 1.5;
+}
+#finishButton:hover {
+    cursor: pointer;
+}
+
