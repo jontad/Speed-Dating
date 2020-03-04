@@ -41,6 +41,7 @@ const userProfile = new Vue({
 	}
     },
     methods: {
+	//add a new user to database during account creation
 	addUser: function()  {
 
 	    let user = new Profile(this.name, this.age, this.description,
@@ -52,6 +53,7 @@ const userProfile = new Vue({
 	    this.allUsers.push(user);
 	    sessionStorage.setItem("userArray", JSON.stringify(this.allUsers));
 	},
+	//check information during login
 	checkUserName: function () {
  	    let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
 
@@ -82,6 +84,7 @@ const userProfile = new Vue({
 	    }
 	    this.passwordChecker();
 	},
+	//check if password if correct during login
 	passwordChecker: function() {
 	    if (correctPassword) {
 		window.location.href = "/user";    
