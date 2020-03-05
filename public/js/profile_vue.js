@@ -129,6 +129,7 @@ const vm = new Vue({
             //       Kanske spara currentUser på nytt i sessionStorage?
         },     
     }
+
 });
 
 
