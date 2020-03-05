@@ -1,3 +1,6 @@
+'use strict';
+const socket = io();
+
 function Profile(name, age, description, location, picture, phoneNumber, email, password, userName) {
     this.name = name;
     this.age = age;
@@ -15,80 +18,81 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
 const userProfile = new Vue({
     el: 'main',
     data: {
-	allUsers: [],
-	name: "",
-	password: "",
-	fullName: "",
-	age: "",
-	address: "",
-	mail: "",
-	number: "",
-	description: "",
-	userName: "",
+	      allUsers: [],
+	      name: "",
+	      password: "",
+	      fullName: "",
+	      age: "",
+	      address: "",
+	      mail: "",
+	      number: "",
+	      description: "",
+	      userName: "",
 
-	registeredUser: false,
-	correctPassword: false,
+	      registeredUser: false,
+	      correctPassword: false,
 
-	Login: "",
+	      Login: "",
     },
     mounted() {
-	if (sessionStorage.getItem("userArray")) {
-	    try {
-		this.allUsers = JSON.parse(sessionStorage.getItem("userArray"));
-	    } catch(e) {
-		sessionStorage.removeItem("userArray");
-	    }
-	}
+	      if (sessionStorage.getItem("userArray")) {
+	          try {
+		            this.allUsers = JSON.parse(sessionStorage.getItem("userArray"));
+	          } catch(e) {
+		            sessionStorage.removeItem("userArray");
+	          }
+	      }
     },
     methods: {
-	//add a new user to database during account creation
-	addUser: function()  {
+	      //add a new user to database during account creation
+	      addUser: function()  {
 
-	    let user = new Profile(this.name, this.age, this.description,
-				   this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-				   this.number, this.mail,
-				   this.password, this.userName);
+	          let user = new Profile(this.name, this.age, this.description,
+				                           this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+				                           this.number, this.mail,
+				                           this.password, this.userName);            
 
-	    window.location.href = "/login";
-	    this.allUsers.push(user);
-	    sessionStorage.setItem("userArray", JSON.stringify(this.allUsers));
-	},
-	//check information during login
-	checkUserName: function () {
- 	    let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
+	          window.location.href = "/login";
+	          this.allUsers.push(user);
+	          sessionStorage.setItem("userArray", JSON.stringify(this.allUsers));
+	      },
 
-	    if(userArray){
-		for (let i = 0; i < userArray.length; i++) {
-		    let fullNameCompare = this.userName.localeCompare(userArray[i].name) == 0;
-		    let userNameCompare =  this.userName.localeCompare(userArray[i].userName) == 0;
-		    let passwordCompare = this.password.localeCompare(userArray[i].password) == 0;
-		    
-		    if(fullNameCompare || userNameCompare){
-			if (passwordCompare) {
-			    sessionStorage.setItem("user", JSON.stringify(userArray[i]));
-			    document.getElementById("loginInfo").innerHTML = "";
-			    correctPassword = true;
-			} else {
-			    document.getElementById("loginInfo").innerHTML = "Wrong Password";
-			}
-			this.registeredUser = true;
-			break;
-		    }
-		}
-		if (!this.registeredUser) {
-		    document.getElementById("loginInfo").innerHTML = "Username not in database";
-		}
-		registeredUser = false;
-	    } else {
-		document.getElementById("loginInfo").innerHTML = "Please create an account!";
-	    }
-	    this.passwordChecker();
-	},
-	//check if password if correct during login
-	passwordChecker: function() {
-	    if (correctPassword) {
-		window.location.href = "/user";    
-	    }   
-	},
+	      //check information during login
+	      checkUserName: function () {
+ 	          let userArray = JSON.parse(sessionStorage.getItem("userArray"));  
+
+	          if(userArray){
+		            for (let i = 0; i < userArray.length; i++) {
+		                let fullNameCompare = this.userName.localeCompare(userArray[i].name) == 0;
+		                let userNameCompare =  this.userName.localeCompare(userArray[i].userName) == 0;
+		                let passwordCompare = this.password.localeCompare(userArray[i].password) == 0;
+		                
+		                if(fullNameCompare || userNameCompare){
+			                  if (passwordCompare) {
+			                      sessionStorage.setItem("user", JSON.stringify(userArray[i]));
+			                      document.getElementById("loginInfo").innerHTML = "";
+			                      correctPassword = true;
+			                  } else {
+			                      document.getElementById("loginInfo").innerHTML = "Wrong Password";
+			                  }
+			                  this.registeredUser = true;
+			                  break;
+		                }
+		            }
+		            if (!this.registeredUser) {
+		                document.getElementById("loginInfo").innerHTML = "Username not in database";
+		            }
+		            registeredUser = false;
+	          } else {
+		            document.getElementById("loginInfo").innerHTML = "Please create an account!";
+	          }
+	          this.passwordChecker();
+	      },
+	      //check if password if correct during login
+	      passwordChecker: function() {
+	          if (correctPassword) {
+		            window.location.href = "/user";    
+	          }   
+	      },
     },
 });

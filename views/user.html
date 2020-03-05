@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
     <script src="/js/profile.js" defer></script>
     <script src="/js/profile_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
@@ -14,14 +15,14 @@
     <!-- User profile-page -->
     <main>
       <div id="profilePicture">
-        <img :src="profile.picture">
+        <img :src="currentUser.picture">
       </div>
       
       <div id="profileInfo">
-        <h2 id="profileHeading">{{profile.name}}, {{profile.age}} </h2>              
+        <h2 id="profileHeading"> {{currentUser.name}}, {{currentUser.age}} </h2>              
         <p class="profileText">Bor i
-          <span v-if="!editMode" class="bold"> {{profileLocation}} </span>
-          <input v-if="editMode" id="editLocation" type="text" v-model="profileLocation"> 
+          <span v-if="!editMode" class="bold"> {{currentUser.address}} </span>
+          <input v-if="editMode" id="editLocation" type="text" v-model="address"> 
         </p>
         <a href="user-contacts">
           <button id="contactsButton" class="profileButtons"> Kontakter </button>
@@ -38,9 +39,10 @@
           </button>
         </a>
         <br/>
-        <div v-if="!editMode" id="description" class="description">{{profileDesc}}</div>
-        <textarea v-if="editMode" id="editDescription" type="text" v-model="profileDesc"></textarea>
+        <div v-if="!editMode" id="description" class="description"> {{currentUser.description}} </div>
+        <textarea v-if="editMode" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
+      
       <div class="footer">
         <a href="/toMeet">
           <button id="backButton"> Speeddate </button>
