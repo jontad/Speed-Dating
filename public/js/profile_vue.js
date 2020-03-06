@@ -61,6 +61,7 @@ const vm = new Vue({
     mounted() {
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
+	
 
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
@@ -74,14 +75,19 @@ const vm = new Vue({
         }
     },
     created: function() {
+
         socket.on('currentUsers', function(data) {
             this.allUsers = data.users;
 	}.bind(this));
-        
+	
+	
         socket.on('loggedIn', function(data) {
             console.log(data);
             this.currentUser = data;
         }.bind(this));
+
+
+	
     },    
     methods: {        
         createProfile: function(){

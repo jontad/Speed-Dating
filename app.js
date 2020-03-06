@@ -43,7 +43,6 @@ app.get('/questions-user', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/questions-user.html'));
 });
 
-
 app.get('/user-contacts', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/user-contacts.html'));
 });
@@ -65,7 +64,6 @@ app.get('/createProfile', function(req, res) {
 
 
 
-
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
     this.name = name;
     this.age = age;
@@ -79,6 +77,10 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.password = password;
     this.userName = userName;
 };
+
+
+
+
 
 
 // Store data in an object to keep the global namespace clean and
@@ -121,14 +123,14 @@ Data.prototype.getLoggedInUsers = function(){
 
 //update array with edited user
 Data.prototype.updateArray = function(newUser){
-    /*for (var i = 0; i < this.users.length; i++) {
+    for (var i = 0; i < this.users.length; i++) {
 	let userCompare = this.users[i].userName.localeCompare(newUser.userName) == 0;
 	if (userCompare) {
-	    this.users[i] = editedUser;
+	    this.users[i] = newUser;
+	    console.log(i)
 	    break;
 	}
-	}*/
-    this.users = ["hej", "då"];
+    }
 }
 
 
@@ -172,7 +174,7 @@ io.on('connection', function(socket) {
 
     socket.on('newArray', function(user){
 	data.updateArray(user);
-	io.emit('currentUsers', {users: data.getAllUsers()});
+	//io.emit('currentUsers', {users: data.getAllUsers()});
     });
 });
 
