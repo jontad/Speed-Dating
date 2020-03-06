@@ -101,6 +101,7 @@ const vm = new Vue({
             console.log(this.userName + this.password);
             if(this.userName in this.allUsers &&
                this.allUsers[this.userName]['password'] == this.password) {
+
                 this.currentUser = this.allUsers[this.userName];
                 this.contacts = this.currentUser.matches;
                 socket.emit('loggedIn', this.currentUser);
@@ -148,9 +149,6 @@ const vm = new Vue({
             // TODO: Måste skicka ersätta den gamla profilen med den nya i app.js och skicka ut användarlistan på nytt.
             //       Kanske spara currentUser på nytt i sessionStorage?
         },                    
-        createProfile: function(){
-            window.location.href="/user";
-        },
         showTableMap: function(){
             document.getElementById("tableMap").style.display= 'inline';            
         },
