@@ -34,7 +34,6 @@ const vm = new Vue({
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 	      editButtonText: "Redigera profil",
-        dummyContacts: [],
         createProfileData: createProfileData,
 
         userName: "",
@@ -45,7 +44,8 @@ const vm = new Vue({
         mail: "",
         number: "",
         description: "",
-
+        contacts: [],
+        
         currentUser: '',
         allUsers: {},
         
@@ -57,6 +57,11 @@ const vm = new Vue({
 
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
+        }
+
+        if (!(location.href.endsWith("/login") ||location.href.endsWith("/createProfile"))&& this.currentUser == '') {
+            console.log('hej');
+            window.location.href="/login";
         }
     },
     created: function() {
@@ -83,7 +88,6 @@ const vm = new Vue({
             sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
 
             socket.emit('addNewUser', newUser);
-            window.address.href="/user";
             
         },        
         login: function(){
@@ -91,6 +95,7 @@ const vm = new Vue({
             if(this.userName in this.allUsers &&
                this.allUsers[this.userName]['password'] == this.password) {
                 this.currentUser = this.allUsers[this.userName];
+                this.contacts = this.currentUser.matches;
                 socket.emit('loggedIn', this.currentUser);
                 sessionStorage.setItem("currentUserName", JSON.stringify(this.currentUser));
                 window.location.href="/user"
@@ -98,6 +103,14 @@ const vm = new Vue({
                 console.log("hej");
                 document.getElementById("loginInfo").style.display = "block";
             }
+        },
+        logout: function(){
+            // Removes current user from session storage, vue object and server
+            sessionStorage.removeItem("currentUserName");
+            this.currentUser = '';
+            socket.emit('logoutUser', currentUser);
+            window.location.href='/login';
+            
         },
         range: function(end) {
             return Array(end).fill().map((_, idx) => 1 + idx)

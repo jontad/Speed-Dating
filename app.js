@@ -119,6 +119,13 @@ Data.prototype.addLoggedIn = function(user) {
     this.loggedIn[user.userName] = user;
 }
 
+Data.prototype.logoutUser = function(user) {
+    delete this.loggedIn[user.usermane];
+}
+Data.prototype.getLoggedInUsers = function(){
+    return this.loggedIn;
+}
+
 
 const data = new Data();
 
@@ -143,8 +150,12 @@ io.on('connection', function(socket) {
     });
     socket.on('loggedIn', function(user){
         data.addLoggedIn(user);
+        io.emit('curretLoggedIn', {loggedIn: data.getLoggedInUsers()});
     });
-
+    socket.on('logoutUser', function(user){
+        data.logoutUser(user);
+        io.emit('curretLoggedIn', {loggedIn: data.getLoggedInUsers()});
+    });
 });
 
 /* eslint-disable-next-line no-unused-vars */
