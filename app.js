@@ -122,8 +122,8 @@ Data.prototype.getLoggedInUsers = function(){
 //update array with edited user
 Data.prototype.updateArray = function(newUser){
     /*for (var i = 0; i < this.users.length; i++) {
-	let userNameCompare = this.users[i].userName.localeCompare(newUser.userName) == 0;
-	if (userNameCompare) {
+	let userCompare = this.users[i].userName.localeCompare(newUser.userName) == 0;
+	if (userCompare) {
 	    this.users[i] = editedUser;
 	    break;
 	}
@@ -172,7 +172,7 @@ io.on('connection', function(socket) {
 
     socket.on('newArray', function(user){
 	data.updateArray(user);
-	//io.emit('currentUsers', {users: data.getAllUsers()});
+	io.emit('currentUsers', {users: data.getAllUsers()});
     });
 });
 
