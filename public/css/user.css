@@ -172,6 +172,9 @@ body {
 #loginData{
     padding: 5vw 0vw;
 }
+#loginInfo{
+    display: none;
+}
 #descriptionTextarea{
     width: 90%;
     height: 130px;
@@ -245,3 +248,4 @@ body {
     text-align: center;
     padding-top: 10px;
 }
+
