@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>User page</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="./css/user.css">
-        <script src="https://vuejs.org/js/vue.js"></script>
-        <script src="/js/profile.js" defer></script>
-        <script src="/js/profile_vue.js" defer></script>
-        <script type="text/javascript" src="js/menu.js"></script> 
-    </head>
-    <body>
+  <head>
+    <title>User page</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
     <!-- User profile-page -->
-        <main>
-            <div id="profilePicture">
-                <img :src="date.picture">
-            </div>
-            
-            <div id="profileInfo">
-              <h2 id="profileHeading">{{ date.name }}, {{ date.age }} </h2>              
-              <p class="profileText">Bor i
-                <span class="bold"> {{ date.location }} </span>
-              </p>
-              <div id="description" class="description"> {{ date.description }}</div>
-            </div>
-            <a href="/questions-user">
-              <div class="footer">
-                <button id="foundButton"> Hittad </button>
-              </div>
-            </a>
-        </main>
-    </body>
+    <main>
+      
+      <div id="tableMap">
+        <div id="tableLayout">
+          <div id="tableMapCloseButton" v-on:click="closeTableMap()">&times</div>
+          <div v-for="i in tablesMapOrder" class="table"> {{i}} </div> 
+        </div>
+      </div>
+      
+      <div id="profilePicture">
+        <img :src="date.picture">
+      </div>      
+      <div id="profileInfo">
+        <h2 id="profileHeading">{{ date.name }}, {{ date.age }} </h2>              
+        <p class="profileText">Bor i
+          <span class="bold"> {{ date.location }} </span>
+        </p>
+        <button id="yourTableButton" class="profileButtons" v-on:click="showTableMap()">
+          Bord nummer X
+        </button>
+        <div id="description" class="description"> {{ date.description }}</div>
+        <div id="foundButtonWrapper">
+          <a href="/questions-user">
+            <button id="foundButton"> Hittad </button>
+          </a>          
+        </div>
+      </div>
+
+    </main>
+  </body>
 </html>

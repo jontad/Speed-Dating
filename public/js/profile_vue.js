@@ -1,6 +1,7 @@
 'use strict';
 const socket = io();
 
+
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
     this.name = name;
     this.age = age;
@@ -15,10 +16,12 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.userName = userName;
 }
 
-
-
 let createProfileData = ['Användarnamn', 'Lösenord','Förnamn', 'Ålder', 'Bor i','Email', 'Telefonnummer'];
 let dateDummy = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+
+
+let q = "question";
+let qs = [q,q,q,q];
 
 
 const vm = new Vue({
@@ -28,14 +31,14 @@ const vm = new Vue({
 	      profileLocation: "",
 	      
         date: dateDummy,
-        questions: ["question"],
 
-	      editMode: false,
+        questions: ["question"],
+        editMode: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 	      editButtonText: "Redigera profil",
         createProfileData: createProfileData,
-
+      
         userName: "",
         password: "",
         name: "",
@@ -48,6 +51,10 @@ const vm = new Vue({
         
         currentUser: '',
         allUsers: {},
+        tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
+        radioAnswers: [0,0,0,0],
+        other: '',
+        dateNumber: 0,
         
         
     },
@@ -140,10 +147,35 @@ const vm = new Vue({
 
             // TODO: Måste skicka ersätta den gamla profilen med den nya i app.js och skicka ut användarlistan på nytt.
             //       Kanske spara currentUser på nytt i sessionStorage?
-        },     
+        },                    
+        createProfile: function(){
+            window.location.href="/user";
+        },
+        showTableMap: function(){
+            document.getElementById("tableMap").style.display= 'inline';            
+        },
+        closeTableMap: function(){
+            document.getElementById("tableMap").style.display= 'none'; 
+        },
+        sendAfterDateQuestions: function() {
+            
+            this.dateNumber = this.dateNumber+1;
+            socket.emit('addAfterDateAnwsers',
+                        {
+                            key: this.dateNumber,
+                            profile: this.profile,
+                            date: this.date,
+                            other: this.other,
+                            radioAnswers: this.radioAnswers,
+                        });
+            
+            console.log( {
+                key: this.dateNumber,
+                profile: this.profile,
+                date: this.date,
+                other: this.other,
+                radioAnswers: this.radioAnswers,
+            });
+        }        
     }
-
 });
-
-
-

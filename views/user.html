@@ -42,8 +42,8 @@
         <div v-if="!editMode" id="description" class="description"> {{currentUser.description}} </div>
         <textarea v-if="editMode" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
-      
-      <div class="footer">
+
+      <div id="SDButton">
         <a href="/toMeet">
           <button id="backButton"> Speeddate </button>
         </a>
