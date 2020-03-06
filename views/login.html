@@ -20,15 +20,15 @@
           <label for="password"> Lösenord </label><br/>
           <input v-model="password" type="password"><br/>
 
-	        <a href="createProfile">
+	  <a href="createProfile">
             <button id="createNewProfileButton">Skapa profil</button>                
           </a><br/>
 
-	        <a>
-		        <button v-on:click="login()" id="loginButton">Logga in</button>
+	  <a>
+	    <button v-on:click="login()" id="loginButton">Logga in</button>
           </a>
 
-	        <div id="loginInfo"> Fel inloggningsuppgifter</div>
+	  <div id="loginInfo"> Fel inloggningsuppgifter</div>
           {{allUsers}}
         </div>
       </div>

@@ -128,7 +128,7 @@ p {
     grid-gap: 3%;
     grid-template-columns: 40% 10% 40%;
     margin-left: 20px;
-	overflow: scroll;
+    overflow: scroll;
 }
 
 #unmatchedGrid {
@@ -141,10 +141,10 @@ p {
     border-radius: 10px;
     padding: 10px;
     min-height: 3em;
-	max-height: 10em;
+    max-height: 10em;
     max-width: 40%;
     margin: 0px auto 10px auto;
-	overflow: scroll;
+    overflow: scroll;
 }
 
 

@@ -28,8 +28,20 @@
         </div>
         <div class="box b">
           <h2>Matchpanel</h2>
-          <div id="matchPanelGrid">
-            <div class="col1 column" draggable="true">
+
+	  <div id="matchPanelGrid">
+	    <section id="userPrint">
+	      <div id="vue"> <!-- Grid/Vue --> 
+		<div v-for="(user, index) in allUsers" draggable="true">
+		   <div><img :src="user.img">{{index}}</div>
+		  <div>{{user.name}}</div>
+		</div>
+	      </div> 
+	    </section>
+
+	    <div>{{allUsers}}</div>
+<!--
+	    <div class="col1 column" draggable="true">
               <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic">
               <p class="column-child">User 1</p>
             </div>
@@ -72,20 +84,15 @@
               <p class="column-child">User 6</p>
 
             </div>
-
+-->
           </div>
           <div id="unmatchPanel">
-
             <br>
             <h2>Omatchade</h2>
-            <div id="unmatchedGrid">
-
-            </div>
+            <div id="unmatchedGrid"></div>
           </div>
-				  <div id="reset" class="buttons">Reset</div>
-
-          <div v-for="(anwser, i) in afterDateAnswers">
-          </div>
+	  <div id="reset" class="buttons">Reset</div>
+	  <div v-for="(anwser, i) in afterDateAnswers"></div>
         </div>
 
         <div class="box c">
