@@ -28,17 +28,17 @@ const vm = new Vue({
     el: 'main',
     data: {
         profile: "", 
-	      profileLocation: "",
-	      
+	profileLocation: "",
+	
         date: dateDummy,
 
         questions: ["question"],
         editMode: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
-	      editButtonText: "Redigera profil",
+	editButtonText: "Redigera profil",
         createProfileData: createProfileData,
-      
+	
         userName: "",
         password: "",
         name: "",
@@ -61,12 +61,15 @@ const vm = new Vue({
     mounted() {
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
+	
 
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
+	    this.description = this.currentUser.description;
+	    this.address = this.currentUser.address;
         }
 
-        if (!(location.href.endsWith("/login") ||location.href.endsWith("/createProfile"))&& this.currentUser == '') {
+        if (!(location.href.endsWith("/login") || location.href.endsWith("/createProfile"))&& this.currentUser == '') {
             console.log('hej');
             window.location.href="/login";
         }
@@ -75,25 +78,27 @@ const vm = new Vue({
 
         socket.on('currentUsers', function(data) {
             this.allUsers = data.users;
-        }.bind(this));
-        
+	}.bind(this));
+	
+	
         socket.on('loggedIn', function(data) {
             console.log(data);
             this.currentUser = data;
         }.bind(this));
+
+
+	
     },    
-    methods: {
-        
+    methods: {        
         createProfile: function(){
             let newUser = new Profile(this.name, this.age, this.description,
-				                              this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-				                              this.number, this.mail,
-				                              this.password, this.userName); 
+				      this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+				      this.number, this.mail,
+				      this.password, this.userName); 
 
             this.currentUser = newUser;
-
+	    
             sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
-
             socket.emit('addNewUser', newUser);
             
         },        
@@ -123,32 +128,24 @@ const vm = new Vue({
         range: function(end) {
             return Array(end).fill().map((_, idx) => 1 + idx)
         },
-	      editProfile: function(){
-	          this.editMode = !this.editMode;
+	editProfile: function(){
+	    this.editMode = !this.editMode;
             if(this.editMode){
                 this.editButtonText = "Spara profil";
-                this.description = this.currentUser.description;
-                this.address = this.currentUser.address;
             }              
             else {
                 this.editButtonText = "Redigera profil";
-		            this.editUser();
-	          }
-	      },
-	      //user saving new profile
-	      editUser: function(){
-            /*
-            let userProfile = new Profile(this.profile.name, this.profile.age,
-					                                this.profileDesc, this.profileLocation, this.profile.picture,
-					                                this.profile.phoneNumber, this.profile.email,
-					                                this.profile.password, this.profile.userName);*/		
+		this.editUser();
+	    }
+	},
+	//user saving new profile
+	editUser: function(){
+	    this.currentUser.description = this.description;
+	    this.currentUser.address = this.address;
 
-	          //sessionStorage.setItem("user", JSON.stringify(userProfile));
-	          //this.inputUserInArray(userProfile);
-
-            // TODO: Måste skicka ersätta den gamla profilen med den nya i app.js och skicka ut användarlistan på nytt.
-            //       Kanske spara currentUser på nytt i sessionStorage?
-        },                    
+	    sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+	    socket.emit('newArray', this.currentUser);	    
+        },
         showTableMap: function(){
             document.getElementById("tableMap").style.display= 'inline';            
         },
