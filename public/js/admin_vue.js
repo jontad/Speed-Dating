@@ -19,6 +19,21 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.userName = userName;
 }
 
+let dummy1 = new Profile("Namn",
+                        "ålder",
+                        loremIpsum,
+                        "Ort",
+                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                        123456789,
+                       "mail@mail.se");
+let dummy2 = new Profile("Namn",
+                        "ålder",
+                        loremIpsum,
+                        "Ort",
+                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                        123456789,
+                       "mail@mail.se");
+
 
 const vm = new Vue({
     el: 'main',
@@ -26,7 +41,10 @@ const vm = new Vue({
 	info: loremIpsum,
         tables: 10,
         afterDateAnswers: {}, // Contains the data received from user-questions
-	allUsers: {},
+	allUsers: {dummy1, dummy2},
+    },
+    mounted() {
+	socket.emit('getUsers');
     },
     created: function() {
         socket.on('initialize', function(data) {
