@@ -38,7 +38,8 @@ const vm = new Vue({
 
 	editButtonText: "Redigera profil",
         createProfileData: createProfileData,
-	
+
+	picture: "",
         userName: "",
         password: "",
         name: "",
@@ -62,7 +63,6 @@ const vm = new Vue({
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
 	
-
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
 	    this.description = this.currentUser.description;
@@ -85,14 +85,12 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-
-
 	
     },    
     methods: {        
         createProfile: function(){
             let newUser = new Profile(this.name, this.age, this.description,
-				      this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+				      this.address, this.picture,
 				      this.number, this.mail,
 				      this.password, this.userName); 
 
