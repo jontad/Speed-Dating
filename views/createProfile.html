@@ -17,14 +17,13 @@
         <form id="createProfileData" action="login">
 
 	        <section class="form">
-	          <!-- <p>
-	               <form action="upload.php" method="post">
-		               <input type="file" name="file" id="userPicture"/>
-	               </form>
-	          </p> BILD -->
+	          <p>
+	            <label>Bild (URL)</label><br>
+	            <input type="text" class="input" id="picture" required="required" placeholder="Bild (URL)" v-model="picture"/>
+	          </p>
 	          <p>
 	            <label>Användarnamn</label><br>
-	            <input type="text" class="input" id="username" required="required" placeholder="User name" v-model="userName"/>
+	            <input type="text" class="input" id="username" required="required" placeholder="Användarnamn" v-model="userName"/>
 	          </p>
 	          <p>
 	            <label>Lösenord</label><br>
