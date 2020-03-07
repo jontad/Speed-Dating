@@ -140,16 +140,11 @@ const vm = new Vue({
 	},
 	//user saving new profile
 	editUser: function(){
-            /*
-              this.inputUserInArray(userProfile);*/
 	    this.currentUser.description = this.description;
 	    this.currentUser.address = this.address;
 
 	    sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-	    socket.emit('newArray', this.currentUser);
-	    
-            // TODO: Måste skicka ersätta den gamla profilen med den nya i app.js och skicka ut användarlistan på nytt.
-            //       Kanske spara currentUser på nytt i sessionStorage?
+	    socket.emit('newArray', this.currentUser);	    
         },
         showTableMap: function(){
             document.getElementById("tableMap").style.display= 'inline';            
