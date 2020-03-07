@@ -34,11 +34,14 @@ const vm = new Vue({
 
         questions: ["question"],
         editMode: false,
+	editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 	editButtonText: "Redigera profil",
+	editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
-	
+
+	picture: "",
         userName: "",
         password: "",
         name: "",
@@ -54,19 +57,17 @@ const vm = new Vue({
         tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
         radioAnswers: [0,0,0,0],
         other: '',
-        dateNumber: 0,
-        
-        
+        dateNumber: 0,        
     },
     mounted() {
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
 	
-
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
 	    this.description = this.currentUser.description;
 	    this.address = this.currentUser.address;
+	    this.picture = this.currentUser.picture;
         }
 
         if (!(location.href.endsWith("/login") || location.href.endsWith("/createProfile"))&& this.currentUser == '') {
@@ -85,14 +86,12 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-
-
 	
     },    
     methods: {        
         createProfile: function(){
             let newUser = new Profile(this.name, this.age, this.description,
-				      this.address, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+				      this.address, this.picture,
 				      this.number, this.mail,
 				      this.password, this.userName); 
 
@@ -132,8 +131,7 @@ const vm = new Vue({
 	    this.editMode = !this.editMode;
             if(this.editMode){
                 this.editButtonText = "Spara profil";
-            }              
-            else {
+            } else {
                 this.editButtonText = "Redigera profil";
 		this.editUser();
 	    }
@@ -146,6 +144,19 @@ const vm = new Vue({
 	    sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 	    socket.emit('newArray', this.currentUser);	    
         },
+	editPic: function(){
+	    this.editPicture = !this.editPicture;
+            if(this.editPicture){
+                this.editPictureText = "Spara profilbild";
+	    } else {
+               	this.editPictureText = "Byt profilbild";
+
+		this.currentUser.picture = this.picture;
+		sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+		socket.emit('newArray', this.currentUser);	    
+	    }
+	},
+
         showTableMap: function(){
             document.getElementById("tableMap").style.display= 'inline';            
         },
