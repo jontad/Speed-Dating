@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="./css/user.css">
         <script src="https://vuejs.org/js/vue.js"></script>
+        <script src="/socket.io/socket.io.js" defer></script>
         <script src="/js/profile.js" defer></script>
         <script src="/js/profile_vue.js" defer></script>
         <script type="text/javascript" src="js/menu.js"></script> 
@@ -19,21 +20,22 @@
             
             <div id="profileQuestions">
               <h2 id="profileHeading">{{ date.name }}, {{ date.age }} </h2>
-              <form action="/user">
+              <form>
                 <div v-for="(q,index) in questions">
-                  <label class="questionLabel" for="question"> {{ q.question }} </label><br />
+                  <label class="questionLabel" for="question"> {{ q }} </label><br />
                   <div class="radioInline" v-for="i in range(5)">
-                    <input type="radio" v-bind:name="index"> {{ i }}
+                    <input type="radio" v-bind:value="i" v-bind:name="index" v-model=radioAnswers[index]> {{ i }} 
                   </div>
                 </div>
                 <div id="placementQuestion">
                   Övrigt angående er date <br/>
-                  <input id="inputPlacementQuestion" type="text" placeholder="T.ex. bordsplacering">
+                  <input id="inputPlacementQuestion" type="text" placeholder="T.ex. om bordsplacering" v-model=other>
                 </div>
-                <div id="profileQuestionsButton">
+
+              </form>
+              <div id="profileQuestionsButton" v-on:click="sendAfterDateQuestions()">
                   <button> Skicka </button>
                 </div>
-              </form>
             </div>           
         </main>
     </body>
