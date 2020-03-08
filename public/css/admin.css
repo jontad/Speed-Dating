@@ -39,7 +39,7 @@ p {
 
 #grid {
     display: grid;
-    grid-gap: 3%;
+    grid-gap: 1%;
     grid-template-columns: 21% 31% 42%;
     grid-template-rows: 10% 100%;
 }
@@ -52,13 +52,11 @@ p {
 .b {
     grid-column: 1 / span 2;
     text-align: center;
-    max-height: 90%;
     border: 2px solid black;
     border-radius: 40px;
     box-shadow: 0px 0px 1px 1px grey;
     margin-left: 20px;
     padding: 10px;
-	overflow: scroll;
 } 
 
 .c {
@@ -125,14 +123,14 @@ p {
 
 #matchPanelGrid {
     display: grid;
-    grid-gap: 3%;
+    grid-gap: 0.2em;
     grid-template-columns: 40% 10% 40%;
     margin-left: 20px;
-	overflow: scroll;
+    min-height: 40em;
 }
 
 #unmatchedGrid {
-    grid-gap: 3%;
+    grid-gap: 0.2em;
     grid-template-columns: 40% 10% 40%;
     grid-template-rows: 1500%;
     width: 40%;
@@ -141,10 +139,8 @@ p {
     border-radius: 10px;
     padding: 10px;
     min-height: 3em;
-	max-height: 10em;
     max-width: 40%;
     margin: 0px auto 10px auto;
-	overflow: scroll;
 }
 
 
@@ -173,7 +169,6 @@ p {
   height: 15px;
   position: absolute;
   width: 15px;
-  
 }
 
 .col2:before {
@@ -251,7 +246,7 @@ p {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     max-width: 90%;
-    height: 30%;
+    height: 10em;
     margin: 5%;
     padding: 2%;
     border: 1px solid;
