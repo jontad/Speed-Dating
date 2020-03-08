@@ -1,3 +1,65 @@
+var profiles = [];
+var matches = [];
+
+for (var i = 0; i < 10; i++)
+{
+	// name, age, description, location, picture, phoneNumber, email
+	var url = "https://i.stack.imgur.com/34AD2.jpg";
+
+	var a = new Profile(String.fromCharCode("a".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "male");
+	var b = new Profile(String.fromCharCode("A".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "female");
+
+	var match = new Match(a, b);
+
+	matches.push(match);
+	profiles.push(a);
+	profiles.push(b);
+
+	addMatch(a, b);
+}
+
+function addProfile(profile)
+{
+	var box = document.getElementById("matchPanelGrid");
+
+	var div = document.createElement("div");
+	var img = document.createElement("img");
+	var p = document.createElement("p");
+
+	p.innerText = profile.name;
+	p.classList.add("column-child");
+
+	img.src = profile.picture;
+	img.classList.add("profile-pic");
+	img.classList.add("column-child");
+
+	div.draggable = true;
+	div.classList.add("column");
+	div.classList.add(profile.gender == "male" ? "col1" : "col3");
+	div.appendChild(img);
+	div.appendChild(p);
+
+	box.appendChild(div);
+}
+
+function addMatch(a, b)
+{
+	var box = document.getElementById("matchPanelGrid");
+
+	addProfile(a);
+
+	var div = document.createElement("div");
+	var p = document.createElement("p");
+
+	p.classList.add("heart");
+	div.classList.add("col2");
+
+	div.appendChild(p);
+
+	box.appendChild(div);
+
+	addProfile(b);
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
