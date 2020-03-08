@@ -1,4 +1,5 @@
-var profiles = [];
+var males = [];
+var females = [];
 var matches = [];
 
 for (var i = 0; i < 10; i++)
@@ -11,42 +12,82 @@ for (var i = 0; i < 10; i++)
 
 	var match = new Match(a, b);
 
-	matches.push(match);
-	profiles.push(a);
-	profiles.push(b);
-
-	addMatch(a, b);
+	males.push(a);
+	females.push(b);
 }
 
-function addProfile(profile)
+matchAlgorithm(males, females, matches);
+
+matches.forEach(function(match) {
+	addMatch(match);
+});
+
+function shuffle(array) {
+	array.sort(() => Math.random() - 0.5);
+}
+
+// Uses Math.random to match people
+function matchAlgorithm(males, females, matches)
+{
+	shuffle(females);
+
+	for (var i = 0; i < Math.max(males.length, females.length); i++)
+	{
+		var male = i >= males.length ? null : males[i];
+		var female = i >= females.length ? null : females[i];
+
+		matches.push(new Match(male, female));
+	}
+}
+
+function addProfile(profile, gender)
 {
 	var box = document.getElementById("matchPanelGrid");
-
 	var div = document.createElement("div");
-	var img = document.createElement("img");
-	var p = document.createElement("p");
 
-	p.innerText = profile.name;
-	p.classList.add("column-child");
+	if (profile != null)
+	{
+		var img = document.createElement("img");
+		var p = document.createElement("p");
 
-	img.src = profile.picture;
-	img.classList.add("profile-pic");
-	img.classList.add("column-child");
+		p.innerText = profile.name;
+		p.classList.add("column-child");
+
+		img.src = profile.picture;
+		img.classList.add("profile-pic");
+		img.classList.add("column-child");
+
+		div.appendChild(img);
+		div.appendChild(p);
+	}
 
 	div.draggable = true;
+	div.classList.add(gender == "male" ? "col1" : "col3");
 	div.classList.add("column");
-	div.classList.add(profile.gender == "male" ? "col1" : "col3");
-	div.appendChild(img);
-	div.appendChild(p);
 
 	box.appendChild(div);
 }
 
-function addMatch(a, b)
+function addMatch(match)
 {
+	var a = match.A;
+	var b = match.B;
+
 	var box = document.getElementById("matchPanelGrid");
 
-	addProfile(a);
+	var aGender = a !== null 
+		? a.gender
+		: b.gender == "male"
+			? "female"
+			: "male";
+
+	var bGender = b !== null
+		? b.gender
+		: a.gender == "male"
+			? "female"
+			: "male";
+
+	addProfile(a, aGender);
 
 	var div = document.createElement("div");
 	var p = document.createElement("p");
@@ -58,7 +99,7 @@ function addMatch(a, b)
 
 	box.appendChild(div);
 
-	addProfile(b);
+	addProfile(b, bGender);
 }
 
 function sleep(ms) {
