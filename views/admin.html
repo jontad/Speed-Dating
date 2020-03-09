@@ -1,111 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <title>Admin page</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="./css/admin.css">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
-    <script src="/socket.io/socket.io.js" defer></script>
-    <script src="https://vuejs.org/js/vue.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" defer></script>
-    <script src="/js/admin.js" defer></script>
-    <script src="/js/admin_vue.js" defer></script>
-    <script type="text/javascript" src="js/menu.js" defer></script>
-  </head>
+<head>
+  <title>Admin page</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="./css/admin.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
+  <script src="https://vuejs.org/js/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="/js/profile.js" defer></script>
+  <script src="/js/match.js" defer></script>
+  <script src="/js/admin.js" defer></script>
+  <script src="/js/admin_vue.js" defer></script>
+  <script type="text/javascript" src="js/menu.js"></script>
+</head>
 
-  <body>
-    <!-- Admin-page -->
-    <main>
-      <div id="grid">
-        <div class="box a">
-          <hr id="progressLine">
-          <div class="progressBubble">Start</div>
-          <div class="progressBubble">Möte 1</div>
-          <div class="progressBubble">Möte 2</div>
-          <div class="progressBubble">Möte 3</div>
-          <div class="progressBubble">Slut</div>
+<body>
+  <!-- Admin-page -->
+  <main>
+    <div id="grid">
+      <div class="box a">
+        <hr id="progressLine">
+        <div class="progressBubble">Start</div>
+        <div class="progressBubble">Möte 1</div>
+        <div class="progressBubble">Möte 2</div>
+        <div class="progressBubble">Möte 3</div>
+        <div class="progressBubble">Slut</div>
+      </div>
+      <div class="box b">
+        <h2>Matchpanel</h2>
+        <div id="matchPanelGrid">
+            <!-- Matches are added to this in js -->
         </div>
-        <div class="box b">
-          <h2>Matchpanel</h2>
-          <div id="matchPanelGrid">
-            <div class="col1 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic">
-              <p class="column-child">User 1</p>
-            </div>
+        <div id="unmatchPanel">
 
-
-            <div class="col2">
-              <p class="heart"></p>
-            </div>
-
-            <div class="col3 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
-              <p class="column-child">User 2</p>
-            </div>
-
-            <div class="col1 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
-              <p class="column-child">User 3</p>
-            </div>
-
-            <div class="col2">
-              <p class="heart"></p>
-            </div>
-
-            <div class="col3 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
-              <p class="column-child">User 4</p>
-            </div>
-
-            <div class="col1 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
-              <p class="column-child">User 5</p>
-            </div>
-
-            <div class="col2">
-              <p class="heart"></p>
-            </div>
-
-            <div class="col3 column" draggable="true">
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="profile-pic column-child">
-              <p class="column-child">User 6</p>
-
-            </div>
+          <br>
+          <h2>Omatchade</h2>
+          <div id="unmatchedGrid">
 
           </div>
-          <div id="unmatchPanel">
 
-            <br>
-            <h2>Omatchade</h2>
-            <div id="unmatchedGrid">
-
-            </div>
-          </div>
 				  <div id="reset" class="buttons">Reset</div>
 
           <div v-for="(anwser, i) in afterDateAnswers">
           </div>
         </div>
+        <div id="reset" class="buttons">Reset</div>
+      </div>
 
-        <div class="box c">
-          <h1>Infopanel</h1>
+      <div class="box c">
+        <h1>Infopanel</h1>
 
-          <h3>Bord</h3>
-          <div id="tableLayout">
-            <div v-for="i in range(10)" class="table"> {{i}} </div> 
-          </div>
-          <br/>
-
-          <p>
-            <h3 id="timer">Timer</h3>
-            <input type="number" required="required" placeholder="Längd på event" id="time" />
-          </p>
-
-          <div class="buttons">Avsluta</div>
-          <div onclick="timer()" class="buttons" id="startbutton">Starta</div>
+        <h3>Bord</h3>
+        <div id="tableLayout">
+          <div v-for="i in range(10)" class="table"> {{i}} </div>
         </div>
-    </main>
-  </body>
+        <br />
+
+        <p>
+          <h3 id="timer">Timer</h3>
+          <input type="number" required="required" placeholder="Längd på event" id="time" />
+        </p>
+
+        <div class="buttons">Avsluta</div>
+        <div onclick="timer()" class="buttons" id="startbutton">Starta</div>
+      </div>
+  </main>
+</body>
 
 </html>

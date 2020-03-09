@@ -1,4 +1,4 @@
-function Profile(name, age, description, location, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, location, picture, phoneNumber, email, gender, password, userName) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -8,6 +8,7 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
     this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
+    this.gender = gender;
     this.password = password;
     this.userName = userName;
 }
@@ -25,9 +26,13 @@ function addMatch(profile, matchedWith) {
 }
 
 
+/*
+let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt rhoncus ante sollicitudin scelerisque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis eu viverra felis. Suspendisse gravida ipsum nec arcu rutrum, quis iaculis velit dignissim. Vivamus non sapien ac lacus pretium elementum. Cras aliquet";
+
 
 
 let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt rhoncus ante sollicitudin scelerisque. Pellentesque habitant morb tristique senectus et netus et malesuada fames ac turpis egestas. Duis eu viverra felis. Suspendisse gravida ipsum nec arcu rutrum, quis iaculis velit dignissim. Vivamus non sapien ac lacus pretium elementum. Cras aliquet";
+
 let dummy = new Profile("Namn",
                         "ålder",
                         loremIpsum,
@@ -42,3 +47,5 @@ let dummyC = new Contact(dummy.name,
                          dummy.email,
                          dummy.picture);
 let dummyContacts = [dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC,dummyC, dummyC, dummyC];
+
+*/

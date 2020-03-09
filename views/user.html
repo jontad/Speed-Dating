@@ -21,17 +21,20 @@
       <div id="profileInfo">
         <h2 id="profileHeading"> {{currentUser.name}}, {{currentUser.age}} </h2>              
         <p class="profileText">Bor i
-          <span v-if="!editMode" class="bold"> {{currentUser.address}} </span>
-          <input v-if="editMode" id="editLocation" type="text" v-model="address"> 
+          <span v-if="!editMode" class="bold">{{currentUser.address}} </span>
+          <input v-if="editMode && !editPicture" id="editLocation" type="text" v-model="address">
+
+	  <span v-if="editPicture" id="description" class="bold"> {{currentUser.address}} </span>
         </p>
         <a href="user-contacts">
           <button id="contactsButton" class="profileButtons"> Kontakter </button>
         </a>
-        <button id="editProfileButton" class="profileButtons" v-on:click="editProfile()">
+        <button id="editProfileButton" class="profileButtons" v-if="!editPicture" v-on:click="editProfile()">
           {{editButtonText}}
         </button>
-        <button id="changeProfilePicture" class="profileButtons" v-if="editMode">
-          Byt profilbild
+
+        <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode" v-on:click="editPic()">
+          {{editPictureText}}
         </button>
         <a href="login">
           <button id="logoutButton" class="profileButtons" v-on:click="logout()">
@@ -39,8 +42,13 @@
           </button>
         </a>
         <br/>
-        <div v-if="!editMode" id="description" class="description"> {{currentUser.description}} </div>
-        <textarea v-if="editMode" id="editDescription" type="text" v-model="description">  </textarea>
+
+	<p v-if="editPicture">BILD (URL):
+	  <input  id="pic" type="text" v-model="picture">
+	<p>
+	  
+        <div v-if="!editMode && !editPicture" id="description" class="description"> {{currentUser.description}} </div>
+        <textarea v-if="editMode && !editPicture" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
 
       <!--

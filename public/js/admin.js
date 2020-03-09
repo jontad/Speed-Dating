@@ -1,3 +1,106 @@
+var males = [];
+var females = [];
+var matches = [];
+
+for (var i = 0; i < 10; i++)
+{
+	// name, age, description, location, picture, phoneNumber, email
+	var url = "https://i.stack.imgur.com/34AD2.jpg";
+
+	var a = new Profile(String.fromCharCode("a".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "male");
+	var b = new Profile(String.fromCharCode("A".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "female");
+
+	var match = new Match(a, b);
+
+	males.push(a);
+	females.push(b);
+}
+
+matchAlgorithm(males, females, matches);
+
+matches.forEach(function(match) {
+	addMatch(match);
+});
+
+function shuffle(array) {
+	array.sort(() => Math.random() - 0.5);
+}
+
+// Uses Math.random to match people
+function matchAlgorithm(males, females, matches)
+{
+	shuffle(females);
+
+	for (var i = 0; i < Math.max(males.length, females.length); i++)
+	{
+		var male = i >= males.length ? null : males[i];
+		var female = i >= females.length ? null : females[i];
+
+		matches.push(new Match(male, female));
+	}
+}
+
+function addProfile(profile, gender)
+{
+	var box = document.getElementById("matchPanelGrid");
+	var div = document.createElement("div");
+
+	if (profile != null)
+	{
+		var img = document.createElement("img");
+		var p = document.createElement("p");
+
+		p.innerText = profile.name;
+		p.classList.add("column-child");
+
+		img.src = profile.picture;
+		img.classList.add("profile-pic");
+		img.classList.add("column-child");
+
+		div.appendChild(img);
+		div.appendChild(p);
+	}
+
+	div.draggable = true;
+	div.classList.add(gender == "male" ? "col1" : "col3");
+	div.classList.add("column");
+
+	box.appendChild(div);
+}
+
+function addMatch(match)
+{
+	var a = match.A;
+	var b = match.B;
+
+	var box = document.getElementById("matchPanelGrid");
+
+	var aGender = a !== null 
+		? a.gender
+		: b.gender == "male"
+			? "female"
+			: "male";
+
+	var bGender = b !== null
+		? b.gender
+		: a.gender == "male"
+			? "female"
+			: "male";
+
+	addProfile(a, aGender);
+
+	var div = document.createElement("div");
+	var p = document.createElement("p");
+
+	p.classList.add("heart");
+	div.classList.add("col2");
+
+	div.appendChild(p);
+
+	box.appendChild(div);
+
+	addProfile(b, bGender);
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

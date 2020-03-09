@@ -43,7 +43,6 @@ app.get('/questions-user', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/questions-user.html'));
 });
 
-
 app.get('/user-contacts', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/user-contacts.html'));
 });
@@ -65,10 +64,6 @@ app.get('/createProfile', function(req, res) {
 
 
 
-
-
-
-
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
     this.name = name;
     this.age = age;
@@ -82,6 +77,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.password = password;
     this.userName = userName;
 };
+
 
 
 
@@ -119,10 +115,15 @@ Data.prototype.addLoggedIn = function(user) {
 }
 
 Data.prototype.logoutUser = function(user) {
-    delete this.loggedIn[user.usermane];
+    delete this.loggedIn[user.userName];
 }
 Data.prototype.getLoggedInUsers = function(){
     return this.loggedIn;
+}
+
+//update array with edited user
+Data.prototype.updateArray = function(newUser){
+    this.users[newUser.userName] = newUser;
 }
 
 
@@ -130,10 +131,9 @@ const data = new Data();
 
 io.on('connection', function(socket) {
     // Send list of orders when a client connects
-    socket.emit('initialize', { afterDateAnswers: data.getAllAfterDateAnswers()
-               });
+    socket.emit('initialize', { afterDateAnswers: data.getAllAfterDateAnswers()});
   
-      // When a connecter client emits an "addAfterDateAnswer" message
+    // When a connecter client emits an "addAfterDateAnswer" message
     socket.on('addAfterDateAnwsers', function(answers){
         // Add the data to the "database"
         data.addAfterDateAnswer(answers);
@@ -164,9 +164,15 @@ io.on('connection', function(socket) {
         data.logoutUser(user);
         io.emit('curretLoggedIn', {loggedIn: data.getLoggedInUsers()});
     });
+
+    socket.on('newArray', function(user){
+	data.updateArray(user);
+	io.emit('currentUsers', {users: data.getAllUsers()});
+    });
 });
 
 /* eslint-disable-next-line no-unused-vars */
 const server = http.listen(app.get('port'), function() {
     console.log('Server listening on port ' + app.get('port'));
 });
+
