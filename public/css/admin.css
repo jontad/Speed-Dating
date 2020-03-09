@@ -22,12 +22,15 @@ h3 {
 
 
 #timer {
-    font-family: Arvo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
+    font-family: Arvo; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
 }
 
+.tableNo {
+    font-size: 18px; font-weight: 500; 
+}
 
 p {
-    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+    font-family: Arvo; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
 }
 
 

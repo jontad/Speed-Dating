@@ -1,6 +1,8 @@
 var males = [];
 var females = [];
 var matches = [];
+let tableNo = 1;
+
 
 for (var i = 0; i < 10; i++)
 {
@@ -36,6 +38,9 @@ function matchAlgorithm(males, females, matches)
 	var male = i >= males.length ? null : males[i];
 	var female = i >= females.length ? null : females[i];
 
+	male.tableNo = i + 1; //assign table to pair
+	female.tableNo = i + 1;
+
 	matches.push(new Match(male, female));
     }
 }
@@ -68,8 +73,7 @@ function addProfile(profile, gender)
     box.appendChild(div);
 }
 
-function addMatch(match)
-{
+function addMatch(match){
     var a = match.A;
     var b = match.B;
 
@@ -91,17 +95,19 @@ function addMatch(match)
 
     var div = document.createElement("div");
     var p = document.createElement("p");
-    var img = document.createElement("img");
+    var pTableNo = document.createElement("p");
 
-    p.classList.add("heart");
-    div.classList.add("col2");
-
-    img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Heart_icon_red_hollow.svg/497px-Heart_icon_red_hollow.svg.png"
-    img.width = "40";
-    img.height = "40";
+    var table = document.createTextNode(tableNo);
+    tableNo++;
     
+    p.classList.add("heart");
+
+    div.classList.add("col2");
+    pTableNo.appendChild(table);
+    pTableNo.classList.add("tableNo");
+
     div.appendChild(p);
-    div.appendChild(img);
+    div.appendChild(pTableNo);
     box.appendChild(div);
 
     addProfile(b, bGender);

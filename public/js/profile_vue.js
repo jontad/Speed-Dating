@@ -2,7 +2,7 @@
 const socket = io();
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, tableNo) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -14,6 +14,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.tableNo = tableNo;
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord','Förnamn', 'Ålder', 'Bor i','Email', 'Telefonnummer'];
@@ -51,7 +52,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-        
+	
         currentUser: '',
         allUsers: {},
         tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
