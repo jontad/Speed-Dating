@@ -51,12 +51,15 @@ function addProfile(profile, gender)
 		var p = document.createElement("p");
 
 		p.innerText = profile.name;
+		p.setAttribute("id", profile.name);
 		p.classList.add("column-child");
+		
+		div.setAttribute("onclick", "openPopup(this.id)");
 
 		img.src = profile.picture;
 		img.classList.add("profile-pic");
 		img.classList.add("column-child");
-
+		
 		div.appendChild(img);
 		div.appendChild(p);
 	}
@@ -357,3 +360,7 @@ document.addEventListener("drop", handleDrop, false);
 
 document.addEventListener("dragenter", handleDragEnter, false);
 document.addEventListener("dragleave", handleDragLeave, false);
+
+function openPopup(clicked_id) {
+	alert(clicked_id);
+}
