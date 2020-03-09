@@ -1,3 +1,106 @@
+var males = [];
+var females = [];
+var matches = [];
+
+for (var i = 0; i < 10; i++)
+{
+	// name, age, description, location, picture, phoneNumber, email
+	var url = "https://i.stack.imgur.com/34AD2.jpg";
+
+	var a = new Profile(String.fromCharCode("a".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "male");
+	var b = new Profile(String.fromCharCode("A".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "female");
+
+	var match = new Match(a, b);
+
+	males.push(a);
+	females.push(b);
+}
+
+matchAlgorithm(males, females, matches);
+
+matches.forEach(function(match) {
+	addMatch(match);
+});
+
+function shuffle(array) {
+	array.sort(() => Math.random() - 0.5);
+}
+
+// Uses Math.random to match people
+function matchAlgorithm(males, females, matches)
+{
+	shuffle(females);
+
+	for (var i = 0; i < Math.max(males.length, females.length); i++)
+	{
+		var male = i >= males.length ? null : males[i];
+		var female = i >= females.length ? null : females[i];
+
+		matches.push(new Match(male, female));
+	}
+}
+
+function addProfile(profile, gender)
+{
+	var box = document.getElementById("matchPanelGrid");
+	var div = document.createElement("div");
+
+	if (profile != null)
+	{
+		var img = document.createElement("img");
+		var p = document.createElement("p");
+
+		p.innerText = profile.name;
+		p.classList.add("column-child");
+
+		img.src = profile.picture;
+		img.classList.add("profile-pic");
+		img.classList.add("column-child");
+
+		div.appendChild(img);
+		div.appendChild(p);
+	}
+
+	div.draggable = true;
+	div.classList.add(gender == "male" ? "col1" : "col3");
+	div.classList.add("column");
+
+	box.appendChild(div);
+}
+
+function addMatch(match)
+{
+	var a = match.A;
+	var b = match.B;
+
+	var box = document.getElementById("matchPanelGrid");
+
+	var aGender = a !== null 
+		? a.gender
+		: b.gender == "male"
+			? "female"
+			: "male";
+
+	var bGender = b !== null
+		? b.gender
+		: a.gender == "male"
+			? "female"
+			: "male";
+
+	addProfile(a, aGender);
+
+	var div = document.createElement("div");
+	var p = document.createElement("p");
+
+	p.classList.add("heart");
+	div.classList.add("col2");
+
+	div.appendChild(p);
+
+	box.appendChild(div);
+
+	addProfile(b, bGender);
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -5,6 +108,9 @@ function sleep(ms) {
 
 let timerOn = false;
 async function timer() {
+	if (isStartDisabled())
+		return;
+
     //choosen time in seconds
     let time = (document.getElementById('time').value) * 60;
     let countDown = time;
@@ -70,6 +176,9 @@ function applyTargetEffect(element) {
 	
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
+		
+	if (effectTarget == null)
+		return;
 
 	if (effectTarget == document.getElementById("unmatchedGrid"))
 		unmatchedEnters++;
@@ -81,6 +190,9 @@ function removeTargetEffect(element) {
 	
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
+		
+	if (effectTarget == null)
+		return;
 
 	if (effectTarget == document.getElementById("unmatchedGrid"))
 	{
@@ -88,7 +200,6 @@ function removeTargetEffect(element) {
 		if (unmatchedEnters > 0)
 			return;
 	}
-		
 
 	effectTarget.style.border = "";
 }
@@ -98,6 +209,9 @@ function handleDragStart(event) {
 
 	if (target == null)
 		return;
+
+	if (target.innerHTML == "")
+		target = null;
 
 	draggedElement = target;
 }
@@ -123,7 +237,29 @@ function getTargetContainer(element, includeUnmatchedCards) {
 	return null;
 }
 
+function isStartDisabled()
+{
+	return document.getElementById("startbutton").hasAttribute("disabled");
+}
+
+function disableStart() {
+	var button = document.getElementById("startbutton");
+
+	button.setAttribute("disabled", "disabled");
+	button.style.opacity = 0.5;
+}
+
+function enableStart() {
+	var button = document.getElementById("startbutton");
+
+	button.removeAttribute("disabled");
+	button.style.opacity = 1;
+}
+
 function handleDrop(event) {
+	if (draggedElement == null)
+		return;
+
 	event.preventDefault();
 
 	var target = getTargetContainer(event.target, false);
@@ -146,7 +282,12 @@ function handleDrop(event) {
 		newDivHtml = source.innerHTML;
 
 	if (sourceType === "unmatched-col")
+	{
 		unmatchedContainer.removeChild(source);
+		
+		if (unmatchedContainer.children.length == 0)
+			enableStart();
+	}
 	else {
 		source.innerHTML = "";
 	}
@@ -160,6 +301,9 @@ function handleDrop(event) {
 		newDiv.innerHTML = newDivHtml;
 
 		unmatchedContainer.appendChild(newDiv);
+
+		if (unmatchedContainer.children.length != 0)
+			disableStart();
 	}
 
 	removeTargetEffect(target);
@@ -188,6 +332,9 @@ function handleDragEnter(event) {
 }
 
 function handleDragLeave(event) {
+	if (draggedElement == null)
+		return;
+
 	event.stopPropagation();
 	var target = getTargetContainer(event.target, false);
 

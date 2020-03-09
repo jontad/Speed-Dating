@@ -157,6 +157,9 @@ body {
 #foundButton:hover {
     cursor: pointer;
 }
+#foundButtonWrapper{
+    text-align: center;
+}
 #login {
     text-align: center;
     margin: 50% 5vw;
@@ -171,6 +174,9 @@ body {
 }
 #loginData{
     padding: 5vw 0vw;
+}
+#loginInfo{
+    display: none;
 }
 #descriptionTextarea{
     width: 90%;
@@ -192,6 +198,7 @@ body {
 #createProfileData{
     padding: 5vw 0vw; 
 }
+
 
 #shareContactQuestion {
     text-align: center;
@@ -222,5 +229,57 @@ body {
 }
 #finishButton:hover {
     cursor: pointer;
+=======
+#tableMap{
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    background: rgba(0,0,0,.4);
+}
+#tableLayout{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    background-color: white;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 80%;
+    height: 80%;
+    padding: 2%;
+    margin: 10%;
+    border: 1px solid;
+    text-align: center;
+    border-radius: 5px;
+    justify-items: center;
+    align-items: center;
+}
+
+#tableMapCloseButton{
+    border: 1px solid;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    top: 5%;
+    right: 8%;
+    text-align: center;
+    line-height: 100%;
+    font-size: 1.8em;
+    height: 1em;
+    width: 1em;
+    background-color: white;
+}
+.table {
+    background-color: red;
+    width: 40px;
+    height: 30px;
+    max-height: 40px;
+    margin: 5%;
+    border-radius: 2px;
+    text-align: center;
+    padding-top: 10px;
 }
 

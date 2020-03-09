@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/socket.io/socket.io.js" defer></script>
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="/js/profile.js" defer></script>
     <script src="/js/profile_vue.js" defer></script>
@@ -16,7 +17,7 @@
     <main>
 
       <div id="contacts">
-        <div class="contactBlock" v-for="(c,index) in dummyContacts">
+        <div class="contactBlock" v-for="(c,index) in contacts">
           <img id="contactPicture" :src="c.picture">
 
           <div id="contactsInfo">
