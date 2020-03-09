@@ -14,14 +14,18 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.allDates = [];
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord','Förnamn', 'Ålder', 'Bor i','Email', 'Telefonnummer'];
 let dateDummy = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
 
-let q = "question";
-let qs = [q,q,q,q];
+let q1 = "Fråga1";
+let q2 = "Fråga2";
+let q3 = "Fråga3";
+let q4 = "Fråga4";
+let qs = [q1,q2,q3,q4];
 
 
 const vm = new Vue({
@@ -32,9 +36,9 @@ const vm = new Vue({
 	      
         date: dateDummy,
 
-        questions: ["question"],
+        questions: qs,
         editMode: false,
-        myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
+        //myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 	      editButtonText: "Redigera profil",
         createProfileData: createProfileData,
@@ -52,9 +56,10 @@ const vm = new Vue({
         currentUser: '',
         allUsers: {},
         tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
-        radioAnswers: [0,0,0,0],
+        afterDateAnswers: [0,0,0,0],
         other: '',
-        dateNumber: 0,
+
+        
         
         
     },
@@ -65,7 +70,9 @@ const vm = new Vue({
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
         }
-
+        if (sessionStorage.getItem("currentDate")){                                    
+            this.currentDate = JSON.parse(sessionStorage.getItem("currentDate"));
+        }
         if (!(location.href.endsWith("/login") ||location.href.endsWith("/createProfile"))&& this.currentUser == '') {
             console.log('hej');
             window.location.href="/login";
@@ -81,6 +88,24 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
+
+        socket.on('newDate', function(data){
+            if (data.user.Username == this.currentUser.userName) {
+                this.date = data.date;
+                sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
+                this.currentUser.allDates.push(data.date);
+                window.location.href='/toMeet';                
+            }
+        }.bind(this));
+
+        socket.on('startClock', function(data){
+            window.location.href='/toMeet';
+        }.bind(this));
+
+        socket.on('stopClock', function(data){
+            window.location.href='/questions-user.html';
+        }.bind(this));
+
     },    
     methods: {
         
@@ -157,23 +182,25 @@ const vm = new Vue({
         },
         sendAfterDateQuestions: function() {
             
-            this.dateNumber = this.dateNumber+1;
             socket.emit('addAfterDateAnwsers',
                         {
-                            key: this.dateNumber,
-                            profile: this.profile,
+                            profile: this.currentUser,
                             date: this.date,
                             other: this.other,
-                            radioAnswers: this.radioAnswers,
+                            afterDateAnswers: this.afterDateAnswers,
                         });
             
             console.log( {
-                key: this.dateNumber,
-                profile: this.profile,
+                profile: this.currentUser,
                 date: this.date,
                 other: this.other,
-                radioAnswers: this.radioAnswers,
+                afterDateAnswers: this.afterDateAnswers,
             });
-        }        
+            window.location.href='/user';
+        },
+        foundDate: function(){
+            socket.emit('foundDate', {user: this.currentUser, date: this.date});
+            window.location.href='/waiting';            
+        },
     }
 });

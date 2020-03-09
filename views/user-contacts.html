@@ -17,7 +17,7 @@
     <main>
 
       <div id="contacts">
-        <div class="contactBlock" v-for="(c,index) in contacts">
+        <div class="contactBlock" v-for="(c,index) in currentUser.matches">
           <img id="contactPicture" :src="c.picture">
 
           <div id="contactsInfo">

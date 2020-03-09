@@ -30,7 +30,7 @@
         <button id="editProfileButton" class="profileButtons" v-on:click="editProfile()">
           {{editButtonText}}
         </button>
-        <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode">
+        <button id="changeProfilePicture" class="profileButtons" v-if="editMode">
           Byt profilbild
         </button>
         <a href="login">
@@ -43,12 +43,13 @@
         <textarea v-if="editMode" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
 
+      <!--
       <div id="SDButton">
         <a href="/toMeet">
           <button id="backButton"> Speeddate </button>
         </a>
       </div>
-
+      -->
     </main>
   </body>
 </html>
