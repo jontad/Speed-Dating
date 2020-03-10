@@ -79,8 +79,8 @@
 
         <div v-if="eventState == 0 || eventState == 4" onclick="window.location.href = '/';" class="buttons">Avsluta</div>
 		<div v-else class="buttons">Avsluta</div>
-        <div v-if="eventState < 4" onclick="timer()" v-on:click="changeState" class="buttons">Starta</div>
-		<div v-else class="buttons" style="background-color: darkgrey">Starta</div>
+        <div id="startbutton" v-if="eventState < 4" onclick="timer()" v-on:click="changeState" class="buttons">Starta</div>
+		<div id="startbutton" v-else class="buttons" style="background-color: darkgrey">Starta</div>
       </div>
   </main>
 </body>
