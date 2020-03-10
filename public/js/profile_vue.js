@@ -2,7 +2,7 @@
 const socket = io();
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, tableNo) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -14,6 +14,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.tableNo = tableNo;
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord','Förnamn', 'Ålder', 'Bor i','Email', 'Telefonnummer'];
@@ -48,7 +49,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-        
+	
         currentUser: '',
         allUsers: {},
         tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
@@ -65,6 +66,10 @@ const vm = new Vue({
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
         }
+	    this.description = this.currentUser.description;
+	    this.address = this.currentUser.address;
+	    this.picture = this.currentUser.picture;
+	}
 
         if (!(location.href.endsWith("/login") ||location.href.endsWith("/createProfile"))&& this.currentUser == '') {
             console.log('hej');
@@ -95,8 +100,14 @@ const vm = new Vue({
             sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
 
             socket.emit('addNewUser', newUser);
-            
-        },        
+
+	    this.defaultPicture();
+        },
+	defaultPicture: function(){
+	    if(true){
+		this.picture = "https://i.stack.imgur.com/34AD2.jpg";
+	    }
+         },
         login: function(){
             console.log(this.userName + this.password);
             if(this.userName in this.allUsers &&
@@ -174,6 +185,6 @@ const vm = new Vue({
                 other: this.other,
                 radioAnswers: this.radioAnswers,
             });
-        }        
+        },
     }
 });
