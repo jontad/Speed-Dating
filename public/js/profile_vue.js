@@ -108,6 +108,7 @@ const vm = new Vue({
 
                 this.currentUser = this.allUsers[this.userName];
                 this.contacts = this.currentUser.matches;
+				console.log("hej");
                 socket.emit('loggedIn', this.currentUser);
                 sessionStorage.setItem("currentUserName", JSON.stringify(this.currentUser));
                 window.location.href="/user"

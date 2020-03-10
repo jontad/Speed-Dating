@@ -158,11 +158,11 @@ io.on('connection', function(socket) {
     });
     socket.on('loggedIn', function(user){
         data.addLoggedIn(user);
-        io.emit('curretLoggedIn', {loggedIn: data.getLoggedInUsers()});
+        io.emit('currentLoggedIn', {loggedIn: data.getLoggedInUsers()});
     });
     socket.on('logoutUser', function(user){
         data.logoutUser(user);
-        io.emit('curretLoggedIn', {loggedIn: data.getLoggedInUsers()});
+        io.emit('currentLoggedIn', {loggedIn: data.getLoggedInUsers()});
     });
 
     socket.on('newArray', function(user){
