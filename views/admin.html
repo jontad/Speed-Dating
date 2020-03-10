@@ -23,14 +23,19 @@
   <!-- Admin-page -->
   <main>
     <div id="grid">
-      <div class="box a">
-        <hr id="progressLine">
-        <div class="progressBubble">Start</div>
-        <div class="progressBubble">Möte 1</div>
-        <div class="progressBubble">Möte 2</div>
-        <div class="progressBubble">Möte 3</div>
-        <div class="progressBubble">Slut</div>
-      </div>
+                  <div class="box a">
+                <hr id="progressLine">
+                <div v-if="eventState == 0" style="background-color:green" class="progressBubble">Start</div>
+				<div v-else class="progressBubble">Start</div>
+                <div v-if="eventState == 1" style="background-color: green" class="progressBubble">Möte 1</div>
+				<div v-else class="progressBubble">Möte 1</div>
+                <div v-if="eventState == 2" style="background-color: green" class="progressBubble">Möte 2</div>
+				<div v-else class="progressBubble">Möte 2</div>
+                <div v-if="eventState == 3" style="background-color: green" class="progressBubble">Möte 3</div>
+				<div v-else class="progressBubble">Möte 3</div>
+                <div v-if="eventState == 4" style="background-color: green" class="progressBubble">Slut</div>
+				<div v-else class="progressBubble">Slut</div>
+            </div>
       <div class="box b">
         <h2>Matchpanel</h2>
 		  {{currentUsers[0]}}
@@ -72,8 +77,10 @@
           <input type="number" required="required" placeholder="Längd på event" id="time" />
         </p>
 
-        <div class="buttons">Avsluta</div>
-        <div onclick="timer()" class="buttons" id="startbutton">Starta</div>
+        <div v-if="eventState == 0 || eventState == 4" onclick="window.location.href = '/';" class="buttons">Avsluta</div>
+				<div v-else class="buttons">Avsluta</div>
+        <div v-if="eventState < 4" onclick="timer()" v-on:click="changeState" class="buttons">Starta</div>
+				<div v-else class="buttons" style="background-color: darkgrey">Starta</div>
       </div>
   </main>
 </body>
