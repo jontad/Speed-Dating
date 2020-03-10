@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
     <script src="/js/profile.js" defer></script>
     <script src="/js/profile_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
@@ -14,39 +15,49 @@
     <!-- User profile-page -->
     <main>
       <div id="profilePicture">
-        <img :src="profile.picture">
+        <img :src="currentUser.picture">
       </div>
       
       <div id="profileInfo">
-        <h2 id="profileHeading">{{ profile.name }}, {{ profile.age }} </h2>              
+        <h2 id="profileHeading"> {{currentUser.name}}, {{currentUser.age}} </h2>              
         <p class="profileText">Bor i
-          <span v-if="!editMode" class="bold"> {{ profile.location }} </span>
-          <input v-if="editMode" id="editLocation" type="text" v-bind:value="profile.location"> 
+          <span v-if="!editMode" class="bold">{{currentUser.address}} </span>
+          <input v-if="editMode && !editPicture" id="editLocation" type="text" v-model="address">
+
+	  <span v-if="editPicture" id="description" class="bold"> {{currentUser.address}} </span>
         </p>
         <a href="user-contacts">
           <button id="contactsButton" class="profileButtons"> Kontakter </button>
         </a>
-        <button id="editProfileButton" class="profileButtons" v-on:click="editProfile()">
-          {{ editButtonText }}
+        <button id="editProfileButton" class="profileButtons" v-if="!editPicture" v-on:click="editProfile()">
+          {{editButtonText}}
         </button>
-        <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode">
-          Byt profilbild
+
+        <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode" v-on:click="editPic()">
+          {{editPictureText}}
         </button>
         <a href="login">
-          <button id="logoutButton" class="profileButtons">
+          <button id="logoutButton" class="profileButtons" v-on:click="logout()">
             Logga ut
           </button>
         </a>
-        <br />
-        <div v-if="!editMode" id="description" class="description"> {{ profile.description }}</div>
-        <textarea v-if="editMode" id="editDescription" type="text" v-bind:value="profile.description"></textarea>
+        <br/>
+
+	<p v-if="editPicture">BILD (URL):
+	  <input  id="pic" type="text" v-model="picture">
+	<p>
+	  
+        <div v-if="!editMode && !editPicture" id="description" class="description"> {{currentUser.description}} </div>
+        <textarea v-if="editMode && !editPicture" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
+
+      <!--
       <div id="SDButton">
         <a href="/toMeet">
           <button id="backButton"> Speeddate </button>
         </a>
       </div>
-
+      -->
     </main>
   </body>
 </html>

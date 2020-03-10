@@ -39,7 +39,7 @@ p {
 
 #grid {
     display: grid;
-    grid-gap: 3%;
+    grid-gap: 1%;
     grid-template-columns: 21% 31% 42%;
     grid-template-rows: 10% 100%;
 }
@@ -52,13 +52,11 @@ p {
 .b {
     grid-column: 1 / span 2;
     text-align: center;
-    max-height: 90%;
     border: 2px solid black;
     border-radius: 40px;
     box-shadow: 0px 0px 1px 1px grey;
     margin-left: 20px;
     padding: 10px;
-	overflow: scroll;
 } 
 
 .c {
@@ -94,7 +92,7 @@ p {
 	margin-left: 37%;
 }
 
-.buttons:hover {
+.buttons:not([disabled]):hover  {
     background-color: white;
     padding-top: 10px;
     box-shadow: inset 0px 0px 6px black;
@@ -125,14 +123,14 @@ p {
 
 #matchPanelGrid {
     display: grid;
-    grid-gap: 3%;
+    grid-gap: 0.2em;
     grid-template-columns: 40% 10% 40%;
     margin-left: 20px;
-	overflow: scroll;
+    min-height: 40em;
 }
 
 #unmatchedGrid {
-    grid-gap: 3%;
+    grid-gap: 0.2em;
     grid-template-columns: 40% 10% 40%;
     grid-template-rows: 1500%;
     width: 40%;
@@ -141,10 +139,8 @@ p {
     border-radius: 10px;
     padding: 10px;
     min-height: 3em;
-	max-height: 10em;
     max-width: 40%;
     margin: 0px auto 10px auto;
-	overflow: scroll;
 }
 
 
@@ -173,7 +169,6 @@ p {
   height: 15px;
   position: absolute;
   width: 15px;
-  
 }
 
 .col2:before {
@@ -247,4 +242,68 @@ p {
     pointer-events: none;
 }
 
+#tableLayout{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 90%;
+    height: 10em;
+    margin: 5%;
+    padding: 2%;
+    border: 1px solid;
+    text-align: center;
+    border-radius: 5px;
+    justify-items: center;
+    align-items: center;
+}
 
+.table {
+    background-color: red;
+    width: 40px;
+    height: 30px;
+    max-height: 40px;
+    margin: 5%;
+    border-radius: 2px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+}
+
+#popupBox {
+	height: 10em;
+	width: 30em;
+	left: 1.5em;
+	top: 7em;
+	padding: 1em 1em 1em 1em;
+	position: absolute;
+	border: 2px solid black;
+	border-radius: 20px;
+	background-color: white;
+	z-index: 9999;
+	display: none;
+	overflow: scroll;
+}
+
+#profileContent > img {
+	float: left;
+	height: 30%;
+	width: 30%;
+}
+
+#profileContent > p {
+	float: left;
+	margin: 0.3em 0 0 0.6em;
+	max-width: 22em;
+	text-align: left;
+}
+
+#closeButton {
+	position: absolute;
+	right: 20em;
+	bottom: 1em;
+}
