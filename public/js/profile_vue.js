@@ -32,20 +32,18 @@ const vm = new Vue({
     el: 'main',
     data: {
         profile: "", 
-	profileLocation: "",
-	
+	      profileLocation: "",
         date: dateDummy,
-
         questions: qs,
         editMode: false,
-	editPicture: false,
+	      editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
-	editButtonText: "Redigera profil",
-	editPictureText: "Byt profilbild",
+	      editButtonText: "Redigera profil",
+	      editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
 
-	picture: "",
+	      picture: "",
         userName: "",
         password: "",
         name: "",
@@ -108,7 +106,7 @@ const vm = new Vue({
         }.bind(this));
 
         socket.on('stopClock', function(data){
-            window.location.href='/questions-user.html';
+            window.location.href='/questions-user';
         }.bind(this));
 
     },    
@@ -183,7 +181,8 @@ const vm = new Vue({
 	},
 
         showTableMap: function(){
-            document.getElementById("tableMap").style.display= 'inline';            
+            document.getElementById("tableMap").style.display= 'inline';
+            //document.getElementById("tableMap").style.color = "#008000"
         },
         closeTableMap: function(){
             document.getElementById("tableMap").style.display= 'none'; 
