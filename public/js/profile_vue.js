@@ -112,6 +112,8 @@ const vm = new Vue({
     },    
     methods: {        
         createProfile: function(){
+	    this.addDefaultPicture();
+	    
             let newUser = new Profile(this.name, this.age, this.description,
 				      this.address, this.picture,
 				      this.number, this.mail,
@@ -122,7 +124,12 @@ const vm = new Vue({
             sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
             socket.emit('addNewUser', newUser);
             
-        },        
+        },
+	addDefaultPicture: function() {
+	    if(!this.picture){
+		this.picture = "https://lh3.googleusercontent.com/proxy/bnJOk7zpFy6agw2HzfOjMjFMPpyoHeYPZu2eYv1NdWdGKiuvS8_llSJrKctCZkKXZDpxrA6-CTu8jwVfJ6-FYHaFM9xs58fsrS6zKpRrC2ztLdU8ljS3D_zpYEwyzVxh_Jt6GRqx6sojSpQrRPD1vAtlddtQ7w"
+	    }
+        },
         login: function(){
             console.log(this.userName + this.password);
             if(this.userName in this.allUsers &&
@@ -145,7 +152,6 @@ const vm = new Vue({
             this.currentUser = '';
             socket.emit('logoutUser', currentUser);
             window.location.href='/login';
-            
         },
         range: function(end) {
             return Array(end).fill().map((_, idx) => 1 + idx)
