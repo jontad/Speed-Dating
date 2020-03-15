@@ -62,6 +62,10 @@ app.get('/createProfile', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/createProfile.html'));
 });
 
+app.get('/loginAdmin', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/loginAdmin.html'));
+});
+
 
 
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
@@ -168,6 +172,9 @@ io.on('connection', function(socket) {
     socket.on('newArray', function(user){
 	data.updateArray(user);
 	io.emit('currentUsers', {users: data.getAllUsers()});
+    });
+    socket.on('stopClock', function(user){
+        io.emit('stopClock',);
     });
 });
 
