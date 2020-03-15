@@ -242,3 +242,28 @@ p {
     text-align: center;
     padding-top: 10px;
 }
+
+/** tooltip för bordsnummer **/
+
+.tableNo {
+  position: relative;
+  display: inline-block;
+}
+
+.tableNo .tableNoText {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tableNo:hover .tableNoText {
+    visibility: visible;
+    transition-delay: 0.1s;
+}

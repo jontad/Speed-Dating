@@ -94,20 +94,31 @@ function addMatch(match){
     addProfile(a, aGender);
 
     var div = document.createElement("div");
-    var p = document.createElement("p");
-    var pTableNo = document.createElement("p");
+    div.classList.add("col2");
 
-    var table = document.createTextNode(tableNo);
-    tableNo++;
-    
+    var p = document.createElement("p");
     p.classList.add("heart");
 
-    div.classList.add("col2");
-    pTableNo.appendChild(table);
-    pTableNo.classList.add("tableNo");
+    
+    var divTableNo = document.createElement("div");
+    divTableNo.classList.add("tableNo");
+    var table = document.createTextNode(tableNo);
+    tableNo++;
 
+    var spanHover = document.createElement("span");
+    spanHover.classList.add("tableNoText");
+
+    var tooltip =  document.createTextNode("Bordsnummer");
+   
+    
+
+    spanHover.appendChild(tooltip);
+    
+    divTableNo.appendChild(table);
+    divTableNo.appendChild(spanHover);
+    
     div.appendChild(p);
-    div.appendChild(pTableNo);
+    div.appendChild(divTableNo);
     box.appendChild(div);
 
     addProfile(b, bGender);
