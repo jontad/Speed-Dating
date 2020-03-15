@@ -267,7 +267,8 @@ p {
 .tableNo:hover .tableNoText {
     visibility: visible;
     transition-delay: 0.1s;
-/****/
+}
+
 #sticky {
 	position: -webkit-sticky;
 	position: sticky;
