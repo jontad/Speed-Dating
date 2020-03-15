@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
   <title>Admin page</title>
   <meta charset="utf-8" />
@@ -51,16 +52,19 @@
         </div>
         <div id="unmatchPanel">
 
-          <br>
-          <h2>Omatchade</h2>
-          <div id="unmatchedGrid">
 
+            <br>
+            <h2>Omatchade</h2>
+            <div id="unmatchedGrid">
+
+            </div>
+
+	    <div id="reset" class="buttons">Reset</div>
+
+            <div v-for="(anwser, i) in afterDateAnswers">
+            </div>
           </div>
 
-				  <div id="reset" class="buttons">Reset</div>
-
-          <div v-for="(anwser, i) in afterDateAnswers">
-          </div>
         </div>
         <div id="reset" class="buttons">Reset</div>
       </div>
@@ -84,5 +88,6 @@
       </div>
   </main>
 </body>
+
 
 </html>

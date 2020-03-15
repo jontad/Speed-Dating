@@ -14,6 +14,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.tableNo = tableNo;
     this.allDates = [];
 }
 
@@ -39,8 +40,10 @@ const vm = new Vue({
 	      editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
-	      editButtonText: "Redigera profil",
-	      editPictureText: "Byt profilbild",
+
+      	editButtonText: "Redigera profil",
+      	editPictureText: "Byt profilbild",
+
         createProfileData: createProfileData,
 
 	      picture: "",
@@ -53,7 +56,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-        
+	
         currentUser: '',
         allUsers: {},
         tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        

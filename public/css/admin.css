@@ -22,12 +22,15 @@ h3 {
 
 
 #timer {
-    font-family: Arvo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
+    font-family: Arvo; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 280; line-height: 30px;
 }
 
+.tableNo {
+    font-size: 18px; font-weight: 500; 
+}
 
 p {
-    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+    font-family: Arvo; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
 }
 
 
@@ -152,33 +155,6 @@ p {
 /** Hearts **/
 .col2 {
     grid-column: 2;
-    background-color: red;
-    display: inline-block;
-    height: 15px;
-    margin: 17px 25px;
-    position: relative;
-    top: 0;
-    transform: rotate(-45deg);
-    width: 15px;
-}
-
-.col2:before, .col2:after {
-  content: "";
-  background-color: red;
-  border-radius: 50%;
-  height: 15px;
-  position: absolute;
-  width: 15px;
-}
-
-.col2:before {
-  top: -7.5px;
-  left: 0;
-}
-
-.col2:after {
-  left: 7.5px;
-  top: 0;
 }
 
 /****/
@@ -267,6 +243,31 @@ p {
     padding-top: 10px;
 }
 
+
+/** tooltip för bordsnummer **/
+
+.tableNo {
+  position: relative;
+  display: inline-block;
+}
+
+.tableNo .tableNoText {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tableNo:hover .tableNoText {
+    visibility: visible;
+    transition-delay: 0.1s;
+/****/
 #sticky {
 	position: -webkit-sticky;
 	position: sticky;
@@ -306,4 +307,5 @@ p {
 	position: absolute;
 	right: 20em;
 	bottom: 1em;
+
 }

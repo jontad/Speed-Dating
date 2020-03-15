@@ -1,13 +1,15 @@
+
 const socket = io();
 var loggedInUsers = {};
 const vm = new Vue({
     el: 'main',
     data: {
-	      eventState: 0,
-	      info: "hej",
-        tables: 10,
-		    currentUsers: {}, //conatins all logged in users
-        afterDateAnswers: {}, // Contains the data received from user-questions
+	  eventState: 0,
+  	info: "hej",
+    tables: 10,
+		currentUsers: {}, //conatins all logged in users  
+    afterDateAnswers: {}, // Contains the data received from user-questions
+
     },
     methods: {
         range: function(end) {
