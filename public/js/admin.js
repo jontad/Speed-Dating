@@ -177,6 +177,9 @@ async function timer() {
     } else {
 	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
     }
+    if(countDown == 0){
+        socket.emit('stopClock');
+    }
 }
 
 if (!Modernizr.draganddrop)
