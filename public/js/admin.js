@@ -119,10 +119,7 @@ function addMatch(match){
 
     var tooltip =  document.createTextNode("Bordsnummer");
    
-    
-
-    spanHover.appendChild(tooltip);
-    
+    spanHover.appendChild(tooltip); 
     divTableNo.appendChild(table);
     divTableNo.appendChild(spanHover);
     
