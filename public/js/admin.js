@@ -182,6 +182,16 @@ function addMatch(match) {
 	divTableNo.classList.add("tableNo");
 	var table = document.createTextNode(tableNo);
 	tableNo++;
+  
+  var tooltip =  document.createTextNode("Bordsnummer");
+   
+  spanHover.appendChild(tooltip); 
+  divTableNo.appendChild(table);
+  divTableNo.appendChild(spanHover);
+    
+  div.appendChild(p);
+  div.appendChild(divTableNo);
+  box.appendChild(div);
 
 	var spanHover = document.createElement("span");
 	spanHover.classList.add("tableNoText");
