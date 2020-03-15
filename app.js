@@ -17,52 +17,52 @@ app.set('port', (process.env.PORT || port));
 app.use(express.static(path.join(__dirname, 'public/')));
 // Serve vue from node_modules as vue/
 app.use('/vue',
-        express.static(path.join(__dirname, '/node_modules/vue/dist/')));
+    express.static(path.join(__dirname, '/node_modules/vue/dist/')));
 // Serve index.html directly as root page
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 // Serve map.html as /map
-app.get('/map', function(req, res) {
+app.get('/map', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/map.html'));
 });
 // Serve dispatcher.html as /dispatcher
-app.get('/dispatcher', function(req, res) {
+app.get('/dispatcher', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/dispatcher.html'));
 });
 
-app.get('/admin', function(req, res) {
+app.get('/admin', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/admin.html'));
 });
 
-app.get('/user', function(req, res) {
+app.get('/user', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/user.html'));
 });
 
-app.get('/questions-user', function(req, res) {
+app.get('/questions-user', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/questions-user.html'));
 });
 
-app.get('/user-contacts', function(req, res) {
+app.get('/user-contacts', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/user-contacts.html'));
 });
 
-app.get('/toMeet', function(req, res) {
+app.get('/toMeet', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/toMeet.html'));
 });
 
-app.get('/waiting', function(req, res) {
+app.get('/waiting', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/waiting.html'));
 });
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/login.html'));
 });
-app.get('/createProfile', function(req, res) {
+app.get('/createProfile', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/createProfile.html'));
 });
 
-app.get('/loginAdmin', function(req, res) {
+app.get('/loginAdmin', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/loginAdmin.html'));
 });
 
@@ -97,89 +97,110 @@ function Data() {
 };
 
 // Adds after date answers to the "database"
-Data.prototype.addAfterDateAnswer = function(afterDateAnswer) {
+Data.prototype.addAfterDateAnswer = function (afterDateAnswer) {
     this.afterDateAnswers[afterDateAnswer.key] = afterDateAnswer;
 }
 
-Data.prototype.getAllAfterDateAnswers = function() {
+Data.prototype.getAllAfterDateAnswers = function () {
     return this.afterDateAnswers;
 }
 
-Data.prototype.addNewUser = function(user) {
+Data.prototype.addNewUser = function (user) {
     this.users[user.userName] = user;//new Profile(user.name, user.age, user.description, user.address, user.picture, user.number, user.mail, user.password, user.userName);    
 };
 
 
-Data.prototype.getAllUsers = function() {
+Data.prototype.getAllUsers = function () {
     return this.users;
 }
 
-Data.prototype.addLoggedIn = function(user) {
+Data.prototype.addLoggedIn = function (user) {
     this.loggedIn[user.userName] = user;
 }
 
-Data.prototype.logoutUser = function(user) {
+Data.prototype.logoutUser = function (user) {
     delete this.loggedIn[user.userName];
 }
-Data.prototype.getLoggedInUsers = function(){
+Data.prototype.getLoggedInUsers = function () {
     return this.loggedIn;
 }
 
 //update array with edited user
-Data.prototype.updateArray = function(newUser){
+Data.prototype.updateArray = function (newUser) {
     this.users[newUser.userName] = newUser;
+}
+
+
+Data.prototype.getMatches = function () {
+    return this.matches;
+}
+
+Data.prototype.setMatches = function (matches) {
+    this.matches = matches;
 }
 
 
 const data = new Data();
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     // Send list of orders when a client connects
-    socket.emit('initialize', { afterDateAnswers: data.getAllAfterDateAnswers()});
-  
+    socket.emit('initialize', { afterDateAnswers: data.getAllAfterDateAnswers() });
+
     // When a connecter client emits an "addAfterDateAnswer" message
-    socket.on('addAfterDateAnwsers', function(answers){
+    socket.on('addAfterDateAnwsers', function (answers) {
         // Add the data to the "database"
         data.addAfterDateAnswer(answers);
         // Send an updated "database" to all connected clients
-        io.emit('currentAfterDateAnswers', {afterDateAnswers: data.getAllAfterDateAnswers()});
+        io.emit('currentAfterDateAnswers', { afterDateAnswers: data.getAllAfterDateAnswers() });
     });
 
     // When a connected client emits an "addOrder" message
-    socket.on('addOrder', function(order) {
+    socket.on('addOrder', function (order) {
         data.addOrder(order);
         // send updated info to all connected clients,
         // note the use of io instead of socket
         io.emit('currentQueue', { orders: data.getAllOrders() });
     });
 
-    socket.on('addNewUser', function(user){
+    socket.on('addNewUser', function (user) {
         data.addNewUser(user);
-        io.emit('currentUsers', {users: data.getAllUsers()});
+        io.emit('currentUsers', { users: data.getAllUsers() });
     });
-    socket.on('getUsers', function(user){
-        io.emit('currentUsers', {users: data.getAllUsers()});
+    socket.on('getUsers', function (user) {
+        io.emit('currentUsers', { users: data.getAllUsers() });
     });
-    socket.on('loggedIn', function(user){
+    socket.on('loggedIn', function (user) {
         data.addLoggedIn(user);
-        io.emit('currentLoggedIn', {loggedIn: data.getLoggedInUsers()});
+        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
     });
-    socket.on('logoutUser', function(user){
+    socket.on('logoutUser', function (user) {
         data.logoutUser(user);
-        io.emit('currentLoggedIn', {loggedIn: data.getLoggedInUsers()});
+        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
     });
 
-    socket.on('newArray', function(user){
-	data.updateArray(user);
-	io.emit('currentUsers', {users: data.getAllUsers()});
+    socket.on('newArray', function (user) {
+        data.updateArray(user);
+        io.emit('currentUsers', { users: data.getAllUsers() });
     });
-    socket.on('stopClock', function(user){
-        io.emit('stopClock',);
+    socket.on('stopClock', function (user) {
+        io.emit('stopClock');
+    });
+    
+    socket.on('startClock', function (user) {
+        io.emit('startClock');
+    });
+
+    socket.on('setMatches', function (matches) {
+        data.setMatches(matches);
+    });
+
+    socket.on('getMatches', function (matches) {
+        io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
 
 /* eslint-disable-next-line no-unused-vars */
-const server = http.listen(app.get('port'), function() {
+const server = http.listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });
 

@@ -31,11 +31,11 @@ const vm = new Vue({
             this.afterDateAnswers = data.afterDateAnswers;
         }.bind(this));
 		    
-		    socket.on('currentLoggedIn', function(data) {
-			      console.log(data.loggedIn);
-			      loggedInUsers = data.loggedIn;
-			      this.currentUsers = data.loggedIn;	
-		    }.bind(this));
+        socket.on('currentLoggedIn', function (data) {
+            console.log(data.loggedIn);
+            loggedInUsers = data.loggedIn;
+            this.currentUsers = data.loggedIn;
+        }.bind(this));
     }
 });
 
