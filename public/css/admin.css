@@ -243,6 +243,7 @@ p {
     padding-top: 10px;
 }
 
+
 /** tooltip för bordsnummer **/
 
 .tableNo {
@@ -266,4 +267,45 @@ p {
 .tableNo:hover .tableNoText {
     visibility: visible;
     transition-delay: 0.1s;
+/****/
+#sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+}
+
+#popupBox {
+	height: 10em;
+	width: 30em;
+	left: 1.5em;
+	top: 7em;
+	padding: 1em 1em 1em 1em;
+	position: absolute;
+	border: 2px solid black;
+	border-radius: 20px;
+	background-color: white;
+	z-index: 9999;
+	display: none;
+	overflow: scroll;
+}
+
+#profileContent > img {
+	float: left;
+	height: 30%;
+	width: 30%;
+}
+
+#profileContent > p {
+	float: left;
+	margin: 0.3em 0 0 0.6em;
+	max-width: 22em;
+	text-align: left;
+}
+
+#closeButton {
+	position: absolute;
+	right: 20em;
+	bottom: 1em;
+
 }

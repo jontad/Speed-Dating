@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/user.css">
     <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
     <script src="/js/profile.js" defer></script>
     <script src="/js/profile_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
@@ -34,9 +35,7 @@
         </button>
         <div id="description" class="description"> {{ date.description }}</div>
         <div id="foundButtonWrapper">
-          <a href="/questions-user">
-            <button id="foundButton"> Hittad </button>
-          </a>          
+          <button id="foundButton" v-on:click='foundDate'> Hittad </button>
         </div>
       </div>
 

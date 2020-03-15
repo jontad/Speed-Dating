@@ -55,16 +55,25 @@ function addProfile(profile, gender)
 	var img = document.createElement("img");
 	var p = document.createElement("p");
 
-	p.innerText = profile.name;
-	p.classList.add("column-child");
 
-	img.src = profile.picture;
-	img.classList.add("profile-pic");
-	img.classList.add("column-child");
+		p.innerText = profile.name;
+		p.setAttribute("id", profile.name);
+		p.classList.add("column-child");
+		
+		div.setAttribute("onclick", "openPopup(this)"); 
+			/*
+			function () {
+			//alert(this.querySelector('p').innerHTML);
+			console.log("hej");
+		};*/
 
-	div.appendChild(img);
-	div.appendChild(p);
-    }
+		img.src = profile.picture;
+		img.classList.add("profile-pic");
+		img.classList.add("column-child");
+		
+		div.appendChild(img);
+		div.appendChild(p);
+	}
 
     div.draggable = true;
     div.classList.add(gender == "male" ? "col1" : "col3");
@@ -379,3 +388,57 @@ document.addEventListener("drop", handleDrop, false);
 
 document.addEventListener("dragenter", handleDragEnter, false);
 document.addEventListener("dragleave", handleDragLeave, false);
+
+/*Buttons och progressbar*/
+var gameState = 0;
+
+function findProfile(name) {
+	let profiles = males.concat(females);
+	for(var i = 0; i < profiles.length; i++) {
+		if(profiles[i].name == name)
+			{
+				return profiles[i];
+			}
+	}
+	return null;
+}
+
+function openPopup(div) {
+	let popup = document.getElementById('popupBox');
+	let profileContent = document.getElementById('profileContent');
+	profileContent.innerHTML = "";
+	popup.style.display = "block";
+	
+	let profile = findProfile(div.querySelector('p').innerHTML);
+	let profileImg = document.createElement('img');
+	profileImg.src = profile.picture;
+	
+	let namePara = document.createElement('p');
+	let profilename = document.createTextNode(profile.name + ",");
+	namePara.appendChild(profilename);
+	
+	let agePara = document.createElement('p');
+	let profileAge = document.createTextNode(profile.age + " år, ");
+	agePara.appendChild(profileAge);
+	
+	let fromPara = document.createElement('p');
+	let profileFrom = document.createTextNode("Bor i " + profile.location);
+	fromPara.appendChild(profileFrom);
+	
+	let bioPara = document.createElement('p');
+	let profileBio = document.createTextNode("Beskrivning: \n" + profile.description);
+	bioPara.appendChild(profileBio);
+	
+	profileContent.appendChild(profileImg);
+	profileContent.appendChild(namePara);
+	profileContent.appendChild(agePara);
+	profileContent.appendChild(fromPara);
+	profileContent.appendChild(bioPara);
+	
+}
+
+
+
+function closePopup() {
+	document.getElementById('popupBox').style.display = "none";
+}
