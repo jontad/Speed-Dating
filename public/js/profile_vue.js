@@ -14,7 +14,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
-    this.tableNo = tableNo;
+    this.tableNo = 0;
     this.allDates = [];
 }
 
@@ -33,11 +33,11 @@ const vm = new Vue({
     el: 'main',
     data: {
         profile: "", 
-	      profileLocation: "",
+	profileLocation: "",
         date: dateDummy,
         questions: qs,
         editMode: false,
-	      editPicture: false,
+	editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 
@@ -46,7 +46,7 @@ const vm = new Vue({
 
         createProfileData: createProfileData,
 
-	      picture: "",
+	picture: "",
         userName: "",
         password: "",
         name: "",
@@ -69,9 +69,9 @@ const vm = new Vue({
 	
         if (sessionStorage.getItem("currentUserName")){                                    
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
-	          this.description = this.currentUser.description;
-	          this.address = this.currentUser.address;
-	          this.picture = this.currentUser.picture;
+	    this.description = this.currentUser.description;
+	    this.address = this.currentUser.address;
+	    this.picture = this.currentUser.picture;
         }
 
         if (sessionStorage.getItem("currentDate")){                                    
@@ -94,7 +94,7 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-      
+	
         socket.on('newDate', function(data){
             if (data.user.Username == this.currentUser.userName) {
                 this.date = data.date;
@@ -126,7 +126,6 @@ const vm = new Vue({
 	    
             sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
             socket.emit('addNewUser', newUser);
-            
         },
 	addDefaultPicture: function() {
 	    if(!this.picture){
@@ -140,7 +139,7 @@ const vm = new Vue({
 
                 this.currentUser = this.allUsers[this.userName];
                 this.contacts = this.currentUser.matches;
-				console.log("hej");
+		console.log("hej");
                 socket.emit('loggedIn', this.currentUser);
                 sessionStorage.setItem("currentUserName", JSON.stringify(this.currentUser));
                 window.location.href="/user"
