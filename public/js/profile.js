@@ -11,7 +11,7 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
     this.gender = gender;
     this.password = password;
     this.userName = userName;
-    this.tableNo;
+    this.tableNo = tableNo;
 }
 
 function Contact(name, age, phoneNumber, email, picture) {
