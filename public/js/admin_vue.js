@@ -4,10 +4,10 @@ var loggedInUsers = {};
 const vm = new Vue({
     el: 'main',
     data: {
-	  eventState: 0,
+	eventState: 0,
   	info: "hej",
     tables: 10,
-		currentUsers: {}, //conatins all logged in users  
+	currentUsers: {}, //conatins all logged in users  
     afterDateAnswers: {}, // Contains the data received from user-questions
 
     },
@@ -23,18 +23,17 @@ const vm = new Vue({
 		    },
     },
     created: function() {
+		
+		socket.on('foundDate', function() {	
+			console.log("hej hej hej found date hej hej");
+		}.bind(this));
+		
         socket.on('initialize', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
         }.bind(this));
 
         socket.on('currentAfterDateAnswers', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
-        }.bind(this));
-		    
-        socket.on('currentLoggedIn', function (data) {
-            console.log(data.loggedIn);
-            loggedInUsers = data.loggedIn;
-            this.currentUsers = data.loggedIn;
         }.bind(this));
     }
 });

@@ -197,6 +197,10 @@ io.on('connection', function (socket) {
     socket.on('getMatches', function (matches) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
+	
+	socket.on('foundDate', function (user){
+		io.emit('foundDate');
+	});
 });
 
 /* eslint-disable-next-line no-unused-vars */
