@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>User page</title>
+        <title>Frågor</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="./css/user.css">
@@ -24,7 +24,7 @@
                 <div v-for="(q,index) in questions">
                   <label class="questionLabel" for="question"> {{ q }} </label><br />
                   <div class="radioInline" v-for="i in range(5)">
-                    <input type="radio" v-bind:value="i" v-bind:name="index" v-model=radioAnswers[index]> {{ i }} 
+                    <input type="radio" v-bind:value="i" v-bind:name="index" v-model=afterDateAnswers[index]> {{ i }} 
                   </div>
                 </div>
                 <div id="placementQuestion">
@@ -34,7 +34,7 @@
 
               </form>
               <div id="profileQuestionsButton" v-on:click="sendAfterDateQuestions()">
-                  <button> Skicka </button>
+                  <button id="backButton"> Skicka </button>
                 </div>
             </div>           
         </main>

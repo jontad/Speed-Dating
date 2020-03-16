@@ -19,7 +19,7 @@
 	  <section class="form">
 	    <p>
 	      <label>Bild (URL)</label><br>
-	      <input type="text" class="input" id="picture" required="required" placeholder="Bild (URL)" v-model="picture"/>
+	      <input type="text" class="input" id="picture" placeholder="Bild (URL)" v-model="picture"/>
 	    </p>
 	    <p>
 	      <label>Användarnamn</label><br>
@@ -35,7 +35,7 @@
 	    </p>
 	    <p>
 	      <label>Ålder</label><br>
-	      <input type="number" class="input" id="email" name="em" required="required" placeholder="Ålder" v-model="age"/>
+	      <input type="number" class="input" id="age" name="em" required="required" placeholder="Ålder" v-model="age"/>
 	    </p>
 	    <p>
 	      <label>Bor i</label><br>
@@ -49,8 +49,14 @@
 	      <label>Telefonnummer</label><br>
 	      <input type="number" class="input" id="tel" name="em" required="required" placeholder="Nummer" v-model="number"/>
 	    </p>
+	      <p>
+		<input type="radio" name="gender" value="Male" v-model="gender" required="required"/>Male<br>
+	      </p>
+	      <p>
+		<input id="female" type="radio" name="gender" value="Female" v-model="gender"/>Female<br>
+	      </p>
 	  </section>
-
+-
           <label for="descriptionTextarea"> Om dig </label></br>
 	  <textarea id="descriptionTextarea" v-model="description"></textarea><br/>
           

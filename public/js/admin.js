@@ -1,57 +1,66 @@
 var males = [];
 var females = [];
 var matches = [];
+let tableNo = 1;
 
-for (var i = 0; i < 10; i++)
-{
-	// name, age, description, location, picture, phoneNumber, email
-	var url = "https://i.stack.imgur.com/34AD2.jpg";
+function setup(loggedInUsers) {
+	for (var i = 0; i < loggedInUsers.length; i++) {
+		// name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
-	var a = new Profile(String.fromCharCode("a".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "male");
-	var b = new Profile(String.fromCharCode("A".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "female");
+		var user = loggedInUsers[i];
+		var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
 
-	var match = new Match(a, b);
-
-	males.push(a);
-	females.push(b);
+		if (userProfile.gender === "male")
+			males.push(userProfile);
+		else
+			females.push(userProfile);
+	}
+	
+	matchAlgorithm(males, females, matches);
+	
+	matches.forEach(function (match) {
+		addMatch(match);
+	});
 }
-
-matchAlgorithm(males, females, matches);
-
-matches.forEach(function(match) {
-	addMatch(match);
-});
 
 function shuffle(array) {
 	array.sort(() => Math.random() - 0.5);
 }
 
 // Uses Math.random to match people
-function matchAlgorithm(males, females, matches)
-{
+function matchAlgorithm(males, females, matches) {
 	shuffle(females);
 
-	for (var i = 0; i < Math.max(males.length, females.length); i++)
-	{
+	for (var i = 0; i < Math.max(males.length, females.length); i++) {
 		var male = i >= males.length ? null : males[i];
 		var female = i >= females.length ? null : females[i];
+
+		male.tableNo = i + 1; //assign table to pair
+		female.tableNo = i + 1;
 
 		matches.push(new Match(male, female));
 	}
 }
 
-function addProfile(profile, gender)
-{
+function addProfile(profile, gender) {
 	var box = document.getElementById("matchPanelGrid");
 	var div = document.createElement("div");
 
-	if (profile != null)
-	{
+	if (profile != null) {
 		var img = document.createElement("img");
 		var p = document.createElement("p");
 
+		p.id = profile.name;
 		p.innerText = profile.name;
+		p.setAttribute("id", profile.name);
 		p.classList.add("column-child");
+
+		div.setAttribute("onclick", "openPopup(this)");
+		/*
+		function () {
+		//alert(this.querySelector('p').innerHTML);
+		console.log("hej");
+	};*/
 
 		img.src = profile.picture;
 		img.classList.add("profile-pic");
@@ -64,18 +73,91 @@ function addProfile(profile, gender)
 	div.draggable = true;
 	div.classList.add(gender == "male" ? "col1" : "col3");
 	div.classList.add("column");
+	div.id = profile.name;
 
 	box.appendChild(div);
 }
 
-function addMatch(match)
+function findProfile(name) {
+	var profile = findProfileInList(males, name);
+
+	return profile != null
+		? profile
+		: findProfileInList(females, name);
+}
+
+function findProfileInList(list, name) {
+	for (var i = 0; i < list.length; i++) {
+		var profile = list[i];
+
+		if (profile.name != name)
+			continue;
+
+		return profile;
+	}
+
+	return null;
+}
+
+function getProfileNameFromDiv(div)
 {
+	if (div.childNodes == null)
+		return null;
+
+	for (var i = 0; i < div.childNodes.length; i++)
+	{
+		var element = div.childNodes[i];
+		if (element == null || element.nodeName != "P")
+			continue;
+
+		return element.id;
+	}
+
+	return null;
+}
+
+function readMatches() {
+	var box = document.getElementById("matchPanelGrid");
+	var readMatches = [];
+
+	var lastUser = null;
+
+	var matchIndex = 0;
+	for (var index = 0; index < box.childNodes.length; index++) {
+		var element = box.childNodes[index];
+
+		if (element.nodeName !== "DIV" || !element.classList.contains("column"))
+			continue;
+
+		var id = getProfileNameFromDiv(element);
+
+		if (id == null)
+			continue;
+
+		if (lastUser == null)
+			lastUser = id;
+		else {
+			readMatches.push({
+				left: findProfile(lastUser),
+				right: findProfile(id),
+				tableNo: matchIndex + 1
+			});
+
+			matchIndex++;
+			lastUser = null;
+		}
+	}
+
+	return readMatches;
+}
+
+function addMatch(match) {
 	var a = match.A;
 	var b = match.B;
 
 	var box = document.getElementById("matchPanelGrid");
 
-	var aGender = a !== null 
+	var aGender = a !== null
 		? a.gender
 		: b.gender == "male"
 			? "female"
@@ -90,62 +172,97 @@ function addMatch(match)
 	addProfile(a, aGender);
 
 	var div = document.createElement("div");
-	var p = document.createElement("p");
-
-	p.classList.add("heart");
 	div.classList.add("col2");
 
-	div.appendChild(p);
+	var p = document.createElement("p");
+	p.classList.add("heart");
 
+
+	var divTableNo = document.createElement("div");
+	divTableNo.classList.add("tableNo");
+	var table = document.createTextNode(tableNo);
+	tableNo++;
+  
+//   var tooltip =  document.createTextNode("Bordsnummer");
+   
+//   spanHover.appendChild(tooltip); 
+//   divTableNo.appendChild(table);
+//   divTableNo.appendChild(spanHover);
+    
+//   div.appendChild(p);
+//   div.appendChild(divTableNo);
+//   box.appendChild(div);
+
+	var spanHover = document.createElement("span");
+	spanHover.classList.add("tableNoText");
+
+	var tooltip = document.createTextNode("Bordsnummer");
+
+
+
+	spanHover.appendChild(tooltip);
+
+	divTableNo.appendChild(table);
+	divTableNo.appendChild(spanHover);
+
+	div.appendChild(p);
+	div.appendChild(divTableNo);
 	box.appendChild(div);
 
 	addProfile(b, bGender);
 }
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let timerOn = false;
+var timerOn = false;
 async function timer() {
 	if (isStartDisabled())
 		return;
 
-    //choosen time in seconds
-    let time = (document.getElementById('time').value) * 60;
-    let countDown = time;
+	//choosen time in seconds
+	let time = (document.getElementById('time').value) * 60;
+	let countDown = time;
 
-    if (countDown > 0 && !timerOn) {
-	timerOn = true;
-	
-	while (countDown > 0) {
-	    let minutes = Math.floor(countDown / 60);
-	    let seconds = countDown % 60;
+	if (countDown > 0 && !timerOn) {
+		timerOn = true;
 
-	    // Display the result in the element with id="timer"
-	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+		var currentMatches = readMatches();
+		socket.emit('setMatches', currentMatches);
+		socket.emit('startClock');
 
-	    // Give page time to print
-	    await sleep(1000);
+		while (countDown > 0) {
+			let minutes = Math.floor(countDown / 60);
+			let seconds = countDown % 60;
 
-	    // Decrement difference 
-	    countDown--;
+			// Display the result in the element with id="timer"
+			document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
-	    // If the count down is finished, write some text 
-	    if (countDown == 0) {
-		document.getElementById("timer").innerHTML = "Mötet är över";
-		await sleep(4000);
-		document.getElementById("timer").innerHTML = "";
-		document.getElementById("time").innerHTML = "Längd på event (min)";
-		timerOn = false;
-	    }
+			// Give page time to print
+			await sleep(1000);
+
+			// Decrement difference 
+			countDown--;
+
+			// If the count down is finished, write some text 
+			if (countDown == 0) {
+				document.getElementById("timer").innerHTML = "Mötet är över";
+				await sleep(4000);
+				document.getElementById("timer").innerHTML = "";
+				document.getElementById("time").innerHTML = "Längd på event (min)";
+				timerOn = false;
+			}
+		}
+	} else if (timerOn) {
+		document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";
+		await sleep(40000);
+	} else {
+		document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
 	}
-    } else if(timerOn){
-	document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";	
-	await sleep(40000);
-    } else {
-	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
-    }
+	if (countDown == 0) {
+		socket.emit('stopClock');
+	}
 }
 
 if (!Modernizr.draganddrop)
@@ -173,10 +290,10 @@ function getColumnClass(element) {
 }
 
 function applyTargetEffect(element) {
-	
+
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
-		
+
 	if (effectTarget == null)
 		return;
 
@@ -187,15 +304,14 @@ function applyTargetEffect(element) {
 }
 
 function removeTargetEffect(element) {
-	
+
 	var effectTarget = element;
 	effectTarget = getTargetContainer(effectTarget, false);
-		
+
 	if (effectTarget == null)
 		return;
 
-	if (effectTarget == document.getElementById("unmatchedGrid"))
-	{
+	if (effectTarget == document.getElementById("unmatchedGrid")) {
 		unmatchedEnters--;
 		if (unmatchedEnters > 0)
 			return;
@@ -237,8 +353,7 @@ function getTargetContainer(element, includeUnmatchedCards) {
 	return null;
 }
 
-function isStartDisabled()
-{
+function isStartDisabled() {
 	return document.getElementById("startbutton").hasAttribute("disabled");
 }
 
@@ -281,10 +396,9 @@ function handleDrop(event) {
 	else
 		newDivHtml = source.innerHTML;
 
-	if (sourceType === "unmatched-col")
-	{
+	if (sourceType === "unmatched-col") {
 		unmatchedContainer.removeChild(source);
-		
+
 		if (unmatchedContainer.children.length == 0)
 			enableStart();
 	}
@@ -357,3 +471,56 @@ document.addEventListener("drop", handleDrop, false);
 
 document.addEventListener("dragenter", handleDragEnter, false);
 document.addEventListener("dragleave", handleDragLeave, false);
+
+/*Buttons och progressbar*/
+var gameState = 0;
+
+function findProfile(name) {
+	let profiles = males.concat(females);
+	for (var i = 0; i < profiles.length; i++) {
+		if (profiles[i].name == name) {
+			return profiles[i];
+		}
+	}
+	return null;
+}
+
+function openPopup(div) {
+	let popup = document.getElementById('popupBox');
+	let profileContent = document.getElementById('profileContent');
+	profileContent.innerHTML = "";
+	popup.style.display = "block";
+
+	let profile = findProfile(div.querySelector('p').innerHTML);
+	let profileImg = document.createElement('img');
+	profileImg.src = profile.picture;
+
+	let namePara = document.createElement('p');
+	let profilename = document.createTextNode(profile.name + ",");
+	namePara.appendChild(profilename);
+
+	let agePara = document.createElement('p');
+	let profileAge = document.createTextNode(profile.age + " år, ");
+	agePara.appendChild(profileAge);
+
+	let fromPara = document.createElement('p');
+	let profileFrom = document.createTextNode("Bor i " + profile.location);
+	fromPara.appendChild(profileFrom);
+
+	let bioPara = document.createElement('p');
+	let profileBio = document.createTextNode("Beskrivning: \n" + profile.description);
+	bioPara.appendChild(profileBio);
+
+	profileContent.appendChild(profileImg);
+	profileContent.appendChild(namePara);
+	profileContent.appendChild(agePara);
+	profileContent.appendChild(fromPara);
+	profileContent.appendChild(bioPara);
+
+}
+
+
+
+function closePopup() {
+	document.getElementById('popupBox').style.display = "none";
+}

@@ -1,8 +1,8 @@
 
 
 body{
-  padding:400px 0;
-  background-color:#c33
+  padding:100px 0;
+  background-color:#fff;
 }
 
 #heart {
@@ -21,7 +21,7 @@ body{
     top: 0;
     width: 100px;
     height: 160px;
-    background: #fff;
+    background: #c33;
     -moz-border-radius: 50px 50px 0 0;
     border-radius: 50px 50px 0 0;
     -webkit-transform: rotate(-45deg);
@@ -82,7 +82,12 @@ body{
 #meetingText {
     margin-top: 180px;
     text-align: center;
-    color: #fff;
-    font-family: Arvo; font-size: 55px; font-style: bold; font-variant: normal; font-weight: 400; line-height: 75px;
+    color: #c33;
+    font-family: Arvo;
+    font-size: 55px;
+    font-style: bold;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 75px;
 }
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>shareInfo</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
+    <!-- User contacts-page -->
+    <main id="main">
+      <div id="shareInfoTitle">
+        VILKA VILL DU TRÄFFA IGEN?
+        </div>
+      <div class="wrapper">
+        <div id="profileBlock" v-for="date in currentUser.allDates">
+          <img class="profile-pic" :src="date.picture">
+          <div id="dateName"> {{ date.name }}
+          </div>
+          <div id="dateInfo">
+            {{ date.address }} {{ date.age }}
+          </div>
+         
+          <div id="dateDescription"> {{ date.description }}
+          </div>
+          <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
+        </div>
+      </div>
+      <a>Value of matches is {{ contacts }}</a>
+         <button id="finishButton" v-on:click="shareContact()"> Klar </button>        
+      </div>
+    </main>
+  </body>
+</html>

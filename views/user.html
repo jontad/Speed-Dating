@@ -32,6 +32,7 @@
         <button id="editProfileButton" class="profileButtons" v-if="!editPicture" v-on:click="editProfile()">
           {{editButtonText}}
         </button>
+
         <button id="changeProfilePicture" class="profileButtons" v-if="myProfile && editMode" v-on:click="editPic()">
           {{editPictureText}}
         </button>
@@ -41,7 +42,7 @@
           </button>
         </a>
         <br/>
-
+	
 	<p v-if="editPicture">BILD (URL):
 	  <input  id="pic" type="text" v-model="picture">
 	<p>
@@ -50,12 +51,13 @@
         <textarea v-if="editMode && !editPicture" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
 
+      <!--
       <div id="SDButton">
         <a href="/toMeet">
           <button id="backButton"> Speeddate </button>
         </a>
       </div>
-
+      -->
     </main>
   </body>
 </html>

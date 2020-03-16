@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Login</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./css/user.css">
-    <script src="https://vuejs.org/js/vue.js"></script>
-    <script src="/socket.io/socket.io.js" defer></script>
-    <script src="/js/profile_vue.js" defer></script>
-    <script type="text/javascript" src="js/menu.js"></script> 
-  </head>
-  <body>
-    <!-- User profile-page -->
-    <main id="site">
-      <div id="login">
-        <div id="loginData">
-          <label for="username"> Användarnamn </label><br/>
-          <input v-model="userName" type="text"> <br />
-          <label for="password"> Lösenord </label><br/>
-          <input v-model="password" type="password"><br/>
 
-	  <a href="createProfile">
-            <button id="createNewProfileButton">Skapa profil</button>                
-          </a><br/>
+<head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./css/user.css">
+  <script src="https://vuejs.org/js/vue.js"></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="/js/profile_vue.js" defer></script>
+  <script type="text/javascript" src="js/menu.js"></script>
+</head>
 
-	  <a>
-	    <button v-on:click="login()" id="loginButton">Logga in</button>
-          </a>
+<body>
+  <!-- User profile-page -->
+  <main id="site">
+    <div id="login">
+      <div id="loginData">
+        <label for="username"> Användarnamn </label><br />
+        <input v-model="userName" type="text"> <br />
+        <label for="password"> Lösenord </label><br />
+        <input v-model="password" type="password"><br />
 
-	  <div id="loginInfo"> Fel inloggningsuppgifter</div>
-        </div>
+        <a href="createProfile">
+          <button id="createNewProfileButton">Skapa profil</button>
+        </a><br />
+
+        <a>
+          <button v-on:click="login()" id="loginButton">Logga in</button>
+        </a>
+
+
+        <div id="loginInfo"> Fel inloggningsuppgifter</div>
+
+	  <div id="test"></div>
+
+	
       </div>
-      
-    </main>
-  </body>
+    </div>
+
+  </main>
+</body>
+
 </html>

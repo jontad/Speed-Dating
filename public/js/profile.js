@@ -1,4 +1,4 @@
-function Profile(name, age, description, location, picture, phoneNumber, email, gender, password, userName) {
+function Profile(name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -11,6 +11,7 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
     this.gender = gender;
     this.password = password;
     this.userName = userName;
+    this.tableNo = tableNo;
 }
 
 function Contact(name, age, phoneNumber, email, picture) {
@@ -96,3 +97,4 @@ let shareContacts = [firstContact, secondContact, thirdContact];
 
 =======
 */
+
