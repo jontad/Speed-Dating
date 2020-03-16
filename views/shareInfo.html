@@ -18,7 +18,7 @@
         VILKA VILL DU TRÄFFA IGEN?
         </div>
       <div class="wrapper">
-        <div id="profileBlock" v-for="date in dummyProfile.allDates">
+        <div id="profileBlock" v-for="date in currentUser.allDates">
           <img class="profile-pic" :src="date.picture">
           <div id="dateName"> {{ date.name }}
           </div>
@@ -28,12 +28,11 @@
          
           <div id="dateDescription"> {{ date.description }}
           </div>
-          <input type="checkbox" :value="date" id="chosenDate" v-bind="dummyProfile.matches">
+          <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
         </div>
       </div>
-      <a>Value of matches is {{ dummyProfile.matches }}</a>
-         <button id="finishButton" v-on:click="shareContact()"> Klar </button>
-        
+      <a>Value of matches is {{ contacts }}</a>
+         <button id="finishButton" v-on:click="shareContact()"> Klar </button>        
       </div>
     </main>
   </body>

@@ -2,7 +2,7 @@
 const socket = io();
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, allContacts) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
 
     this.name = name;
     this.age = age;
@@ -17,7 +17,8 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.userName = userName;
     this.tableNo = 0;
     this.allDates = [];
-    this.allContacts = [];
+
+    this.currentContacts = [];
     
 }
 
@@ -32,21 +33,15 @@ let q4 = "Fråga4";
 let qs = [q1, q2, q3, q4];
 
 
-let dateDummy1 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dateDummy1 = new Profile ("Din Date1","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
-let dateDummy2 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dateDummy2 = new Profile ("Din Date2","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
-let dateDummy3 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dateDummy3 = new Profile ("Din Date3","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
-let dateDummy4 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dateDummy4 = new Profile ("Din Date4","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
-let dummyC = new Contact(dateDummy1.name,
-                         dateDummy1.age,
-                         dateDummy1.phoneNumber,
-                         dateDummy1.email,
-                         dateDummy1.picture);
-let dummyContacts = [dummyC, dummyC, dummyC];
-
+let dummyContacts = [dateDummy1, dateDummy2,dateDummy3];
 
 let meetingUser = null;
 
@@ -85,15 +80,14 @@ const vm = new Vue({
         tablesMapOrder: [6, 1, 7, 2, 8, 3, 9, 4, 10, 5],
         afterDateAnswers: [0, 0, 0, 0],
         other: '',
-        dummy: [dateDummy1, dateDummy2, dateDummy3],
-        dummyProfile: dateDummy1,
-        dummyContacts: dummyContacts,
+
     },
     mounted() {
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
 
         var matchesPages = ["/toMeet", "/questions-user"];
+
         if (matchesPages.includes(window.location.pathname))
             socket.emit('getMatches');
 
@@ -104,7 +98,7 @@ const vm = new Vue({
             this.picture = this.currentUser.picture;
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
-            this.picture = this.currentUser.picture;
+            this.picture = this.currentUser.picture;            
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -115,8 +109,10 @@ const vm = new Vue({
             console.log('hej');
             window.location.href = "/login";
         }
-        //change this to currentUser
-        this.dummyProfile.allDates = this.dummy;
+
+        
+        // TODO: REMOVE THIS! 
+        this.currentUser.allDates = dummyContacts;
     },
     created: function () {
 
@@ -163,6 +159,8 @@ const vm = new Vue({
             }
 
             this.date = meetingUser;
+            this.currentUser.allDates.push(meetingUser);
+            
         }.bind(this));
 
         socket.on('startClock', function () {
@@ -282,18 +280,10 @@ const vm = new Vue({
             window.location.href = '/waiting';
         },
         shareContact: function(){
-            window.location.href="/lastPage";
-           /* let i = 0;
-            alert(this.dummyProfile.matches[0]);
-            for(i = 0; i < 3; i++){
-                var match = this.dummyProfile.matches[i];
-                var newContact = new Contact(match.name,
-                                             match.age,
-                                             match.phoneNumber,
-                                             match.email,
-                                             match.picture);
-                this.dummyProfile.allContacts[i] = newContact;
-            }*/
+            //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
+            //window.location.href="/lastPage";
+            console.log(this.contacts);
+            this.contacts = [];
         },
     }
 });
