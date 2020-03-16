@@ -290,10 +290,10 @@ const vm = new Vue({
             window.location.href = '/waiting';
         },
         shareContact: function(){
-            //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
             //window.location.href="/lastPage";
             console.log(this.contacts);
             this.contacts = [];
+            socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
         },
     }
 });

@@ -220,6 +220,10 @@ io.on('connection', function (socket) {
     socket.on('getMatches', function (matches) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
+    
+     socket.on('makeContactWith', function (matches) {
+        io.emit('currentMatches', { matches: data.getMatches() });
+    });
 });
 
 /* eslint-disable-next-line no-unused-vars */
