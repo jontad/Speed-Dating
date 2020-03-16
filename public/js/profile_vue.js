@@ -163,7 +163,7 @@ const vm = new Vue({
         },
         addDefaultPicture: function () {
             if (!this.picture) {
-                this.picture = "https://lh3.googleusercontent.com/proxy/bnJOk7zpFy6agw2HzfOjMjFMPpyoHeYPZu2eYv1NdWdGKiuvS8_llSJrKctCZkKXZDpxrA6-CTu8jwVfJ6-FYHaFM9xs58fsrS6zKpRrC2ztLdU8ljS3D_zpYEwyzVxh_Jt6GRqx6sojSpQrRPD1vAtlddtQ7w"
+                this.picture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
             }
         },
         login: function () {
