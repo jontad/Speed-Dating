@@ -37,6 +37,14 @@ let dateDummy3 = new Profile ("Din Date","ålder","description","Ort", "https://
 
 let dateDummy4 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
+let dummyC = new Contact(dateDummy1.name,
+                         dateDummy1.age,
+                         dateDummy1.phoneNumber,
+                         dateDummy1.email,
+                         dateDummy1.picture);
+let dummyContacts = [dummyC, dummyC, dummyC];
+
+
 
 const vm = new Vue({
     el: 'main',
@@ -73,6 +81,7 @@ const vm = new Vue({
         other: '',
         dummy: [dateDummy1, dateDummy2, dateDummy3],
         dummyProfile: dateDummy1,
+        dummyContacts: dummyContacts,
     },
     mounted() {
         // When site is mounted, get all users (shitty soulution)
@@ -226,9 +235,10 @@ const vm = new Vue({
             window.location.href='/waiting';            
         },
         shareContact: function(){
-            let i = 0;
+            window.location.href="/lastPage";
+           /* let i = 0;
+            alert(this.dummyProfile.matches[0]);
             for(i = 0; i < 3; i++){
-                console.log(this.dummyProfile.mataches[i]);
                 var match = this.dummyProfile.matches[i];
                 var newContact = new Contact(match.name,
                                              match.age,
@@ -236,7 +246,7 @@ const vm = new Vue({
                                              match.email,
                                              match.picture);
                 this.dummyProfile.allContacts[i] = newContact;
-            }
+            }*/
         },
     }
 });

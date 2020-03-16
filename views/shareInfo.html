@@ -25,13 +25,13 @@
           <div id="dateInfo">
             {{ date.address }} {{ date.age }}
           </div>
-          
+         
           <div id="dateDescription"> {{ date.description }}
           </div>
           <input type="checkbox" :value="date" id="chosenDate" v-model="dummyProfile.matches">
         </div>
       </div>
-      
+      <a>Value of matches is {{ dummyProfile.matches }}</a>
          <button id="finishButton" v-on:click="shareContact()"> Klar </button>
         
       </div>

@@ -67,6 +67,9 @@ app.get('/shareInfo', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/shareInfo.html'));
 });
 
+app.get('/lastPage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/lastPage.html'));
+});
 
 
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {

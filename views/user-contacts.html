@@ -16,8 +16,10 @@
     <!-- User contacts-page -->
     <main>
 
-      <div id="contacts">
-        <div class="contactBlock" v-for="(c,index) in currentUser.matches">
+      <h2 align="center">Dina kontaktar<h2>
+
+       <div id="contacts">
+        <div class="contactBlock" v-for="(c,index) in dummyContacts">
           <img id="contactPicture" :src="c.picture">
 
           <div id="contactsInfo">
