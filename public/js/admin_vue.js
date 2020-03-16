@@ -14,6 +14,7 @@ const vm = new Vue({
         range: function(end) {
             return Array(end).fill().map((_, idx) => 1 + idx)
         },
+        
     },
     created: function() {
         socket.on('initialize', function(data) {

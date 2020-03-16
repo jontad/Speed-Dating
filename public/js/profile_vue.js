@@ -182,7 +182,13 @@ const vm = new Vue({
 	},
 
         showTableMap: function(){
-            document.getElementById("tableMap").style.display= 'inline';            
+            document.getElementById("tableMap").style.display= 'inline';
+
+            let tab = document.getElementById("tableLayout");
+            let tables = tab.getElementByTagName("div");
+
+            console.log(table);
+            
         },
         closeTableMap: function(){
             document.getElementById("tableMap").style.display= 'none'; 
