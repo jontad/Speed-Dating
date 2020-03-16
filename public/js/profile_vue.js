@@ -213,7 +213,8 @@ const vm = new Vue({
 
         },
         closeTableMap: function(){
-            document.getElementById("tableMap").style.display= 'none'; 
+            document.getElementById("tableMap").style.display= 'none';
+            console.log(this.$refs);
         },
         sendAfterDateQuestions: function() {
             
