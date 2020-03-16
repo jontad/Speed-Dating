@@ -22,6 +22,9 @@ const vm = new Vue({
 			      }
 		    },
     },
+    mounted() {
+        socket.emit('getLoggedInUsers');
+    },
     created: function() {
         socket.on('initialize', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
@@ -35,6 +38,8 @@ const vm = new Vue({
             console.log(data.loggedIn);
             loggedInUsers = data.loggedIn;
             this.currentUsers = data.loggedIn;
+
+            setup(loggedInUsers);
         }.bind(this));
     }
 });
