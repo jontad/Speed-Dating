@@ -28,7 +28,7 @@
          
           <div id="dateDescription"> {{ date.description }}
           </div>
-          <input type="checkbox" :value="date" id="chosenDate" v-model="dummyProfile.matches">
+          <input type="checkbox" :value="date" id="chosenDate" v-bind="dummyProfile.matches">
         </div>
       </div>
       <a>Value of matches is {{ dummyProfile.matches }}</a>
