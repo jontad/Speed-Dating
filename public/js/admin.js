@@ -8,9 +8,9 @@ function setup(loggedInUsers) {
 		// name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
 		var user = loggedInUsers[i];
-		var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender, user.password, user.userName, -1);
+		var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
 
-		if (userProfile.gender == "male")
+		if (userProfile.gender === "male")
 			males.push(userProfile);
 		else
 			females.push(userProfile);
@@ -183,15 +183,15 @@ function addMatch(match) {
 	var table = document.createTextNode(tableNo);
 	tableNo++;
   
-  var tooltip =  document.createTextNode("Bordsnummer");
+//   var tooltip =  document.createTextNode("Bordsnummer");
    
-  spanHover.appendChild(tooltip); 
-  divTableNo.appendChild(table);
-  divTableNo.appendChild(spanHover);
+//   spanHover.appendChild(tooltip); 
+//   divTableNo.appendChild(table);
+//   divTableNo.appendChild(spanHover);
     
-  div.appendChild(p);
-  div.appendChild(divTableNo);
-  box.appendChild(div);
+//   div.appendChild(p);
+//   div.appendChild(divTableNo);
+//   box.appendChild(div);
 
 	var spanHover = document.createElement("span");
 	spanHover.classList.add("tableNoText");
