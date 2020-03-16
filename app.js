@@ -178,6 +178,17 @@ io.on('connection', function (socket) {
     socket.on('getUsers', function (user) {
         io.emit('currentUsers', { users: data.getAllUsers() });
     });
+    
+    socket.on('getLoggedInUsers', function (x) {
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });
+    });
+
     socket.on('loggedIn', function (user) {
         data.addLoggedIn(user);
         io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });

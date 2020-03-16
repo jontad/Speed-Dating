@@ -3,25 +3,25 @@ var females = [];
 var matches = [];
 let tableNo = 1;
 
+function setup(loggedInUsers) {
+	for (var i = 0; i < loggedInUsers.length; i++) {
+		// name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
-for (var i = 0; i < 10; i++) {
-	// name, age, description, location, picture, phoneNumber, email
-	var url = "https://i.stack.imgur.com/34AD2.jpg";
+		var user = loggedInUsers[i];
+		var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender, user.password, user.userName, -1);
 
-	var a = new Profile(String.fromCharCode("a".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "male");
-	var b = new Profile(String.fromCharCode("A".charCodeAt(0) + i), 100, "Hejsan", "Okänd plats", url, "070111000111", "a@b.c", "female");
-
-	var match = new Match(a, b);
-
-	males.push(a);
-	females.push(b);
+		if (userProfile.gender == "male")
+			males.push(userProfile);
+		else
+			females.push(userProfile);
+	}
+	
+	matchAlgorithm(males, females, matches);
+	
+	matches.forEach(function (match) {
+		addMatch(match);
+	});
 }
-
-matchAlgorithm(males, females, matches);
-
-matches.forEach(function (match) {
-	addMatch(match);
-});
 
 function shuffle(array) {
 	array.sort(() => Math.random() - 0.5);
