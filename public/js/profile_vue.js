@@ -90,6 +90,7 @@ const vm = new Vue({
             console.log('hej');
             window.location.href = "/login";
         }
+        
     },
     created: function () {
 
@@ -224,7 +225,14 @@ const vm = new Vue({
 
         showTableMap: function () {
             document.getElementById("tableMap").style.display = 'inline';
-            //document.getElementById("tableMap").style.color = "#008000"
+            
+            let tab = "table";
+            for (var i = 1; i < 11; i++) {
+                if(this.currentUser.tableNo == i){
+                    document.getElementById(tab + i).style.backgroundColor = "green";
+                }
+            }
+
         },
         closeTableMap: function () {
             document.getElementById("tableMap").style.display = 'none';
