@@ -3,6 +3,7 @@ const socket = io();
 
 
 function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, allContacts) {
+
     this.name = name;
     this.age = age;
     this.description = description;
@@ -14,20 +15,22 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.tableNo = 0;
     this.allDates = [];
     this.allContacts = [];
     
 }
 
-let createProfileData = ['Användarnamn', 'Lösenord','Förnamn', 'Ålder', 'Bor i','Email', 'Telefonnummer'];
-let dateDummy = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bor i', 'Email', 'Telefonnummer'];
+let dateDummy = new Profile("Din Date", "ålder", "description", "Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", 0, 0);
 
 
 let q1 = "Fråga1";
 let q2 = "Fråga2";
 let q3 = "Fråga3";
 let q4 = "Fråga4";
-let qs = [q1,q2,q3,q4];
+let qs = [q1, q2, q3, q4];
+
 
 let dateDummy1 = new Profile ("Din Date","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
@@ -45,19 +48,22 @@ let dummyC = new Contact(dateDummy1.name,
 let dummyContacts = [dummyC, dummyC, dummyC];
 
 
+let meetingUser = null;
+
 
 const vm = new Vue({
     el: 'main',
     data: {
         profile: "", 
-	      profileLocation: "",
-	      
-        date: dateDummy,
 
+	      profileLocation: "",
+        date: dateDummy,
+        tableNo: -1,
         questions: qs,
         editMode: false,
 	      editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
+
 
 	      editButtonText: "Redigera profil",
 	      editPictureText: "Byt profilbild",
@@ -73,11 +79,11 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-        
+
         currentUser: '',
         allUsers: {},
-        tablesMapOrder: [6,1,7,2,8,3,9,4,10,5],        
-        afterDateAnswers: [0,0,0,0],
+        tablesMapOrder: [6, 1, 7, 2, 8, 3, 9, 4, 10, 5],
+        afterDateAnswers: [0, 0, 0, 0],
         other: '',
         dummy: [dateDummy1, dateDummy2, dateDummy3],
         dummyProfile: dateDummy1,
@@ -86,28 +92,35 @@ const vm = new Vue({
     mounted() {
         // When site is mounted, get all users (shitty soulution)
         socket.emit('getUsers');
-	      
-        if (sessionStorage.getItem("currentUserName")){                                    
+
+        var matchesPages = ["/toMeet", "/questions-user"];
+        if (matchesPages.includes(window.location.pathname))
+            socket.emit('getMatches');
+
+        if (sessionStorage.getItem("currentUserName")) {
             this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
-	          this.description = this.currentUser.description;
-	          this.address = this.currentUser.address;
-	          this.picture = this.currentUser.picture;
+            this.description = this.currentUser.description;
+            this.address = this.currentUser.address;
+            this.picture = this.currentUser.picture;
+            this.description = this.currentUser.description;
+            this.address = this.currentUser.address;
+            this.picture = this.currentUser.picture;
         }
 
-        if (sessionStorage.getItem("currentDate")){                                    
+        if (sessionStorage.getItem("currentDate")) {
             this.currentDate = JSON.parse(sessionStorage.getItem("currentDate"));
         }
-        if (!(location.href.endsWith("/login") || location.href.endsWith("/createProfile"))&& this.currentUser == '') {
+        if (!(location.href.endsWith("/login") || location.href.endsWith("/createProfile")) && this.currentUser == '') {
 
             console.log('hej');
-            window.location.href="/login";
+            window.location.href = "/login";
         }
         //change this to currentUser
         this.dummyProfile.allDates = this.dummy;
     },
-    created: function() {
+    created: function () {
 
-        socket.on('currentUsers', function(data) {
+        socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
 	      }.bind(this));
 	      
@@ -126,117 +139,147 @@ const vm = new Vue({
             }
         }.bind(this));
 
-        socket.on('startClock', function(data){
-            window.location.href='/toMeet';
+        socket.on('currentMatches', function (data) {
+            var matches = data.matches;
+            this.matches = matches;
+
+            meetingUser = null;
+
+            var currentUser = this.currentUser.name;
+            for (var i = 0; i < matches.length; i++)
+            {
+                var match = matches[i];
+                
+                if (match.left == null || match.right == null || (match.left.name != currentUser && match.right.name != currentUser))
+                    continue;
+
+                var other = match.left.name == currentUser 
+                    ? match.right 
+                    : match.left;
+
+                this.tableNo = match.tableNo;
+                meetingUser = other;
+                break;
+            }
+
+            this.date = meetingUser;
         }.bind(this));
 
-        socket.on('stopClock', function(data){
-            window.location.href='/questions-user.html';
+        socket.on('startClock', function () {
+            console.info("hejsan");
+            window.location.href = '/toMeet';
+        }.bind(this));
+
+        socket.on('stopClock', function (data) {
+            window.location.href = '/questions-user';
         }.bind(this));
 
     },
-    
-    methods: {        
-        createProfile: function(){
+
+    methods: {
+        createProfile: function () {
+            this.addDefaultPicture();
+
             let newUser = new Profile(this.name, this.age, this.description,
-				                              this.address, this.picture,
-				                              this.number, this.mail,
-				                              this.password, this.userName); 
+                this.address, this.picture,
+                this.number, this.mail,
+                this.password, this.userName);
 
             this.currentUser = newUser;
-	          
-            sessionStorage.setItem("currentUser", JSON.stringify(newUser));            
+
+            sessionStorage.setItem("currentUser", JSON.stringify(newUser));
             socket.emit('addNewUser', newUser);
-            
-        },        
-        login: function(){
+        },
+        addDefaultPicture: function () {
+            if (!this.picture) {
+                this.picture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
+        },
+        login: function () {
             console.log(this.userName + this.password);
-            if(this.userName in this.allUsers &&
-               this.allUsers[this.userName]['password'] == this.password) {
+            if (this.userName in this.allUsers &&
+                this.allUsers[this.userName]['password'] == this.password) {
 
                 this.currentUser = this.allUsers[this.userName];
                 this.contacts = this.currentUser.matches;
-				        console.log("hej");
+
                 socket.emit('loggedIn', this.currentUser);
                 sessionStorage.setItem("currentUserName", JSON.stringify(this.currentUser));
-                window.location.href="/user"
+                window.location.href = "/user"
             } else {
                 console.log("hej");
                 document.getElementById("loginInfo").style.display = "block";
             }
         },
-        logout: function(){
+        logout: function () {
             // Removes current user from session storage, vue object and server
             sessionStorage.removeItem("currentUserName");
             this.currentUser = '';
             socket.emit('logoutUser', currentUser);
-            window.location.href='/login';
-            
+            window.location.href = '/login';
         },
-        range: function(end) {
+        range: function (end) {
             return Array(end).fill().map((_, idx) => 1 + idx)
         },
-	      editProfile: function(){
-	          this.editMode = !this.editMode;
-            if(this.editMode){
+
+        editProfile: function () {
+            this.editMode = !this.editMode;
+            if (this.editMode) {
                 this.editButtonText = "Spara profil";
             } else {
                 this.editButtonText = "Redigera profil";
-		            this.editUser();
-	          }
-	      },
-	      //user saving new profile
-	      editUser: function(){
-	          this.currentUser.description = this.description;
-	          this.currentUser.address = this.address;
-
-	          sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-	          socket.emit('newArray', this.currentUser);	    
+                this.editUser();
+            }
         },
-	      editPic: function(){
-	          this.editPicture = !this.editPicture;
-            if(this.editPicture){
+        //user saving new profile
+        editUser: function () {
+            this.currentUser.description = this.description;
+            this.currentUser.address = this.address;
+
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            socket.emit('newArray', this.currentUser);
+        },
+        editPic: function () {
+            this.editPicture = !this.editPicture;
+            if (this.editPicture) {
                 this.editPictureText = "Spara profilbild";
-	          } else {
-               	this.editPictureText = "Byt profilbild";
+            } else {
+                this.editPictureText = "Byt profilbild";
 
-		            this.currentUser.picture = this.picture;
-		            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-		            socket.emit('newArray', this.currentUser);	    
-	          }
-	      },
-
-        showTableMap: function(){
-            alert(this.$refs);
-            document.getElementById("tableMap").style.display= 'inline';
-
-
+                this.currentUser.picture = this.picture;
+                sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+                socket.emit('newArray', this.currentUser);
+            }
         },
-        closeTableMap: function(){
-            document.getElementById("tableMap").style.display= 'none';
-            console.log(this.$refs);
+
+        showTableMap: function () {
+            document.getElementById("tableMap").style.display = 'inline';
+            //document.getElementById("tableMap").style.color = "#008000"
         },
-        sendAfterDateQuestions: function() {
-            
+        closeTableMap: function () {
+            document.getElementById("tableMap").style.display = 'none';
+        },
+        sendAfterDateQuestions: function () {
+
             socket.emit('addAfterDateAnwsers',
-                        {
-                            profile: this.currentUser,
-                            date: this.date,
-                            other: this.other,
-                            afterDateAnswers: this.afterDateAnswers,
-                        });
-            
-            console.log( {
+                {
+                    profile: this.currentUser,
+                    date: this.date,
+                    other: this.other,
+                    afterDateAnswers: this.afterDateAnswers,
+                });
+
+            console.log({
                 profile: this.currentUser,
                 date: this.date,
                 other: this.other,
                 afterDateAnswers: this.afterDateAnswers,
             });
-            window.location.href='/user';
+            window.location.href = '/user';
         },
-        foundDate: function(){
-            socket.emit('foundDate', {user: this.currentUser, date: this.date});
-            window.location.href='/waiting';            
+        foundDate: function () {
+            socket.emit('foundDate', { user: this.currentUser, date: this.date });
+            window.location.href = '/waiting';
         },
         shareContact: function(){
             window.location.href="/lastPage";

@@ -10,6 +10,7 @@
     <script src="/js/profile.js" defer></script>
     <script src="/js/profile_vue.js" defer></script>
     <script type="text/javascript" src="js/menu.js"></script> 
+    <script type="text/javascript" src="js/toMeet.js"></script> 
   </head>
   <body>
     <!-- User profile-page -->
@@ -18,7 +19,7 @@
       <div id="tableMap">
         <div id="tableLayout">
           <div id="tableMapCloseButton" v-on:click="closeTableMap()">&times</div>
-          <div v-for="i in tablesMapOrder" class="table"> {{i}} </div> 
+          <div v-for="i in tablesMapOrder" class="table" :id="'table'+i.toString()"> {{i}} </div> 
         </div>
       </div>
       
@@ -31,14 +32,13 @@
           <span class="bold"> {{ date.location }} </span>
         </p>
         <button id="yourTableButton" class="profileButtons" v-on:click="showTableMap()">
-          Bord nummer X
+          Bord nummer {{ tableNo }}
         </button>
         <div id="description" class="description"> {{ date.description }}</div>
         <div id="foundButtonWrapper">
           <button id="foundButton" v-on:click='foundDate'> Hittad </button>
         </div>
       </div>
-
     </main>
   </body>
 </html>

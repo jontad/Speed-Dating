@@ -165,11 +165,27 @@ body {
     background-color: LightGray;
     border-radius: 10px;
 }
+#loginAdmin {
+    text-align: center;
+    margin: 50% 5vw;
+    background-color: LightGray;
+    border-radius: 10px;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 20%;
+}
+#loginDataAdmin{
+    padding: 1vw 0vw;
+}
 #createProfileBox{
     text-align: center;
     margin: 5vw 5vw;
     background-color: LightGray;
     border-radius: 10px;
+    
 }
 #loginData{
     padding: 5vw 0vw;
@@ -239,6 +255,9 @@ body {
     height: 1em;
     width: 1em;
     background-color: white;
+}
+#table1{
+    background-color: green;
 }
 .table {
     background-color: red;

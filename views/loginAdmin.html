@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/user.css">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script> 
+  </head>
+  <body>
+    <main id="site">
+      <div id="loginAdmin">
+        <h3>Admin login sida</h3>
+       <div id="loginDataAdmin">
+         <label for="username"> Användarnamn </label><br/>
+          <input  type="text" required> <br />
+          <label for="password" required> Lösenord </label><br/>
+          <input v-model="password" type="password"><br/>
+	  <a>
+	    <button onclick="window.location.href = 'admin'" id="loginButton">Logga in</button>
+          </a>
+
+	  <div id="loginInfo"> Fel inloggningsuppgifter</div>
+    
+        </div>
+      </div>
+      
+    </main>
+  </body>
+</html>

@@ -3,16 +3,12 @@
 body{
   padding:100px 0;
   background-color:#fff;
-  height: 667px;
-  width: 375px;
-  margin: 0;
-  text-align:center;
 }
 
 #heart {
     align: center;
     position: relative;
-    width: 100%;
+    width: 180px;
     height: 10px;
     animation: heartbeat 1s infinite;
     margin: auto;
@@ -87,6 +83,11 @@ body{
     margin-top: 180px;
     text-align: center;
     color: #c33;
-    font-family: Arvo; font-size: 55px; font-style: bold; font-variant: normal; font-weight: 400; line-height: 75px;
+    font-family: Arvo;
+    font-size: 55px;
+    font-style: bold;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 75px;
 }
 
