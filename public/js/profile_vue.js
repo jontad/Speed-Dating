@@ -2,23 +2,25 @@
 const socket = io();
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
 
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender, allContacts) {
     this.name = name;
     this.age = age;
     this.description = description;
     this.address = address;
-    this.myProfile = true;
     this.picture = picture;
     this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.gender = gender;
+    this.allContacts = [];
+
+    this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
 
-    this.currentContacts = [];
     
 }
 
@@ -39,7 +41,13 @@ let dateDummy2 = new Profile ("Din Date2","ålder","description","Ort", "https:/
 
 let dateDummy3 = new Profile ("Din Date3","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
+
 let dateDummy4 = new Profile ("Din Date4","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dummyC = new Profile(dateDummy1.name,
+                         dateDummy1.age,
+                         dateDummy1.phoneNumber,
+                         dateDummy1.email,
+                         dateDummy1.picture);
 
 let dummyContacts = [dateDummy1, dateDummy2,dateDummy3];
 
@@ -74,6 +82,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
+	      gender: "",
 
         currentUser: '',
         allUsers: {},
@@ -98,7 +107,8 @@ const vm = new Vue({
             this.picture = this.currentUser.picture;
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
-            this.picture = this.currentUser.picture;            
+            this.picture = this.currentUser.picture;
+	          this.gender = this.currentUser.gender;
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -179,9 +189,9 @@ const vm = new Vue({
             this.addDefaultPicture();
 
             let newUser = new Profile(this.name, this.age, this.description,
-                this.address, this.picture,
-                this.number, this.mail,
-                this.password, this.userName);
+				                              this.address, this.picture,
+				                              this.number, this.mail,
+				                              this.password, this.userName, this.gender);
 
             this.currentUser = newUser;
 
@@ -194,7 +204,7 @@ const vm = new Vue({
             }
         },
         login: function () {
-            console.log(this.userName + this.password);
+            console.log(this.gender);
             if (this.userName in this.allUsers &&
                 this.allUsers[this.userName]['password'] == this.password) {
 
@@ -260,12 +270,12 @@ const vm = new Vue({
         sendAfterDateQuestions: function () {
 
             socket.emit('addAfterDateAnwsers',
-                {
-                    profile: this.currentUser,
-                    date: this.date,
-                    other: this.other,
-                    afterDateAnswers: this.afterDateAnswers,
-                });
+			                  {
+			                      profile: this.currentUser,
+			                      date: this.date,
+			                      other: this.other,
+			                      afterDateAnswers: this.afterDateAnswers,
+			                  });
 
             console.log({
                 profile: this.currentUser,
