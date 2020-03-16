@@ -77,23 +77,26 @@ app.get('/loginAdmin', function (req, res) {
 
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender, allContacts) {
+
     this.name = name;
     this.age = age;
     this.description = description;
     this.address = address;
-    this.myProfile = true;
     this.picture = picture;
     this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
     this.userName = userName;
-};
+    this.gender = gender;
+    this.allContacts = [];
 
-
-
-
+    this.myProfile = true;
+    this.tableNo = 0;
+    this.allDates = [];
+    
+}
 
 
 // Store data in an object to keep the global namespace clean and
