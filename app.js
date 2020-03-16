@@ -58,8 +58,17 @@ app.get('/waiting', function (req, res) {
 app.get('/login', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/login.html'));
 });
-app.get('/createProfile', function (req, res) {
+
+app.get('/createProfile', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/createProfile.html'));
+});
+
+app.get('/shareInfo', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/shareInfo.html'));
+});
+
+app.get('/lastPage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/lastPage.html'));
 });
 
 app.get('/loginAdmin', function (req, res) {
