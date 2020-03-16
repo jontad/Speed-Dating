@@ -20,8 +20,6 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
-
-    
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bor i', 'Email', 'Telefonnummer'];
@@ -290,10 +288,11 @@ const vm = new Vue({
             window.location.href = '/waiting';
         },
         shareContact: function(){
-            //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
+            socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
             //window.location.href="/lastPage";
             console.log(this.contacts);
             this.contacts = [];
+
         },
     }
 });

@@ -106,6 +106,7 @@ function Data() {
     this.users = {};
     this.loggedIn = {};
     this.afterDateAnswers = {};
+    this.matches = {};
 };
 
 // Adds after date answers to the "database"
@@ -149,6 +150,22 @@ Data.prototype.getMatches = function () {
 
 Data.prototype.setMatches = function (matches) {
     this.matches = matches;
+}
+
+
+Data.prototype.checkShareContacts = function(user, contacts) {
+
+    for(var contact in contacts){
+	var chosenContact = this.users[contact.userName];
+
+	var allDates = chosenContact.allDates;
+	for(var date in allDates){
+	    if(user.userName.localCompare(date.userName)){
+				
+	    }
+	}
+    }
+
 }
 
 
@@ -221,8 +238,8 @@ io.on('connection', function (socket) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
     
-     socket.on('makeContactWith', function (contacts) {
-        io.emit('currentMatches', { matches: contacts.getMatches() });
+    socket.on('makeContactWith', function(user, contacts) {
+     
     });
 });
 
