@@ -9,7 +9,6 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.description = description;
     this.address = address;
     this.picture = picture;
-    this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
@@ -17,6 +16,8 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.gender = gender;
     this.allContacts = [];
 
+    this.matches = [];
+    this.wantedMatches = [];    
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
@@ -57,22 +58,21 @@ const vm = new Vue({
     data: {
         profile: "", 
 
-	      profileLocation: "",
+	profileLocation: "",
         date: dateDummy,
         tableNo: -1,
         questions: qs,
         editMode: false,
-	      editPicture: false,
+	editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 
-	      editButtonText: "Redigera profil",
-	      editPictureText: "Byt profilbild",
+	editButtonText: "Redigera profil",
+	editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
-        shareContacts: shareContacts,
         contactList: [],
 
-	      picture: "",
+	picture: "",
         userName: "",
         password: "",
         name: "",
@@ -82,7 +82,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-	      gender: "",
+	gender: "",
 
         currentUser: '',
         allUsers: {},
@@ -108,7 +108,8 @@ const vm = new Vue({
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
             this.picture = this.currentUser.picture;
-	          this.gender = this.currentUser.gender;
+	    this.gender = this.currentUser.gender;
+	    this.contacts = this.currentUser.wantedMatches;
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -128,14 +129,17 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-                if (this.currentUser in this.currentUser.wantedMatches[i].wantedMatches) {
-                    this.currentUser.matches.append(this.currentUser.wantedMatches[i]);
+
+	    /**for (var i = 0; i < this.contacts.length; i++) {
+                if (this.currentUser in this.contacts[i].wantedMatches && !(this.contacts[i] in this.currentUser.wantedMatches)) {
+		    this.currentUser.matches.append(this.contacts[i]);
                 }
-            }
-	      }.bind(this));
-	      
-	      
+		}**/
+	    this.currentUser.matches.append(dateDummy);
+	    
+	}.bind(this));
+	
+	
         socket.on('loggedIn', function(data) {
             console.log(data);
             this.currentUser = data;
@@ -187,6 +191,21 @@ const vm = new Vue({
             window.location.href = '/questions-user';
         }.bind(this));
 
+	socket.on('sharedContacts', function (users) {
+	    this.allUsers = users.allUsers;
+
+	    for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+		var currentMatch = this.currentUser.wantedMatches[i];
+		var matchProfile = this.allUsers[currentMatch.userName];
+
+                if (this.currentUser in matchProfile.wantedMatches) {
+		    this.currentUser.matches.append(matchProfile);
+		}
+	    }
+	    socket.emit('addNewUser', this.currentUser);
+	 
+	}.bind(this));
+
     },
 
     methods: {
@@ -194,9 +213,9 @@ const vm = new Vue({
             this.addDefaultPicture();
 
             let newUser = new Profile(this.name, this.age, this.description,
-				                              this.address, this.picture,
-				                              this.number, this.mail,
-				                              this.password, this.userName, this.gender);
+				      this.address, this.picture,
+				      this.number, this.mail,
+				      this.password, this.userName, this.gender);
 
             this.currentUser = newUser;
 
@@ -222,7 +241,7 @@ const vm = new Vue({
             } else {
                 console.log("hej");
                 document.getElementById("loginInfo").style.display = "block";
-            }
+           }
         },
         logout: function () {
             // Removes current user from session storage, vue object and server
@@ -280,12 +299,12 @@ const vm = new Vue({
         sendAfterDateQuestions: function () {
 
             socket.emit('addAfterDateAnwsers',
-			                  {
-			                      profile: this.currentUser,
-			                      date: this.date,
-			                      other: this.other,
-			                      afterDateAnswers: this.afterDateAnswers,
-			                  });
+			{
+			    profile: this.currentUser,
+			    date: this.date,
+			    other: this.other,
+			    afterDateAnswers: this.afterDateAnswers,
+			});
 
             console.log({
                 profile: this.currentUser,
@@ -303,9 +322,9 @@ const vm = new Vue({
             //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
             //window.location.href="/lastPage";
             console.log(this.contacts);
-            this.contacts = [];
-            this.currentUser.wantedMatches.append(this.append);
-            socket.emit('newArray', this.currentUser);
+            //this.contacts = [];
+            this.currentUser.wantedMatches.concat(this.contacts);
+            socket.emit('share', this.currentUser);    	
         },
     }
 });
