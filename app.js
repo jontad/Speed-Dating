@@ -159,23 +159,6 @@ Data.prototype.setMatches = function (matches) {
 }
 
 
-Data.prototype.checkShareContacts = function(user, contacts) {
-
-
-    for(var contact in contacts){
-	      var chosenContact = this.users[contact.userName];
-
-	      var allDates = chosenContact.allDates;
-	      for(var date in allDates){
-	          if(user.userName.localCompare(date.userName)){
-				        
-	          }
-	      }
-    }
-
-}
-
-
 
 const data = new Data();
 
@@ -246,8 +229,9 @@ io.on('connection', function (socket) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
     
-    socket.on('makeContactWith', function(userData) {
-        data.checkShareContacts(userData.user, userData.contacts);
+    socket.on('share', function(user) {
+        data.updateArray(user);
+	io.emit('sharedContacts', { allUsers: data.getAllUsers() });
     });
 });
 

@@ -20,13 +20,15 @@
       <div class="wrapper">
         <div id="profileBlock" v-for="date in currentUser.allDates">
           <img class="profile-pic" :src="date.picture">
-          <div id="dateName"> {{ date.name }}
+          <div id="dateName">
+	    {{ date.name }}
           </div>
           <div id="dateInfo">
             {{ date.address }} {{ date.age }}
           </div>
          
-          <div id="dateDescription"> {{ date.description }}
+          <div id="dateDescription">
+	    {{ date.description }}
           </div>
           <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
         </div>

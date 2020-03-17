@@ -9,7 +9,6 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.description = description;
     this.address = address;
     this.picture = picture;
-    this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
@@ -17,6 +16,8 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.gender = gender;
     this.allContacts = [];
 
+    this.matches = [];
+    this.wantedMatches = [];    
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
@@ -70,7 +71,10 @@ const vm = new Vue({
 	      editButtonText: "Redigera profil",
 	      editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
+            <<<<<<< HEAD
         //shareContacts: shareContacts,
+            =======
+            >>>>>>> 40d0f1ad897fac2450e23e288a452a4c063ca9d4
         contactList: [],
 
 	      picture: "",
@@ -110,6 +114,7 @@ const vm = new Vue({
             this.address = this.currentUser.address;
             this.picture = this.currentUser.picture;
 	          this.gender = this.currentUser.gender;
+	          this.contacts = this.currentUser.wantedMatches;
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -132,16 +137,14 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-            if (this.currentUser) {
-                for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-                    if (this.currentUser in this.currentUser.wantedMatches[i].wantedMatches) {
-                        this.currentUser.matches.append(this.currentUser.wantedMatches[i]);
-                    }
-                }
-            }
-            
+	          /**for (var i = 0; i < this.contacts.length; i++) {
+               if (this.currentUser in this.contacts[i].wantedMatches && !(this.contacts[i] in this.currentUser.wantedMatches)) {
+		           this.currentUser.matches.append(this.contacts[i]);
+               }
+		           }**/
+
+	          
 	      }.bind(this));
-	      
 	      
         socket.on('loggedIn', function(data) {
             console.log(data);
@@ -193,6 +196,21 @@ const vm = new Vue({
         socket.on('stopClock', function (data) {
             window.location.href = '/questions-user';
         }.bind(this));
+
+	      socket.on('sharedContacts', function (users) {
+	          this.allUsers = users.allUsers;
+
+	          for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+		            var currentMatch = this.currentUser.wantedMatches[i];
+		            var matchProfile = this.allUsers[currentMatch.userName];
+
+                if (this.currentUser in matchProfile.wantedMatches) {
+		                this.currentUser.matches.append(matchProfile);
+		            }
+	          }
+	          socket.emit('addNewUser', this.currentUser);
+	          
+	      }.bind(this));
 
     },
 
@@ -305,9 +323,9 @@ const vm = new Vue({
             //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
             //window.location.href="/lastPage";
             console.log(this.contacts);
-            this.contacts = [];
-            this.currentUser.wantedMatches.append(this.append);
-            socket.emit('newArray', this.currentUser);
+            //this.contacts = [];
+            this.currentUser.wantedMatches.concat(this.contacts);
+            socket.emit('share', this.currentUser);    	
         },
     }
 });
