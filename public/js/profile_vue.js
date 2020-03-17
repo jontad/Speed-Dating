@@ -20,6 +20,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
+    this.wantedMatches = [];
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bor i', 'Email', 'Telefonnummer'];
@@ -69,7 +70,7 @@ const vm = new Vue({
 	      editButtonText: "Redigera profil",
 	      editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
-        shareContacts: shareContacts,
+        //shareContacts: shareContacts,
         contactList: [],
 
 	      picture: "",
@@ -121,18 +122,24 @@ const vm = new Vue({
         }
 
         
-        // TODO: REMOVE THIS! 
-        this.currentUser.allDates = dummyContacts;
+        // TODO: REMOVE THIS!
+        if (this.currentUser) {
+            this.currentUser.allDates = dummyContacts;
+        }
+
     },
     created: function () {
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-                if (this.currentUser in this.currentUser.wantedMatches[i].wantedMatches) {
-                    this.currentUser.matches.append(this.currentUser.wantedMatches[i]);
+            if (this.currentUser) {
+                for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+                    if (this.currentUser in this.currentUser.wantedMatches[i].wantedMatches) {
+                        this.currentUser.matches.append(this.currentUser.wantedMatches[i]);
+                    }
                 }
             }
+            
 	      }.bind(this));
 	      
 	      
@@ -251,11 +258,6 @@ const vm = new Vue({
 
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
             socket.emit('newArray', this.currentUser);
-        },
-
-        createProfile: function(){
-            window.location.href="/user";
-            console.log("hej");
         },
         editPic: function () {
             this.editPicture = !this.editPicture;
