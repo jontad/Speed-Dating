@@ -224,8 +224,6 @@ io.on('connection', function (socket) {
     
     socket.on('makeContactWith', function (matches) {
         // Update all user array
-        data.addNewUser(user);
-        io.emit('currentMatches', { matches: data.getMatches() });
         //io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
