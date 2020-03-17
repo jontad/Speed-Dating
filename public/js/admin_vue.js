@@ -7,6 +7,7 @@ const vm = new Vue({
 	eventState: 0,
   	info: "hej",
     tables: 10,
+	found: {},
 	currentUsers: {}, //conatins all logged in users  
     afterDateAnswers: {}, // Contains the data received from user-questions
 
@@ -23,11 +24,6 @@ const vm = new Vue({
 		    },
     },
     created: function() {
-		
-		socket.on('foundDate', function() {	
-			console.log("hej hej hej found date hej hej");
-		}.bind(this));
-		
         socket.on('initialize', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
         }.bind(this));
@@ -35,6 +31,13 @@ const vm = new Vue({
         socket.on('currentAfterDateAnswers', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
         }.bind(this));
+		
+		socket.on('foundDate', function(data) {	
+			this.found = data.user.tableNo;
+			let tables = document.getElementsByClassName('table');
+			tables[this.found].style.backgroundColor = "green";
+			console.log("hej hej hej found date hej hej");
+		}.bind(this));
     }
 });
 

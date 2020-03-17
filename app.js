@@ -199,7 +199,7 @@ io.on('connection', function (socket) {
     });
 	
 	socket.on('foundDate', function (user){
-		io.emit('foundDate');
+		io.emit('foundDate', { user: user.user });
 	});
 });
 

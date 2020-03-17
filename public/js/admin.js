@@ -251,6 +251,11 @@ async function timer() {
 				await sleep(4000);
 				document.getElementById("timer").innerHTML = "";
 				document.getElementById("time").innerHTML = "Längd på event (min)";
+				//Reset background-color to red
+				let tables = document.getElementsByClassName('table');
+				for(var i = 0; i < tables.length; i++) {
+					tables[i].style.backgroundColor = "red";
+				}
 				timerOn = false;
 			}
 		}
