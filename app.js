@@ -58,8 +58,17 @@ app.get('/waiting', function (req, res) {
 app.get('/login', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/login.html'));
 });
-app.get('/createProfile', function (req, res) {
+
+app.get('/createProfile', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/createProfile.html'));
+});
+
+app.get('/shareInfo', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/shareInfo.html'));
+});
+
+app.get('/lastPage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/lastPage.html'));
 });
 
 app.get('/loginAdmin', function (req, res) {
@@ -68,23 +77,26 @@ app.get('/loginAdmin', function (req, res) {
 
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender, allContacts) {
+
     this.name = name;
     this.age = age;
     this.description = description;
     this.address = address;
-    this.myProfile = true;
     this.picture = picture;
     this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
     this.userName = userName;
-};
+    this.gender = gender;
+    this.allContacts = [];
 
-
-
-
+    this.myProfile = true;
+    this.tableNo = 0;
+    this.allDates = [];
+    
+}
 
 
 // Store data in an object to keep the global namespace clean and
@@ -169,6 +181,17 @@ io.on('connection', function (socket) {
     socket.on('getUsers', function (user) {
         io.emit('currentUsers', { users: data.getAllUsers() });
     });
+    
+    socket.on('getLoggedInUsers', function (x) {
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });
+    });
+
     socket.on('loggedIn', function (user) {
         data.addLoggedIn(user);
         io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
@@ -195,6 +218,10 @@ io.on('connection', function (socket) {
     });
 
     socket.on('getMatches', function (matches) {
+        io.emit('currentMatches', { matches: data.getMatches() });
+    });
+    
+     socket.on('makeContactWith', function (matches) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
