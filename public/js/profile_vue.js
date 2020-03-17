@@ -20,6 +20,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
+    this.wantedMatches = [];
 
     
 }
@@ -146,6 +147,9 @@ const vm = new Vue({
             this.matches = matches;
 
             meetingUser = null;
+            if (!matches) {
+                return;
+            }
 
             var currentUser = this.currentUser.name;
             for (var i = 0; i < matches.length; i++)
@@ -295,8 +299,10 @@ const vm = new Vue({
         shareContact: function(){
             //window.location.href="/lastPage";
             console.log(this.contacts);
+            this.currentUser.wantedMatches.concat(this.contacts);
             this.contacts = [];
-            socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
+            
+            //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
         },
     }
 });

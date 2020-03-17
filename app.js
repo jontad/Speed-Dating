@@ -106,6 +106,7 @@ function Data() {
     this.users = {};
     this.loggedIn = {};
     this.afterDateAnswers = {};
+    this.matches = [];
 };
 
 // Adds after date answers to the "database"
@@ -142,7 +143,7 @@ Data.prototype.updateArray = function (newUser) {
     this.users[newUser.userName] = newUser;
 }
 
-
+// TODO: Behövs dessa??
 Data.prototype.getMatches = function () {
     return this.matches;
 }
@@ -222,7 +223,7 @@ io.on('connection', function (socket) {
     });
     
      socket.on('makeContactWith', function (matches) {
-        io.emit('currentMatches', { matches: data.getMatches() });
+        //io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
 
