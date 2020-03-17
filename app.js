@@ -222,7 +222,10 @@ io.on('connection', function (socket) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
     
-     socket.on('makeContactWith', function (matches) {
+    socket.on('makeContactWith', function (matches) {
+        // Update all user array
+        data.addNewUser(user);
+        io.emit('currentMatches', { matches: data.getMatches() });
         //io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
