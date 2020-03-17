@@ -3,7 +3,7 @@ const socket = io();
 
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender, allContacts) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -36,7 +36,7 @@ let q4 = "Fråga4";
 let qs = [q1, q2, q3, q4];
 
 
-let dateDummy1 = new Profile ("Din Date1","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
+let dateDummy1 = new Profile ("Din Date1","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0,0,0,"male");
 
 let dateDummy2 = new Profile ("Din Date2","ålder","description","Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",0,0);
 
@@ -61,7 +61,7 @@ const vm = new Vue({
         profile: "", 
 
 	      profileLocation: "",
-        date: dateDummy,
+        date: dateDummy1,
         tableNo: -1,
         questions: qs,
         editMode: false,
@@ -113,7 +113,7 @@ const vm = new Vue({
         }
 
         if (sessionStorage.getItem("currentDate")) {
-            this.currentDate = JSON.parse(sessionStorage.getItem("currentDate"));
+            this.date = JSON.parse(sessionStorage.getItem("currentDate"));
         }
         if (!(location.href.endsWith("/login") || location.href.endsWith("/createProfile")) && this.currentUser == '') {
 
@@ -125,6 +125,9 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
+            if (this.currentUser) {
+                this.checkMatches();                
+            }
 	      }.bind(this));
 	      
 	      
@@ -169,8 +172,7 @@ const vm = new Vue({
             }
 
             this.date = meetingUser;
-            this.currentUser.allDates.push(meetingUser);
-            
+            this.currentUser.allDates.push(meetingUser);            
         }.bind(this));
 
         socket.on('startClock', function () {
@@ -185,6 +187,19 @@ const vm = new Vue({
     },
 
     methods: {
+        checkMatches: function(){
+
+            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+
+                var wantedMatchUsername = this.currentUser.wantedMatches[i].username;
+                var wantedMatchProfile = this.allUsers[wantedMatchUsername]; 
+
+                if (this.currentUser in wantedMatchProfile &&
+                    !(wantedMatchProfile in this.currentUser.matches)) {
+                    this.currentUser.matches.append(wantedMatchProfile);
+                }
+            }
+        },
         createProfile: function () {
             this.addDefaultPicture();
 
@@ -269,7 +284,6 @@ const vm = new Vue({
                     document.getElementById(tab + i).style.backgroundColor = "green";
                 }
             }
-
         },
         closeTableMap: function () {
             document.getElementById("tableMap").style.display = 'none';
@@ -301,8 +315,11 @@ const vm = new Vue({
             console.log(this.contacts);
             this.currentUser.wantedMatches.concat(this.contacts);
             this.contacts = [];
+            this.currentUser.allDates = [];
+
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            socket.emit('newArray', this.currentUser);
             
-            //socket.emit('makeContactWith', {user: this.currentUser, contacts: this.contacts});
         },
     }
 });

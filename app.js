@@ -222,7 +222,8 @@ io.on('connection', function (socket) {
         io.emit('currentMatches', { matches: data.getMatches() });
     });
     
-     socket.on('makeContactWith', function (matches) {
+    socket.on('makeContactWith', function (matches) {
+        // Update all user array
         //io.emit('currentMatches', { matches: data.getMatches() });
     });
 });
