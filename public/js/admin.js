@@ -5,21 +5,21 @@ let tableNo = 1;
 
 function setup(loggedInUsers) {
     for (var i = 0; i < loggedInUsers.length; i++) {
-	// name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
+        // name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
-	var user = loggedInUsers[i];
-	var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
+        var user = loggedInUsers[i];
+        var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
 
-	if (userProfile.gender === "male")
-	    males.push(userProfile);
-	else
-	    females.push(userProfile);
+        if (userProfile.gender === "male")
+            males.push(userProfile);
+        else
+            females.push(userProfile);
     }
-    
+
     matchAlgorithm(males, females, matches);
-    
+
     matches.forEach(function (match) {
-	addMatch(match);
+        addMatch(match);
     });
 }
 
@@ -32,14 +32,16 @@ function matchAlgorithm(males, females, matches) {
     shuffle(females);
 
     for (var i = 0; i < Math.max(males.length, females.length); i++) {
-	var male = i >= males.length ? null : males[i];
-	var female = i >= females.length ? null : females[i];
+        var male = i >= males.length ? null : males[i];
+        var female = i >= females.length ? null : females[i];
 
-        male.tableNo = i + 1; //assign table to pair
-        female.tableNo = i + 1;
+        if (male != null)
+            male.tableNo = i + 1; //assign table to pair
 
+        if (female != null)
+            female.tableNo = i + 1;
 
-	matches.push(new Match(male, female));
+        matches.push(new Match(male, female));
     }
 }
 
@@ -48,27 +50,27 @@ function addProfile(profile, gender) {
     var div = document.createElement("div");
 
     if (profile != null) {
-	var img = document.createElement("img");
-	var p = document.createElement("p");
+        var img = document.createElement("img");
+        var p = document.createElement("p");
 
-	p.id = profile.name;
-	p.innerText = profile.name;
-	p.setAttribute("id", profile.name);
-	p.classList.add("column-child");
+        p.id = profile.name;
+        p.innerText = profile.name;
+        p.setAttribute("id", profile.name);
+        p.classList.add("column-child");
 
-	div.setAttribute("onclick", "openPopup(this)");
-	/*
-	  function () {
-	  //alert(this.querySelector('p').innerHTML);
-	  console.log("hej");
-	  };*/
+        div.setAttribute("onclick", "openPopup(this)");
+        /*
+          function () {
+          //alert(this.querySelector('p').innerHTML);
+          console.log("hej");
+          };*/
 
-	img.src = profile.picture;
-	img.classList.add("profile-pic");
-	img.classList.add("column-child");
+        img.src = profile.picture;
+        img.classList.add("profile-pic");
+        img.classList.add("column-child");
 
-	div.appendChild(img);
-	div.appendChild(p);
+        div.appendChild(img);
+        div.appendChild(p);
     }
 
     div.draggable = true;
@@ -83,35 +85,33 @@ function findProfile(name) {
     var profile = findProfileInList(males, name);
 
     return profile != null
-	? profile
-	: findProfileInList(females, name);
+        ? profile
+        : findProfileInList(females, name);
 }
 
 function findProfileInList(list, name) {
     for (var i = 0; i < list.length; i++) {
-	var profile = list[i];
+        var profile = list[i];
 
-	if (profile.name != name)
-	    continue;
+        if (profile.name != name)
+            continue;
 
-	return profile;
+        return profile;
     }
 
     return null;
 }
 
-function getProfileNameFromDiv(div)
-{
+function getProfileNameFromDiv(div) {
     if (div.childNodes == null)
-	return null;
+        return null;
 
-    for (var i = 0; i < div.childNodes.length; i++)
-    {
-	var element = div.childNodes[i];
-	if (element == null || element.nodeName != "P")
-	    continue;
+    for (var i = 0; i < div.childNodes.length; i++) {
+        var element = div.childNodes[i];
+        if (element == null || element.nodeName != "P")
+            continue;
 
-	return element.id;
+        return element.id;
     }
 
     return null;
@@ -125,28 +125,28 @@ function readMatches() {
 
     var matchIndex = 0;
     for (var index = 0; index < box.childNodes.length; index++) {
-	var element = box.childNodes[index];
+        var element = box.childNodes[index];
 
-	if (element.nodeName !== "DIV" || !element.classList.contains("column"))
-	    continue;
+        if (element.nodeName !== "DIV" || !element.classList.contains("column"))
+            continue;
 
-	var id = getProfileNameFromDiv(element);
+        var id = getProfileNameFromDiv(element);
 
-	if (id == null)
-	    continue;
+        if (id == null)
+            continue;
 
-	if (lastUser == null)
-	    lastUser = id;
-	else {
-	    readMatches.push({
-		left: findProfile(lastUser),
-		right: findProfile(id),
-		tableNo:  matchIndex + 1,
-	    });
+        if (lastUser == null)
+            lastUser = id;
+        else {
+            readMatches.push({
+                left: findProfile(lastUser),
+                right: findProfile(id),
+                tableNo: matchIndex + 1,
+            });
 
-	    matchIndex++;
-	    lastUser = null;
-	}
+            matchIndex++;
+            lastUser = null;
+        }
     }
 
     return readMatches;
@@ -159,16 +159,16 @@ function addMatch(match) {
     var box = document.getElementById("matchPanelGrid");
 
     var aGender = a !== null
-	? a.gender
-	: b.gender == "male"
-	? "female"
-	: "male";
+        ? a.gender
+        : b.gender == "male"
+            ? "female"
+            : "male";
 
     var bGender = b !== null
-	? b.gender
-	: a.gender == "male"
-	? "female"
-	: "male";
+        ? b.gender
+        : a.gender == "male"
+            ? "female"
+            : "male";
 
     addProfile(a, aGender);
 
@@ -183,13 +183,13 @@ function addMatch(match) {
     divTableNo.classList.add("tableNo");
     var table = document.createTextNode(tableNo);
     tableNo++;
-    
+
     //   var tooltip =  document.createTextNode("Bordsnummer");
-    
+
     //   spanHover.appendChild(tooltip); 
     //   divTableNo.appendChild(table);
     //   divTableNo.appendChild(spanHover);
-    
+
     //   div.appendChild(p);
     //   div.appendChild(divTableNo);
     //   box.appendChild(div);
@@ -221,58 +221,58 @@ var timerOn = false;
 var endMeet = false;
 async function timer() {
     if (isStartDisabled())
-	return;
+        return;
 
     //choosen time in seconds
     let time = (document.getElementById('time').value) * 60;
     let countDown = time;
 
     if (countDown > 0 && !timerOn) {
-	timerOn = true;
+        timerOn = true;
 
-	
-	var currentMatches = readMatches();
-	socket.emit('setMatches', currentMatches);
-	socket.emit('startClock');
 
-	while (countDown > 0) {
-	    let minutes = Math.floor(countDown / 60);
-	    let seconds = countDown % 60;
+        var currentMatches = readMatches();
+        socket.emit('setMatches', currentMatches);
+        socket.emit('startClock');
 
-	    // Display the result in the element with id="timer"
-	    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+        while (countDown > 0) {
+            let minutes = Math.floor(countDown / 60);
+            let seconds = countDown % 60;
 
-	    // Give page time to print
-	    await sleep(1000);
+            // Display the result in the element with id="timer"
+            document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
-	    // Decrement difference 
-	    countDown--;
-	    if(endMeet){
-		countDown = 0;
-		endMeet = false;
-	    }
+            // Give page time to print
+            await sleep(1000);
 
-	    // If the count down is finished, write some text 
-	    if (countDown == 0) {
-		document.getElementById("timer").innerHTML = "Mötet är över";
-		await sleep(4000);
-		document.getElementById("timer").innerHTML = "";
-		document.getElementById("time").innerHTML = "Längd på event (min)";
-		timerOn = false;
-	    }
-	}
+            // Decrement difference 
+            countDown--;
+            if (endMeet) {
+                countDown = 0;
+                endMeet = false;
+            }
+
+            // If the count down is finished, write some text 
+            if (countDown == 0) {
+                document.getElementById("timer").innerHTML = "Mötet är över";
+                await sleep(4000);
+                document.getElementById("timer").innerHTML = "";
+                document.getElementById("time").innerHTML = "Längd på event (min)";
+                timerOn = false;
+            }
+        }
     } else if (timerOn) {
-	document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";
-	await sleep(40000);
+        document.getElementById("timer").innerHTML = "Vänligen vänta tills mötet är över";
+        await sleep(40000);
     } else {
-	document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
+        document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
     }
     if (countDown == 0) {
-	socket.emit('stopClock');
+        socket.emit('stopClock');
     }
 }
 
-function endMeeting(){ 
+function endMeeting() {
     endMeet = true;
 }
 
@@ -290,11 +290,11 @@ function getColumnClass(element) {
     var classList = element.classList;
 
     for (var i = 0; i < classList.length; i++) {
-	var currentClass = classList[i];
-	if (!columnClasses.includes(currentClass))
-	    continue;
+        var currentClass = classList[i];
+        if (!columnClasses.includes(currentClass))
+            continue;
 
-	return currentClass;
+        return currentClass;
     }
 
     return null;
@@ -306,10 +306,10 @@ function applyTargetEffect(element) {
     effectTarget = getTargetContainer(effectTarget, false);
 
     if (effectTarget == null)
-	return;
+        return;
 
     if (effectTarget == document.getElementById("unmatchedGrid"))
-	unmatchedEnters++;
+        unmatchedEnters++;
 
     effectTarget.style.border = "2px dashed #000";
 }
@@ -320,12 +320,12 @@ function removeTargetEffect(element) {
     effectTarget = getTargetContainer(effectTarget, false);
 
     if (effectTarget == null)
-	return;
+        return;
 
     if (effectTarget == document.getElementById("unmatchedGrid")) {
-	unmatchedEnters--;
-	if (unmatchedEnters > 0)
-	    return;
+        unmatchedEnters--;
+        if (unmatchedEnters > 0)
+            return;
     }
 
     effectTarget.style.border = "";
@@ -335,30 +335,30 @@ function handleDragStart(event) {
     var target = getTargetContainer(event.target, true);
 
     if (target == null)
-	return;
+        return;
 
     if (target.innerHTML == "")
-	target = null;
+        target = null;
 
     draggedElement = target;
 }
 
 function getTargetContainer(element, includeUnmatchedCards) {
     while (element != null) {
-	if (element.parentNode == window.document || element.classList == null)
-	    return null;
+        if (element.parentNode == window.document || element.classList == null)
+            return null;
 
-	if (!includeUnmatchedCards) {
-	    if (element.id === "unmatchedGrid")
-		return element;
+        if (!includeUnmatchedCards) {
+            if (element.id === "unmatchedGrid")
+                return element;
 
-	    if (element.classList.contains("column") && !element.classList.contains("unmatched-col"))
-		return element;
-	} else if (element.classList.contains("column")) {
-	    return element;
-	}
+            if (element.classList.contains("column") && !element.classList.contains("unmatched-col"))
+                return element;
+        } else if (element.classList.contains("column")) {
+            return element;
+        }
 
-	element = element.parentNode;
+        element = element.parentNode;
     }
 
     return null;
@@ -384,13 +384,13 @@ function enableStart() {
 
 function handleDrop(event) {
     if (draggedElement == null)
-	return;
+        return;
 
     event.preventDefault();
 
     var target = getTargetContainer(event.target, false);
     if (target == draggedElement)
-	return;
+        return;
 
     var source = draggedElement;
 
@@ -403,32 +403,32 @@ function handleDrop(event) {
 
     var newDivHtml = overwrittenHtml;
     if (overwrittenType != null)
-	target.innerHTML = sourceHtml;
+        target.innerHTML = sourceHtml;
     else
-	newDivHtml = source.innerHTML;
+        newDivHtml = source.innerHTML;
 
     if (sourceType === "unmatched-col") {
-	unmatchedContainer.removeChild(source);
+        unmatchedContainer.removeChild(source);
 
-	if (unmatchedContainer.children.length == 0)
-	    enableStart();
+        if (unmatchedContainer.children.length == 0)
+            enableStart();
     }
     else {
-	source.innerHTML = "";
+        source.innerHTML = "";
     }
 
     if (overwrittenHtml != "" || overwrittenType == null) {
-	var newDiv = document.createElement("div");
+        var newDiv = document.createElement("div");
 
-	newDiv.classList.add("unmatched-col");
-	newDiv.classList.add("column");
-	newDiv.draggable = true;
-	newDiv.innerHTML = newDivHtml;
+        newDiv.classList.add("unmatched-col");
+        newDiv.classList.add("column");
+        newDiv.draggable = true;
+        newDiv.innerHTML = newDivHtml;
 
-	unmatchedContainer.appendChild(newDiv);
+        unmatchedContainer.appendChild(newDiv);
 
-	if (unmatchedContainer.children.length != 0)
-	    disableStart();
+        if (unmatchedContainer.children.length != 0)
+            disableStart();
     }
 
     removeTargetEffect(target);
@@ -442,15 +442,15 @@ function preventEvent(event) {
 function handleDragEnter(event) {
     event.stopPropagation();
     if (draggedElement == null)
-	return;
+        return;
 
     var target = getTargetContainer(event.target, false);
 
     if (target == draggedElement)
-	return;
+        return;
 
     if (target == draggedElement)
-	return;
+        return;
 
     previousTarget = target;
     applyTargetEffect(target);
@@ -458,13 +458,13 @@ function handleDragEnter(event) {
 
 function handleDragLeave(event) {
     if (draggedElement == null)
-	return;
+        return;
 
     event.stopPropagation();
     var target = getTargetContainer(event.target, false);
 
     if (target == draggedElement)
-	return;
+        return;
 
     removeTargetEffect(target);
 }
@@ -489,9 +489,9 @@ var gameState = 0;
 function findProfile(name) {
     let profiles = males.concat(females);
     for (var i = 0; i < profiles.length; i++) {
-	if (profiles[i].name == name) {
-	    return profiles[i];
-	}
+        if (profiles[i].name == name) {
+            return profiles[i];
+        }
     }
     return null;
 }
