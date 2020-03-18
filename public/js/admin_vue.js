@@ -43,7 +43,7 @@ const vm = new Vue({
 		socket.on('foundDate', function(data) {	
 			this.found = data.user.tableNo;
 			let tables = document.getElementsByClassName('table');
-			tables[this.found].style.backgroundColor = "green";
+			tables[this.found-1].style.backgroundColor = "green";
 			console.log("hej hej hej found date hej hej");
 		}.bind(this));
 
