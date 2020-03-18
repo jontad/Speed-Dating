@@ -87,7 +87,7 @@
 	  <div id="startbutton" v-if="eventState < 3" onclick="timer()" v-on:click="changeState" class="buttons">Starta
 	  </div>
       <div id="startbutton" v-if="eventState == 4" class="buttons" style="background-color: darkgrey">Dela info</div>
-	  <div id="startbutton" v-else class="buttons" v-on:click="shareInfo()">Dela info</div>
+	  <div id="startbutton" v-if="eventState == 3" class="buttons" v-on:click="shareInfo()">Dela info</div>
 		  
 	</div>
     </main>
