@@ -307,7 +307,7 @@ const vm = new Vue({
             window.location.href = '/user';
         },
         foundDate: function () {
-            socket.emit('foundDate', { user: this.currentUser, date: this.date });
+            socket.emit('foundDate', { user: this.currentUser });
             window.location.href = '/waiting';
         },
         shareContact: function(){

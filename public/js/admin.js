@@ -231,6 +231,7 @@ function sleep(ms) {
 var timerOn = false;
 var endMeet = false;
 async function timer() {
+  
     if (isStartDisabled())
         return;
 
@@ -270,6 +271,11 @@ async function timer() {
                 document.getElementById("timer").innerHTML = "";
                 document.getElementById("time").innerHTML = "Längd på event (min)";
                 timerOn = false;
+              	//Reset background-color to red
+				        let tables = document.getElementsByClassName('table');
+				        for(var i = 0; i < tables.length; i++) {
+					        tables[i].style.backgroundColor = "red";
+				        }
             }
         }
     } else if (timerOn) {
