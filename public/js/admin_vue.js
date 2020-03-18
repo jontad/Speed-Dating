@@ -39,7 +39,6 @@ const vm = new Vue({
         }.bind(this));
 		    
         socket.on('currentLoggedIn', function (data) {
-            console.log(data.loggedIn);
             loggedInUsers = data.loggedIn;
             this.currentUsers = data.loggedIn;
 

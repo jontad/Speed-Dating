@@ -4,6 +4,14 @@ var matches = [];
 let tableNo = 1;
 
 function setup(loggedInUsers) {
+    var box = document.getElementById("matchPanelGrid");
+
+    box.innerHTML = "";
+
+    males = [];
+    females = [];
+    tableNo = 1;
+
     for (var i = 0; i < loggedInUsers.length; i++) {
         // name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
@@ -16,6 +24,7 @@ function setup(loggedInUsers) {
             females.push(userProfile);
     }
 
+    matches = [];
     matchAlgorithm(males, females, matches);
 
     matches.forEach(function (match) {
@@ -76,7 +85,9 @@ function addProfile(profile, gender) {
     div.draggable = true;
     div.classList.add(gender == "male" ? "col1" : "col3");
     div.classList.add("column");
-    div.id = profile.name;
+
+    if (profile != null)
+        div.id = profile.name;
 
     box.appendChild(div);
 }
