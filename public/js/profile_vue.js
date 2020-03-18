@@ -237,8 +237,8 @@ const vm = new Vue({
         logout: function () {
             // Removes current user from session storage, vue object and server
             sessionStorage.removeItem("currentUserName");
+            socket.emit('logoutUser', this.currentUser);
             this.currentUser = '';
-            socket.emit('logoutUser', currentUser);
             window.location.href = '/login';
         },
         range: function (end) {

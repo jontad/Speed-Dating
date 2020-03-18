@@ -38,6 +38,7 @@ function matchAlgorithm(males, females, matches) {
         male.tableNo = i + 1; //assign table to pair
         female.tableNo = i + 1;
 
+
 		    matches.push(new Match(male, female));
 	  }
 }

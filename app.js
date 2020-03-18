@@ -140,7 +140,7 @@ Data.prototype.getLoggedInUsers = function () {
 
 //update array with edited user
 Data.prototype.updateArray = function (newUser) {
-    this.users[newUser.userName] = newUser;
+    delete this.users[newUser.userName];
 }
 
 // TODO: Behövs dessa??
@@ -195,11 +195,25 @@ io.on('connection', function (socket) {
 
     socket.on('loggedIn', function (user) {
         data.addLoggedIn(user);
-        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        //io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() })
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });;
     });
     socket.on('logoutUser', function (user) {
         data.logoutUser(user);
-        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        //io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });
     });
 
     socket.on('newArray', function (user) {
