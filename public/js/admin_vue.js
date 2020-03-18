@@ -20,7 +20,11 @@ const vm = new Vue({
 			      if(time > 0 && this.eventState < 4) {
 				        this.eventState += 1;
 			      }
-		    },
+		},
+		shareInfo: function (){
+			this.eventState += 1;
+			socket.emit('eventOver');	
+		},
     },
     mounted() {
         socket.emit('getLoggedInUsers');

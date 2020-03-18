@@ -184,7 +184,11 @@ const vm = new Vue({
         socket.on('stopClock', function (data) {
             window.location.href = '/questions-user';
         }.bind(this));
-
+		
+		socket.on('eventOver', function (data) {
+			console.log("sharedinfo");
+			window.location.href = '/shareInfo';
+		});
     },
 
     methods: {
