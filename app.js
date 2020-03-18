@@ -227,6 +227,10 @@ io.on('connection', function (socket) {
     socket.on('startClock', function (user) {
         io.emit('startClock');
     });
+	
+	socket.on('eventOver', function (user) {
+		io.emit('eventOver');
+	}); 
 
     socket.on('setMatches', function (matches) {
         data.setMatches(matches);
