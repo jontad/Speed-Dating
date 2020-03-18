@@ -167,6 +167,7 @@ const vm = new Vue({
                     : match.left;
 
                 this.tableNo = match.tableNo;
+                this.currentUser.tableNo = match.tableNo;
                 meetingUser = other;
                 break;
             }
@@ -277,13 +278,8 @@ const vm = new Vue({
 
         showTableMap: function () {
             document.getElementById("tableMap").style.display = 'inline';
-            
-            let tab = "table";
-            for (var i = 1; i < 11; i++) {
-                if(this.currentUser.tableNo == i){
-                    document.getElementById(tab + i).style.backgroundColor = "green";
-                }
-            }
+            document.getElementById("table" + this.tableNo.toString()).style.backgroundColor = "green";
+
         },
         closeTableMap: function () {
             document.getElementById("tableMap").style.display = 'none';
@@ -318,8 +314,7 @@ const vm = new Vue({
             this.currentUser.allDates = [];
 
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-            socket.emit('newArray', this.currentUser);
-            
+            socket.emit('newArray', this.currentUser);            
         },
     }
 });

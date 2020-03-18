@@ -141,7 +141,7 @@ function readMatches() {
 			      readMatches.push({
 				        left: findProfile(lastUser),
 				        right: findProfile(id),
-				        tableNo: matchIndex + 1
+				        tableNo:  matchIndex + 1,
 			      });
 
 			      matchIndex++;
@@ -229,6 +229,7 @@ async function timer() {
 	  if (countDown > 0 && !timerOn) {
 		    timerOn = true;
 
+       
 		    var currentMatches = readMatches();
 		    socket.emit('setMatches', currentMatches);
 		    socket.emit('startClock');
