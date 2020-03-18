@@ -2,94 +2,95 @@
 <html lang="en">
 
 
-<head>
-  <title>Admin page</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="./css/admin.css">
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="https://vuejs.org/js/vue.js"></script>
+  <head>
+    <title>Admin page</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./css/admin.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="/js/profile.js" defer></script>
-  <script src="/js/match.js" defer></script>
-  <script src="/js/admin.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/js/profile.js" defer></script>
+    <script src="/js/match.js" defer></script>
+    <script src="/js/admin.js" defer></script>
 
-  <script src="/js/admin_vue.js" defer></script>
-  <script type="text/javascript" src="js/menu.js"></script>
-</head>
+    <script src="/js/admin_vue.js" defer></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+  </head>
 
-<body>
-  <!-- Admin-page -->
-  <main>
-    <div id="grid">
-      <div class="box a">
-        <hr id="progressLine">
-        <div v-if="eventState == 0" style="background-color:green" class="progressBubble">Start</div>
-        <div v-else class="progressBubble">Start</div>
-        <div v-if="eventState == 1" style="background-color: green" class="progressBubble">Möte 1</div>
-        <div v-else class="progressBubble">Möte 1</div>
-        <div v-if="eventState == 2" style="background-color: green" class="progressBubble">Möte 2</div>
-        <div v-else class="progressBubble">Möte 2</div>
-        <div v-if="eventState == 3" style="background-color: green" class="progressBubble">Möte 3</div>
-        <div v-else class="progressBubble">Möte 3</div>
-        <div v-if="eventState == 4" style="background-color: green" class="progressBubble">Slut</div>
-        <div v-else class="progressBubble">Slut</div>
-      </div>
-      <div class="box b">
-        <h2>Matchpanel</h2>
-        {{ currentUsers  }}
-		<div id="sticky">
-        	<div id="popupBox">
+  <body>
+    <!-- Admin-page -->
+    <main>
+      <div id="grid">
+	<div class="box a">
+          <hr id="progressLine">
+          <div v-if="eventState == 0" style="background-color:green" class="progressBubble">Start</div>
+          <div v-else class="progressBubble">Start</div>
+          <div v-if="eventState == 1" style="background-color: green" class="progressBubble">Möte 1</div>
+          <div v-else class="progressBubble">Möte 1</div>
+          <div v-if="eventState == 2" style="background-color: green" class="progressBubble">Möte 2</div>
+          <div v-else class="progressBubble">Möte 2</div>
+          <div v-if="eventState == 3" style="background-color: green" class="progressBubble">Möte 3</div>
+          <div v-else class="progressBubble">Möte 3</div>
+          <div v-if="eventState == 4" style="background-color: green" class="progressBubble">Slut</div>
+          <div v-else class="progressBubble">Slut</div>
+	</div>
+	<div class="box b">
+          <h2>Matchpanel</h2>
+          {{ currentUsers  }}
+	  <div id="sticky">
+            <div id="popupBox">
               <div id="profileContent"></div>
               <button id="closeButton" onclick="closePopup()">STÄNG</button>
             </div>
-        </div>
-        <div id="matchPanelGrid">
+          </div>
+          <div id="matchPanelGrid">
 
 
-          <!-- Matches are added to this in js -->
-        </div>
-        <div id="unmatchPanel">
+            <!-- Matches are added to this in js -->
+          </div>
+          <div id="unmatchPanel">
 
 
-          <br>
-          <h2>Omatchade</h2>
-          <div id="unmatchedGrid">
+            <br>
+            <h2>Omatchade</h2>
+            <div id="unmatchedGrid">
 
+            </div>
+
+            <div id="reset" onclick="matchAlgorithm()" class="buttons">Reset</div>
+
+            <div v-for="(anwser, i) in afterDateAnswers">
+            </div>
           </div>
 
-          <div id="reset" onclick="matchAlgorithm()" class="buttons">Reset</div>
+	</div>
 
-          <div v-for="(anwser, i) in afterDateAnswers">
-          </div>
-        </div>
-
-      </div>
-
-    <div class="box c">
-      <h1>Infopanel</h1>
-      <h3>Bord</h3>
-      <div id="tableLayout">
-        <div v-for="i in range(10)" class="table"> {{i}} </div>
-      </div>
-      <br />
+	<div class="box c">
+	  <h1>Infopanel</h1>
+	  <h3>Bord</h3>
+	  <div id="tableLayout">
+            <div v-for="i in range(10)" class="table"> {{i}} </div>
+	  </div>
+	  <br />
 
 
-      <p>
-        <h3 id="timer">Timer</h3>
-        <input type="number" required="required" placeholder="Längd på event" id="time" />
-      </p>
+	  <p>
+            <h3 id="timer">Timer</h3>
+            <input type="number" required="required" placeholder="Längd på event" id="time" />
+	  </p>
 
-      <div v-if="eventState == 0 || eventState == 4" onclick="window.location.href = '/';" class="buttons">Avsluta</div>
-      <div v-else class="buttons">Avsluta</div>
-      <div id="startbutton" v-if="eventState < 4" onclick="timer()" v-on:click="changeState" class="buttons">Starta
-      </div>
-      <div id="startbutton" v-else class="buttons" style="background-color: darkgrey">Starta</div>
-    </div>
-  </main>
-</body>
+	  
+	  <div v-if="eventState == 0 || eventState == 4" onclick="window.location.href = '/';" class="buttons">Avsluta</div>
+	  <div v-else onclick="endMeeting()" class="buttons">Avsluta</div>
+	  <div id="startbutton" v-if="eventState < 4" onclick="timer()" v-on:click="changeState" class="buttons">Starta
+	  </div>
+	  <div id="startbutton" v-else class="buttons" style="background-color: darkgrey">Starta</div>
+	</div>
+    </main>
+  </body>
 
 
 </html>
