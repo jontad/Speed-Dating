@@ -19,7 +19,7 @@
       <div id="tableMap">
         <div id="tableLayout">
           <div id="tableMapCloseButton" v-on:click="closeTableMap()">&times</div>
-          <div v-for="i in tablesMapOrder" class="table"> {{i}} </div> 
+          <div v-for="i in tablesMapOrder" class="table" :id="'table'+i.toString()"> {{i}} </div> 
         </div>
       </div>
       

@@ -58,8 +58,17 @@ app.get('/waiting', function (req, res) {
 app.get('/login', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/login.html'));
 });
-app.get('/createProfile', function (req, res) {
+
+app.get('/createProfile', function(req, res) {
     res.sendFile(path.join(__dirname, 'views/createProfile.html'));
+});
+
+app.get('/shareInfo', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/shareInfo.html'));
+});
+
+app.get('/lastPage', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/lastPage.html'));
 });
 
 app.get('/loginAdmin', function (req, res) {
@@ -68,23 +77,26 @@ app.get('/loginAdmin', function (req, res) {
 
 
 
-function Profile(name, age, description, address, picture, phoneNumber, email, password, userName) {
+function Profile(name, age, description, address, picture, phoneNumber, email, password, userName, gender, allContacts) {
+
     this.name = name;
     this.age = age;
     this.description = description;
     this.address = address;
-    this.myProfile = true;
     this.picture = picture;
     this.matches = [];
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
     this.userName = userName;
-};
+    this.gender = gender;
+    this.allContacts = [];
 
-
-
-
+    this.myProfile = true;
+    this.tableNo = 0;
+    this.allDates = [];
+    
+}
 
 
 // Store data in an object to keep the global namespace clean and
@@ -94,6 +106,7 @@ function Data() {
     this.users = {};
     this.loggedIn = {};
     this.afterDateAnswers = {};
+    this.matches = [];
 };
 
 // Adds after date answers to the "database"
@@ -127,10 +140,10 @@ Data.prototype.getLoggedInUsers = function () {
 
 //update array with edited user
 Data.prototype.updateArray = function (newUser) {
-    this.users[newUser.userName] = newUser;
+    delete this.users[newUser.userName];
 }
 
-
+// TODO: Behövs dessa??
 Data.prototype.getMatches = function () {
     return this.matches;
 }
@@ -169,13 +182,38 @@ io.on('connection', function (socket) {
     socket.on('getUsers', function (user) {
         io.emit('currentUsers', { users: data.getAllUsers() });
     });
+    
+    socket.on('getLoggedInUsers', function (x) {
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });
+    });
+
     socket.on('loggedIn', function (user) {
         data.addLoggedIn(user);
-        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        //io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() })
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });;
     });
     socket.on('logoutUser', function (user) {
         data.logoutUser(user);
-        io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        //io.emit('currentLoggedIn', { loggedIn: data.getLoggedInUsers() });
+        var users = [];
+
+        var dict = data.getLoggedInUsers();
+        for (var key in dict)
+            users.push(dict[key]);
+
+        io.emit('currentLoggedIn', { loggedIn: users });
     });
 
     socket.on('newArray', function (user) {
@@ -189,6 +227,10 @@ io.on('connection', function (socket) {
     socket.on('startClock', function (user) {
         io.emit('startClock');
     });
+	
+	socket.on('eventOver', function (user) {
+		io.emit('eventOver');
+	}); 
 
     socket.on('setMatches', function (matches) {
         data.setMatches(matches);
@@ -201,6 +243,13 @@ io.on('connection', function (socket) {
 	socket.on('foundDate', function (user){
 		io.emit('foundDate', { user: user.user });
 	});
+
+    
+    socket.on('makeContactWith', function (matches) {
+        // Update all user array
+        //io.emit('currentMatches', { matches: data.getMatches() });
+    });
+
 });
 
 /* eslint-disable-next-line no-unused-vars */

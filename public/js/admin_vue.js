@@ -21,7 +21,14 @@ const vm = new Vue({
 			      if(time > 0 && this.eventState < 4) {
 				        this.eventState += 1;
 			      }
-		    },
+		},
+		shareInfo: function (){
+			this.eventState += 1;
+			socket.emit('eventOver');	
+		},
+    },
+    mounted() {
+        socket.emit('getLoggedInUsers');
     },
     created: function() {
         socket.on('initialize', function(data) {
@@ -31,6 +38,7 @@ const vm = new Vue({
         socket.on('currentAfterDateAnswers', function(data) {
             this.afterDateAnswers = data.afterDateAnswers;
         }.bind(this));
+
 		
 		socket.on('foundDate', function(data) {	
 			this.found = data.user.tableNo;
@@ -38,6 +46,15 @@ const vm = new Vue({
 			tables[this.found].style.backgroundColor = "green";
 			console.log("hej hej hej found date hej hej");
 		}.bind(this));
+
+		    
+        socket.on('currentLoggedIn', function (data) {
+            loggedInUsers = data.loggedIn;
+            this.currentUsers = data.loggedIn;
+
+            setup(loggedInUsers);
+        }.bind(this));
+
     }
 });
 
