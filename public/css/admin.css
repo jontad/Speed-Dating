@@ -129,7 +129,6 @@ p {
     grid-gap: 0.2em;
     grid-template-columns: 40% 10% 40%;
     margin-left: 20px;
-    min-height: 40em;
 }
 
 #unmatchedGrid {

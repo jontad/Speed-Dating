@@ -3,7 +3,90 @@ var females = [];
 var matches = [];
 let tableNo = 1;
 
+/* // DUMMY CODE
+setup([
+    {
+        name: "a",
+        age: 1,
+        description: "aa",
+        location: "hejsan",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "a@a.a",
+        gender: "male",
+        password: "a",
+        userName: "a"
+    },
+    {
+        name: "B",
+        age: 1,
+        description: "bb",
+        location: "hejsan bbb",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "b@b.b",
+        gender: "female",
+        password: "b",
+        userName: "b"
+    },
+    {
+        name: "c",
+        age: 1,
+        description: "cc",
+        location: "hejsan",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "c@c.c",
+        gender: "male",
+        password: "c",
+        userName: "c"
+    },
+    {
+        name: "D",
+        age: 1,
+        description: "dd",
+        location: "hejsan ddd",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "d@d.d",
+        gender: "female",
+        password: "d",
+        userName: "d"
+    },
+    {
+        name: "e",
+        age: 1,
+        description: "ee",
+        location: "hejsan eee",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "e@e.e",
+        gender: "male",
+        password: "e",
+        userName: "e"
+    },
+    {
+        name: "F",
+        age: 1,
+        description: "FF",
+        location: "loaction FF",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "f@f.f",
+        gender: "female",
+        password: "f",
+        userName: "f"
+    }
+]);
+*/
+
 function setup(loggedInUsers) {
+
+    /* // DUMMY CODE
+    if (loggedInUsers.length == 0)
+        return;
+    */
+
     var box = document.getElementById("matchPanelGrid");
 
     box.innerHTML = "";
