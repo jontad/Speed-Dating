@@ -52,26 +52,103 @@ let dummyContacts = [dateDummy1, dateDummy2,dateDummy3];
 
 let meetingUser = null;
 
+// DUMMY CODE
+let dummyUsers = [
+    {
+        name: "a",
+        age: 1,
+        description: "aa",
+        location: "hejsan",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "a@a.a",
+        gender: "male",
+        password: "a",
+        userName: "a"
+    },
+    {
+        name: "B",
+        age: 1,
+        description: "bb",
+        location: "hejsan bbb",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "b@b.b",
+        gender: "female",
+        password: "b",
+        userName: "b"
+    },
+    {
+        name: "c",
+        age: 1,
+        description: "cc",
+        location: "hejsan",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "c@c.c",
+        gender: "male",
+        password: "c",
+        userName: "c"
+    },
+    {
+        name: "D",
+        age: 1,
+        description: "dd",
+        location: "hejsan ddd",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "d@d.d",
+        gender: "female",
+        password: "d",
+        userName: "d"
+    },
+    {
+        name: "e",
+        age: 1,
+        description: "ee",
+        location: "hejsan eee",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "e@e.e",
+        gender: "male",
+        password: "e",
+        userName: "e"
+    },
+    {
+        name: "F",
+        age: 1,
+        description: "FF",
+        location: "loaction FF",
+        picture: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+        phoneNumber: "11111111111",
+        email: "f@f.f",
+        gender: "female",
+        password: "f",
+        userName: "f"
+    }
+];
+
+
 
 const vm = new Vue({
     el: 'main',
     data: {
         profile: "", 
 
-	      profileLocation: "",
+	profileLocation: "",
         date: dateDummy1,
         tableNo: -1,
         questions: qs,
         editMode: false,
-	      editPicture: false,
+	editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 
-	      editButtonText: "Redigera profil",
-	      editPictureText: "Byt profilbild",
+	editButtonText: "Redigera profil",
+	editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
 
-	      picture: "",
+	picture: "",
         userName: "",
         password: "",
         name: "",
@@ -81,13 +158,15 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-	      gender: "",
+	gender: "",
 
         currentUser: '',
         allUsers: {},
         tablesMapOrder: [6, 1, 7, 2, 8, 3, 9, 4, 10, 5],
         afterDateAnswers: [0, 0, 0, 0],
         other: '',
+
+	dummyUsers: dummyUsers,
 
     },
     mounted() {
@@ -107,7 +186,7 @@ const vm = new Vue({
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
             this.picture = this.currentUser.picture;
-	          this.gender = this.currentUser.gender;
+	    this.gender = this.currentUser.gender;
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -126,22 +205,22 @@ const vm = new Vue({
             if (this.currentUser) {
                 this.checkMatches();                
             }
-	      }.bind(this));
-	      
-	      
+	}.bind(this));
+	
+	
         socket.on('loggedIn', function(data) {
             console.log(data);
             this.currentUser = data;
         }.bind(this));
         /*
-        socket.on('newDate', function(data){
-            if (data.user.Username == this.currentUser.userName) {
-                this.date = data.date;
-                this.currentUser.allDates.push(data.date);
-                sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
-                window.location.href='/toMeet';                
-            }
-        }.bind(this));*/
+          socket.on('newDate', function(data){
+          if (data.user.Username == this.currentUser.userName) {
+          this.date = data.date;
+          this.currentUser.allDates.push(data.date);
+          sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
+          window.location.href='/toMeet';                
+          }
+          }.bind(this));*/
 
         socket.on('currentMatches', function (data) {
             var matches = data.matches;
@@ -185,11 +264,11 @@ const vm = new Vue({
         socket.on('stopClock', function (data) {
             window.location.href = '/questions-user';
         }.bind(this));
-		    
-		    socket.on('eventOver', function (data) {
-			      console.log("sharedinfo");
-			      window.location.href = '/shareInfo';
-		    });
+	
+	socket.on('eventOver', function (data) {
+	    console.log("sharedinfo");
+	    window.location.href = '/shareInfo';
+	});
     },
 
     methods: {
@@ -218,9 +297,9 @@ const vm = new Vue({
             this.addDefaultPicture();
 
             let newUser = new Profile(this.name, this.age, this.description,
-				                              this.address, this.picture,
-				                              this.number, this.mail,
-				                              this.password, this.userName, this.gender);
+				      this.address, this.picture,
+				      this.number, this.mail,
+				      this.password, this.userName, this.gender);
 
             this.currentUser = newUser;
 
@@ -299,12 +378,12 @@ const vm = new Vue({
         sendAfterDateQuestions: function () {
 
             socket.emit('addAfterDateAnwsers',
-			                  {
-			                      profile: this.currentUser,
-			                      date: this.date,
-			                      other: this.other,
-			                      afterDateAnswers: this.afterDateAnswers,
-			                  });
+			{
+			    profile: this.currentUser,
+			    date: this.date,
+			    other: this.other,
+			    afterDateAnswers: this.afterDateAnswers,
+			});
 
             console.log({
                 profile: this.currentUser,
@@ -328,5 +407,32 @@ const vm = new Vue({
             socket.emit('newArray', this.currentUser);
             window.location.href="/lastPage";
         },
+	dummys: function () {
+	    document.getElementById("test").innerhtml = "hej";
+	    let newUser;
+
+	    for (var i = 0; i < dummyUsers.length; i++) {
+		let name = dummyUsers[i].name;
+		let age = dummyUsers[i].age;
+		let description = dummyUsers[i].description;
+		let address = dummyUsers[i].address;
+		let picture = dummyUsers[i].picture;
+		let number = dummyUsers[i].phoneNumber;
+		let mail = dummyUsers[i].email;
+		let password = dummyUsers[i].password;
+		let userName = dummyUsers[i].userName;
+		let gender = dummyUsers[i].gender;
+		
+		newUser = new Profile(name, age, description,
+					  address, picture,
+					  number, mail,
+					  password, userName, gender);
+
+		console.log(newUser)
+
+		socket.emit('addNewUser', newUser);
+	    }
+	    this.currentUser = newUser;
+	},
     }
 });

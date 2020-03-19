@@ -3,8 +3,8 @@ var females = [];
 var matches = [];
 let tableNo = 1;
 
-/* // DUMMY CODE
-setup([
+// DUMMY CODE
+let dummyUsers = [
     {
         name: "a",
         age: 1,
@@ -77,8 +77,8 @@ setup([
         password: "f",
         userName: "f"
     }
-]);
-*/
+];
+
 
 function setup(loggedInUsers) {
 
