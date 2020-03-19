@@ -27,10 +27,10 @@ let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bo
 let dateDummy = new Profile("Din Date", "ålder", "description", "Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", 0, 0);
 
 
-let q1 = "Fråga1";
-let q2 = "Fråga2";
-let q3 = "Fråga3";
-let q4 = "Fråga4";
+let q1 = "Vad tyckte du om daten?";
+let q2 = "Vad tyckte du om din dates personlighet?";
+let q3 = "Tyckte du din dejt var intressant att lyssna på?";
+let q4 = "Kan du tänka dig att träffa din dejt igen?";
 let qs = [q1, q2, q3, q4];
 
 
