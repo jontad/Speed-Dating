@@ -135,20 +135,20 @@ const vm = new Vue({
     data: {
         profile: "", 
 
-	profileLocation: "",
+	      profileLocation: "",
         date: dateDummy1,
         tableNo: -1,
         questions: qs,
         editMode: false,
-	editPicture: false,
+	      editPicture: false,
         myProfile: true, // Tillfälligt för att visa knappar på "ens egen profil"
 
 
-	editButtonText: "Redigera profil",
-	editPictureText: "Byt profilbild",
+	      editButtonText: "Redigera profil",
+	      editPictureText: "Byt profilbild",
         createProfileData: createProfileData,
 
-	picture: "",
+	      picture: "",
         userName: "",
         password: "",
         name: "",
@@ -158,7 +158,7 @@ const vm = new Vue({
         number: "",
         description: "",
         contacts: [],
-	gender: "",
+	      gender: "",
 
         currentUser: '',
         allUsers: {},
@@ -166,7 +166,7 @@ const vm = new Vue({
         afterDateAnswers: [0, 0, 0, 0],
         other: '',
 
-	dummyUsers: dummyUsers,
+	      dummyUsers: dummyUsers,
 
     },
     mounted() {
@@ -186,7 +186,7 @@ const vm = new Vue({
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
             this.picture = this.currentUser.picture;
-	    this.gender = this.currentUser.gender;
+	          this.gender = this.currentUser.gender;
         }
 
         if (sessionStorage.getItem("currentDate")) {
@@ -202,25 +202,12 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-            if (this.currentUser) {
-                this.checkMatches();                
-            }
-	}.bind(this));
-	
-	
+	      }.bind(this));
+	      
         socket.on('loggedIn', function(data) {
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-        /*
-          socket.on('newDate', function(data){
-          if (data.user.Username == this.currentUser.userName) {
-          this.date = data.date;
-          this.currentUser.allDates.push(data.date);
-          sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
-          window.location.href='/toMeet';                
-          }
-          }.bind(this));*/
 
         socket.on('currentMatches', function (data) {
             var matches = data.matches;
@@ -264,11 +251,11 @@ const vm = new Vue({
         socket.on('stopClock', function (data) {
             window.location.href = '/questions-user';
         }.bind(this));
-	
-	socket.on('eventOver', function (data) {
-	    console.log("sharedinfo");
-	    window.location.href = '/shareInfo';
-	});
+	      
+	      socket.on('eventOver', function (data) {
+	          console.log("sharedinfo");
+	          window.location.href = '/shareInfo';
+	      });
     },
 
     methods: {
@@ -280,26 +267,13 @@ const vm = new Vue({
             }
             return false;
         },
-        checkMatches: function(){
-
-            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-
-                var wantedMatchUsername = this.currentUser.wantedMatches[i].username;
-                var wantedMatchProfile = this.allUsers[wantedMatchUsername]; 
-
-                if (this.currentUser in wantedMatchProfile &&
-                    !(wantedMatchProfile in this.currentUser.matches)) {
-                    this.currentUser.matches.append(wantedMatchProfile);
-                }
-            }
-        },
         createProfile: function () {
             this.addDefaultPicture();
 
             let newUser = new Profile(this.name, this.age, this.description,
-				      this.address, this.picture,
-				      this.number, this.mail,
-				      this.password, this.userName, this.gender);
+				                              this.address, this.picture,
+				                              this.number, this.mail,
+				                              this.password, this.userName, this.gender);
 
             this.currentUser = newUser;
 
@@ -378,12 +352,12 @@ const vm = new Vue({
         sendAfterDateQuestions: function () {
 
             socket.emit('addAfterDateAnwsers',
-			{
-			    profile: this.currentUser,
-			    date: this.date,
-			    other: this.other,
-			    afterDateAnswers: this.afterDateAnswers,
-			});
+			                  {
+			                      profile: this.currentUser,
+			                      date: this.date,
+			                      other: this.other,
+			                      afterDateAnswers: this.afterDateAnswers,
+			                  });
 
             console.log({
                 profile: this.currentUser,
@@ -399,39 +373,62 @@ const vm = new Vue({
         },
         shareContact: function(){            
             console.log(this.contacts);
-            this.currentUser.wantedMatches.concat(this.contacts);
+            for (var i = 0; i < this.contacts.length; i++) {
+                this.currentUser.wantedMatches.push(this.contacts[i].userName);
+            }
             this.contacts = [];
             this.currentUser.allDates = [];
-
+            console.log(this.currentUser);
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
             socket.emit('newArray', this.currentUser);
-            window.location.href="/lastPage";
+            window.location.href="/user";
         },
-	dummys: function () {
-	    let newUser;
+        checkMatches: function(){
 
-	    for (var i = 0; i < dummyUsers.length; i++) {
-		let name = dummyUsers[i].name;
-		let age = dummyUsers[i].age;
-		let description = dummyUsers[i].description;
-		let address = dummyUsers[i].address;
-		let picture = dummyUsers[i].picture;
-		let number = dummyUsers[i].phoneNumber;
-		let mail = dummyUsers[i].email;
-		let password = dummyUsers[i].password;
-		let userName = dummyUsers[i].userName;
-		let gender = dummyUsers[i].gender;
-		
-		newUser = new Profile(name, age, description,
-					  address, picture,
-					  number, mail,
-					  password, userName, gender);
+            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+                var wantedMatchUsername = this.currentUser.wantedMatches[i];
+                var wantedMatchProfile = this.allUsers[wantedMatchUsername];
+                var wantedMatchWantedMatches = wantedMatchProfile.wantedMatches;
 
-		console.log(newUser)
+                for (var i = 0; i < wantedMatchWantedMatches.length; i++) {
+                    if (this.currentUser.userName.toString() == wantedMatchWantedMatches[i] &&
+                        !(this.userNameInArray(wantedMatchProfile.userName, this.currentUser.matches))) {
+                        this.currentUser.matches.push(wantedMatchProfile);
+                    }
+                }   
+            }
+            socket.emit('newArray', this.currentUser);
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        },
+        contactsButton: function(){
+            this.checkMatches();
+            window.location.href="/user-contacts";
+        },
+	      dummys: function () {
+	          let newUser;
 
-		socket.emit('addNewUser', newUser);
-	    }
-	    this.currentUser = newUser;
-	},
+	          for (var i = 0; i < dummyUsers.length; i++) {
+		            let name = dummyUsers[i].name;
+		            let age = dummyUsers[i].age;
+		            let description = dummyUsers[i].description;
+		            let address = dummyUsers[i].address;
+		            let picture = dummyUsers[i].picture;
+		            let number = dummyUsers[i].phoneNumber;
+		            let mail = dummyUsers[i].email;
+		            let password = dummyUsers[i].password;
+		            let userName = dummyUsers[i].userName;
+		            let gender = dummyUsers[i].gender;
+		            
+		            newUser = new Profile(name, age, description,
+					                            address, picture,
+					                            number, mail,
+					                            password, userName, gender);
+
+		            console.log(newUser)
+
+		            socket.emit('addNewUser', newUser);
+	          }
+	          this.currentUser = newUser;
+	      },
     }
 });

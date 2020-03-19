@@ -13,12 +13,12 @@ body {
 }
 
 div {
-    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; //line-height: 20px;
 }
 
 
 p {
-    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; //line-height: 20px;
 }
 
 #profilePicture {
@@ -128,7 +128,7 @@ p {
     height: 100%;
 }
 #contactName {
-    font-size: 1em;
+    //font-size: 1em;
     font-weight: bold;
 }
 
@@ -391,10 +391,11 @@ p {
 
 #contactName {
     margin-left: 10px;
+    padding-top: 100px;
     
     //Font style
     font-family: Arvo;
-    font-size: 50px;
+    font-size: 2em;
     font-style: normal;
     font-variant: normal;
 } 

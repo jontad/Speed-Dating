@@ -15,7 +15,7 @@
     <!-- User contacts-page -->
     <main id="main">
       <div id="shareInfoTitle">
-        VILKA VILL DU TRÄFFA IGEN?
+        Vilka vill du fortsätta ha kontakt med?
         </div>
       <div class="wrapper">
         <div id="profileBlock" v-for="date in currentUser.allDates">
@@ -31,9 +31,7 @@
           <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
         </div>
       </div>
-      <div>{{ contacts }}</div>
          <button id="finishButton" v-on:click="shareContact()"> Klar </button>        
-      </div>
     </main>
   </body>
 </html>
