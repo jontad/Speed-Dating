@@ -408,7 +408,6 @@ const vm = new Vue({
             window.location.href="/lastPage";
         },
 	dummys: function () {
-	    document.getElementById("test").innerhtml = "hej";
 	    let newUser;
 
 	    for (var i = 0; i < dummyUsers.length; i++) {
