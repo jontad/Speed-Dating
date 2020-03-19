@@ -21,8 +21,6 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.tableNo = 0;
     this.allDates = [];
     this.wantedMatches = [];
-
-    
 }
 
 let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bor i', 'Email', 'Telefonnummer'];
@@ -101,8 +99,8 @@ const vm = new Vue({
         if (matchesPages.includes(window.location.pathname))
             socket.emit('getMatches');
 
-        if (sessionStorage.getItem("currentUserName")) {
-            this.currentUser = JSON.parse(sessionStorage.getItem("currentUserName"));
+        if (sessionStorage.getItem("currentUser")) {
+            this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
             this.description = this.currentUser.description;
             this.address = this.currentUser.address;
             this.picture = this.currentUser.picture;
@@ -135,15 +133,15 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-        
+        /*
         socket.on('newDate', function(data){
             if (data.user.Username == this.currentUser.userName) {
                 this.date = data.date;
-                sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
                 this.currentUser.allDates.push(data.date);
+                sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
                 window.location.href='/toMeet';                
             }
-        }.bind(this));
+        }.bind(this));*/
 
         socket.on('currentMatches', function (data) {
             var matches = data.matches;
@@ -169,29 +167,40 @@ const vm = new Vue({
                 this.tableNo = match.tableNo;
                 this.currentUser.tableNo = match.tableNo;
                 meetingUser = other;
+
                 break;
             }
-
             this.date = meetingUser;
-            this.currentUser.allDates.push(meetingUser);            
+            if (!this.userNameInArray(this.date.userName, this.currentUser.allDates)) {
+                this.currentUser.allDates.push(this.date);                                    
+            }
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            
         }.bind(this));
 
         socket.on('startClock', function () {
-            console.info("hejsan");
             window.location.href = '/toMeet';
         }.bind(this));
 
         socket.on('stopClock', function (data) {
             window.location.href = '/questions-user';
         }.bind(this));
-		
-		socket.on('eventOver', function (data) {
-			console.log("sharedinfo");
-			window.location.href = '/shareInfo';
-		});
+		    
+		    socket.on('eventOver', function (data) {
+			      console.log("sharedinfo");
+			      window.location.href = '/shareInfo';
+		    });
     },
 
     methods: {
+        userNameInArray: function(userName, array){
+            for (var i = 0; i < array.length; i++) {
+                if (userName == array[i].userName) {
+                    return true;
+                }
+            }
+            return false;
+        },
         checkMatches: function(){
 
             for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
@@ -232,7 +241,7 @@ const vm = new Vue({
                 this.contacts = this.currentUser.matches;
 
                 socket.emit('loggedIn', this.currentUser);
-                sessionStorage.setItem("currentUserName", JSON.stringify(this.currentUser));
+                sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
                 window.location.href = "/user"
             } else {
                 console.log("hej");
@@ -241,7 +250,7 @@ const vm = new Vue({
         },
         logout: function () {
             // Removes current user from session storage, vue object and server
-            sessionStorage.removeItem("currentUserName");
+            sessionStorage.removeItem("currentUser");
             socket.emit('logoutUser', this.currentUser);
             this.currentUser = '';
             window.location.href = '/login';
@@ -283,7 +292,6 @@ const vm = new Vue({
         showTableMap: function () {
             document.getElementById("tableMap").style.display = 'inline';
             document.getElementById("table" + this.tableNo.toString()).style.backgroundColor = "green";
-
         },
         closeTableMap: function () {
             document.getElementById("tableMap").style.display = 'none';
@@ -310,15 +318,15 @@ const vm = new Vue({
             socket.emit('foundDate', { user: this.currentUser });
             window.location.href = '/waiting';
         },
-        shareContact: function(){
-            //window.location.href="/lastPage";
+        shareContact: function(){            
             console.log(this.contacts);
             this.currentUser.wantedMatches.concat(this.contacts);
             this.contacts = [];
             this.currentUser.allDates = [];
 
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-            socket.emit('newArray', this.currentUser);            
+            socket.emit('newArray', this.currentUser);
+            window.location.href="/lastPage";
         },
     }
 });
