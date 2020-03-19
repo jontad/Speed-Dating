@@ -123,9 +123,6 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-            if (this.currentUser) {
-                this.checkMatches();                
-            }
 	      }.bind(this));
 	      
 	      
@@ -133,16 +130,7 @@ const vm = new Vue({
             console.log(data);
             this.currentUser = data;
         }.bind(this));
-        /*
-        socket.on('newDate', function(data){
-            if (data.user.Username == this.currentUser.userName) {
-                this.date = data.date;
-                this.currentUser.allDates.push(data.date);
-                sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
-                window.location.href='/toMeet';                
-            }
-        }.bind(this));*/
-
+        
         socket.on('currentMatches', function (data) {
             var matches = data.matches;
             this.matches = matches;
@@ -200,19 +188,6 @@ const vm = new Vue({
                 }
             }
             return false;
-        },
-        checkMatches: function(){
-
-            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-
-                var wantedMatchUsername = this.currentUser.wantedMatches[i].username;
-                var wantedMatchProfile = this.allUsers[wantedMatchUsername]; 
-
-                if (this.currentUser in wantedMatchProfile &&
-                    !(wantedMatchProfile in this.currentUser.matches)) {
-                    this.currentUser.matches.append(wantedMatchProfile);
-                }
-            }
         },
         createProfile: function () {
             this.addDefaultPicture();
@@ -320,13 +295,36 @@ const vm = new Vue({
         },
         shareContact: function(){            
             console.log(this.contacts);
-            this.currentUser.wantedMatches.concat(this.contacts);
+            for (var i = 0; i < this.contacts.length; i++) {
+                this.currentUser.wantedMatches.push(this.contacts[i].userName);
+            }
             this.contacts = [];
             this.currentUser.allDates = [];
-
+            console.log(this.currentUser);
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
             socket.emit('newArray', this.currentUser);
-            window.location.href="/lastPage";
+            window.location.href="/user";
         },
+        checkMatches: function(){
+
+            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+                var wantedMatchUsername = this.currentUser.wantedMatches[i];
+                var wantedMatchProfile = this.allUsers[wantedMatchUsername];
+                var wantedMatchWantedMatches = wantedMatchProfile.wantedMatches;
+
+                for (var i = 0; i < wantedMatchWantedMatches.length; i++) {
+                    if (this.currentUser.userName.toString() == wantedMatchWantedMatches[i] &&
+                        !(this.userNameInArray(wantedMatchProfile.userName, this.currentUser.matches))) {
+                        this.currentUser.matches.push(wantedMatchProfile);
+                    }
+                }   
+            }
+            socket.emit('newArray', this.currentUser);
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        },
+        contactsButton: function(){
+            this.checkMatches();
+            window.location.href="/user-contacts";
+        }
     }
 });

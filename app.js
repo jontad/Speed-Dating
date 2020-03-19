@@ -95,6 +95,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, p
     this.myProfile = true;
     this.tableNo = 0;
     this.allDates = [];
+    this.wantedMatches = [];
     
 }
 
@@ -140,7 +141,7 @@ Data.prototype.getLoggedInUsers = function () {
 
 //update array with edited user
 Data.prototype.updateArray = function (newUser) {
-    delete this.users[newUser.userName];
+    this.users[newUser.userName] = newUser;
 }
 
 // TODO: Behövs dessa??
@@ -243,12 +244,7 @@ io.on('connection', function (socket) {
 	socket.on('foundDate', function (user){
 		io.emit('foundDate', { user: user.user });
 	});
-
-    
-    socket.on('makeContactWith', function (matches) {
-        // Update all user array
-        //io.emit('currentMatches', { matches: data.getMatches() });
-    });
+  
 
 });
 

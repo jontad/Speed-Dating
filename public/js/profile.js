@@ -12,6 +12,7 @@ function Profile(name, age, description, location, picture, phoneNumber, email, 
     this.password = password;
     this.userName = userName;
     this.tableNo = tableNo;
+    this.wantedMatches =[];
 }
 
 function Contact(name, age, phoneNumber, email, picture) {

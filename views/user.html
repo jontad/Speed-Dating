@@ -26,9 +26,7 @@
 
 	  <span v-if="editPicture" id="description" class="bold"> {{currentUser.address}} </span>
         </p>
-        <a href="user-contacts">
-          <button id="contactsButton" class="profileButtons"> Kontakter </button>
-        </a>
+        <button id="contactsButton" class="profileButtons" v-on:click="contactsButton"> Kontakter </button>
         <button id="editProfileButton" class="profileButtons" v-if="!editPicture" v-on:click="editProfile()">
           {{editButtonText}}
         </button>
@@ -50,7 +48,6 @@
         <div v-if="!editMode && !editPicture" id="description" class="description"> {{currentUser.description}} </div>
         <textarea v-if="editMode && !editPicture" id="editDescription" type="text" v-model="description">  </textarea>
       </div>
-
       <!--
       <div id="SDButton">
         <a href="/toMeet">
