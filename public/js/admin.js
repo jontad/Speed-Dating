@@ -270,6 +270,7 @@ async function timer() {
                 await sleep(4000);
                 document.getElementById("timer").innerHTML = "";
                 document.getElementById("time").innerHTML = "Längd på event (min)";
+                socket.emit('stopClock');
                 timerOn = false;
               	//Reset background-color to red
 				        let tables = document.getElementsByClassName('table');
@@ -283,9 +284,6 @@ async function timer() {
         await sleep(40000);
     } else {
         document.getElementById("timer").innerHTML = "Vänligen ge ett giltigt värde (värde över 0)";
-    }
-    if (countDown == 0) {
-        socket.emit('stopClock');
     }
 }
 
