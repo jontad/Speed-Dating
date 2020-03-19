@@ -202,256 +202,233 @@ const vm = new Vue({
 
         socket.on('currentUsers', function (data) {
             this.allUsers = data.users;
-                <<<<<<< HEAD
 	      }.bind(this));
 	      
-	      
-            =======
-            if (this.currentUser) {
-                this.checkMatches();                
+        socket.on('loggedIn', function(data) {
+            console.log(data);
+            this.currentUser = data;
+        }.bind(this));
+
+        socket.on('currentMatches', function (data) {
+            var matches = data.matches;
+            this.matches = matches;
+
+            meetingUser = null;
+            if (!matches) {
+                return;
             }
-	  }.bind(this));
-	                 
-	                 
-                   >>>>>>> db6a42071798c565eb605a1a99f8b2f4c6bcdd4f
-                   socket.on('loggedIn', function(data) {
-                       console.log(data);
-                       this.currentUser = data;
-                   }.bind(this));
-                   <<<<<<< HEAD
-                   
-                   =======
-                   /*
-                     socket.on('newDate', function(data){
-                     if (data.user.Username == this.currentUser.userName) {
-                     this.date = data.date;
-                     this.currentUser.allDates.push(data.date);
-                     sessionStorage.setItem("currentDate", JSON.stringify(this.currentDate));
-                     window.location.href='/toMeet';                
-                     }
-                     }.bind(this));*/
 
-                   >>>>>>> db6a42071798c565eb605a1a99f8b2f4c6bcdd4f
-                   socket.on('currentMatches', function (data) {
-                       var matches = data.matches;
-                       this.matches = matches;
+            var currentUser = this.currentUser.name;
+            for (var i = 0; i < matches.length; i++)
+            {
+                var match = matches[i];
+                
+                if (match.left == null || match.right == null || (match.left.name != currentUser && match.right.name != currentUser))
+                    continue;
 
-                       meetingUser = null;
-                       if (!matches) {
-                           return;
-                       }
+                var other = match.left.name == currentUser 
+                    ? match.right 
+                    : match.left;
 
-                       var currentUser = this.currentUser.name;
-                       for (var i = 0; i < matches.length; i++)
-                       {
-                           var match = matches[i];
-                           
-                           if (match.left == null || match.right == null || (match.left.name != currentUser && match.right.name != currentUser))
-                               continue;
+                this.tableNo = match.tableNo;
+                this.currentUser.tableNo = match.tableNo;
+                meetingUser = other;
 
-                           var other = match.left.name == currentUser 
-                               ? match.right 
-                               : match.left;
+                break;
+            }
+            this.date = meetingUser;
+            if (!this.userNameInArray(this.date.userName, this.currentUser.allDates)) {
+                this.currentUser.allDates.push(this.date);                                    
+            }
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            
+        }.bind(this));
 
-                           this.tableNo = match.tableNo;
-                           this.currentUser.tableNo = match.tableNo;
-                           meetingUser = other;
+        socket.on('startClock', function () {
+            window.location.href = '/toMeet';
+        }.bind(this));
 
-                           break;
-                       }
-                       this.date = meetingUser;
-                       if (!this.userNameInArray(this.date.userName, this.currentUser.allDates)) {
-                           this.currentUser.allDates.push(this.date);                                    
-                       }
-                       sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-                       
-                   }.bind(this));
+        socket.on('stopClock', function (data) {
+            window.location.href = '/questions-user';
+        }.bind(this));
+	      
+	      socket.on('eventOver', function (data) {
+	          console.log("sharedinfo");
+	          window.location.href = '/shareInfo';
+	      });
+    },
 
-                   socket.on('startClock', function () {
-                       window.location.href = '/toMeet';
-                   }.bind(this));
+    methods: {
+        userNameInArray: function(userName, array){
+            for (var i = 0; i < array.length; i++) {
+                if (userName == array[i].userName) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        createProfile: function () {
+            this.addDefaultPicture();
 
-                   socket.on('stopClock', function (data) {
-                       window.location.href = '/questions-user';
-                   }.bind(this));
-	                 
-	                 socket.on('eventOver', function (data) {
-	                     console.log("sharedinfo");
-	                     window.location.href = '/shareInfo';
-	                 });
-                  },
+            let newUser = new Profile(this.name, this.age, this.description,
+				                              this.address, this.picture,
+				                              this.number, this.mail,
+				                              this.password, this.userName, this.gender);
 
-      methods: {
-          userNameInArray: function(userName, array){
-              for (var i = 0; i < array.length; i++) {
-                  if (userName == array[i].userName) {
-                      return true;
-                  }
-              }
-              return false;
-          },
-          createProfile: function () {
-              this.addDefaultPicture();
+            this.currentUser = newUser;
 
-              let newUser = new Profile(this.name, this.age, this.description,
-				                                this.address, this.picture,
-				                                this.number, this.mail,
-				                                this.password, this.userName, this.gender);
+            sessionStorage.setItem("currentUser", JSON.stringify(newUser));
+            socket.emit('addNewUser', newUser);
+        },
+        addDefaultPicture: function () {
+            if (!this.picture) {
+                this.picture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
+        },
+        login: function () {
+            console.log(this.gender);
+            if (this.userName in this.allUsers &&
+                this.allUsers[this.userName]['password'] == this.password) {
 
-              this.currentUser = newUser;
+                this.currentUser = this.allUsers[this.userName];
+                this.contacts = this.currentUser.matches;
 
-              sessionStorage.setItem("currentUser", JSON.stringify(newUser));
-              socket.emit('addNewUser', newUser);
-          },
-          addDefaultPicture: function () {
-              if (!this.picture) {
-                  this.picture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-              }
-          },
-          login: function () {
-              console.log(this.gender);
-              if (this.userName in this.allUsers &&
-                  this.allUsers[this.userName]['password'] == this.password) {
+                socket.emit('loggedIn', this.currentUser);
+                sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+                window.location.href = "/user"
+            } else {
+                console.log("hej");
+                document.getElementById("loginInfo").style.display = "block";
+            }
+        },
+        logout: function () {
+            // Removes current user from session storage, vue object and server
+            sessionStorage.removeItem("currentUser");
+            socket.emit('logoutUser', this.currentUser);
+            this.currentUser = '';
+            window.location.href = '/login';
+        },
+        range: function (end) {
+            return Array(end).fill().map((_, idx) => 1 + idx)
+        },
 
-                  this.currentUser = this.allUsers[this.userName];
-                  this.contacts = this.currentUser.matches;
+        editProfile: function () {
+            this.editMode = !this.editMode;
+            if (this.editMode) {
+                this.editButtonText = "Spara profil";
+            } else {
+                this.editButtonText = "Redigera profil";
+                this.editUser();
+            }
+        },
+        //user saving new profile
+        editUser: function () {
+            this.currentUser.description = this.description;
+            this.currentUser.address = this.address;
 
-                  socket.emit('loggedIn', this.currentUser);
-                  sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-                  window.location.href = "/user"
-              } else {
-                  console.log("hej");
-                  document.getElementById("loginInfo").style.display = "block";
-              }
-          },
-          logout: function () {
-              // Removes current user from session storage, vue object and server
-              sessionStorage.removeItem("currentUser");
-              socket.emit('logoutUser', this.currentUser);
-              this.currentUser = '';
-              window.location.href = '/login';
-          },
-          range: function (end) {
-              return Array(end).fill().map((_, idx) => 1 + idx)
-          },
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            socket.emit('newArray', this.currentUser);
+        },
+        editPic: function () {
+            this.editPicture = !this.editPicture;
+            if (this.editPicture) {
+                this.editPictureText = "Spara profilbild";
+            } else {
+                this.editPictureText = "Byt profilbild";
 
-          editProfile: function () {
-              this.editMode = !this.editMode;
-              if (this.editMode) {
-                  this.editButtonText = "Spara profil";
-              } else {
-                  this.editButtonText = "Redigera profil";
-                  this.editUser();
-              }
-          },
-          //user saving new profile
-          editUser: function () {
-              this.currentUser.description = this.description;
-              this.currentUser.address = this.address;
+                this.currentUser.picture = this.picture;
+                sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+                socket.emit('newArray', this.currentUser);
+            }
+        },
 
-              sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-              socket.emit('newArray', this.currentUser);
-          },
-          editPic: function () {
-              this.editPicture = !this.editPicture;
-              if (this.editPicture) {
-                  this.editPictureText = "Spara profilbild";
-              } else {
-                  this.editPictureText = "Byt profilbild";
+        showTableMap: function () {
+            document.getElementById("tableMap").style.display = 'inline';
+            document.getElementById("table" + this.tableNo.toString()).style.backgroundColor = "green";
+        },
+        closeTableMap: function () {
+            document.getElementById("tableMap").style.display = 'none';
+        },
+        sendAfterDateQuestions: function () {
 
-                  this.currentUser.picture = this.picture;
-                  sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-                  socket.emit('newArray', this.currentUser);
-              }
-          },
+            socket.emit('addAfterDateAnwsers',
+			                  {
+			                      profile: this.currentUser,
+			                      date: this.date,
+			                      other: this.other,
+			                      afterDateAnswers: this.afterDateAnswers,
+			                  });
 
-          showTableMap: function () {
-              document.getElementById("tableMap").style.display = 'inline';
-              document.getElementById("table" + this.tableNo.toString()).style.backgroundColor = "green";
-          },
-          closeTableMap: function () {
-              document.getElementById("tableMap").style.display = 'none';
-          },
-          sendAfterDateQuestions: function () {
+            console.log({
+                profile: this.currentUser,
+                date: this.date,
+                other: this.other,
+                afterDateAnswers: this.afterDateAnswers,
+            });
+            window.location.href = '/user';
+        },
+        foundDate: function () {
+            socket.emit('foundDate', { user: this.currentUser });
+            window.location.href = '/waiting';
+        },
+        shareContact: function(){            
+            console.log(this.contacts);
+            for (var i = 0; i < this.contacts.length; i++) {
+                this.currentUser.wantedMatches.push(this.contacts[i].userName);
+            }
+            this.contacts = [];
+            this.currentUser.allDates = [];
+            console.log(this.currentUser);
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+            socket.emit('newArray', this.currentUser);
+            window.location.href="/user";
+        },
+        checkMatches: function(){
 
-              socket.emit('addAfterDateAnwsers',
-			                    {
-			                        profile: this.currentUser,
-			                        date: this.date,
-			                        other: this.other,
-			                        afterDateAnswers: this.afterDateAnswers,
-			                    });
+            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
+                var wantedMatchUsername = this.currentUser.wantedMatches[i];
+                var wantedMatchProfile = this.allUsers[wantedMatchUsername];
+                var wantedMatchWantedMatches = wantedMatchProfile.wantedMatches;
 
-              console.log({
-                  profile: this.currentUser,
-                  date: this.date,
-                  other: this.other,
-                  afterDateAnswers: this.afterDateAnswers,
-              });
-              window.location.href = '/user';
-          },
-          foundDate: function () {
-              socket.emit('foundDate', { user: this.currentUser });
-              window.location.href = '/waiting';
-          },
-          shareContact: function(){            
-              console.log(this.contacts);
-              for (var i = 0; i < this.contacts.length; i++) {
-                  this.currentUser.wantedMatches.push(this.contacts[i].userName);
-              }
-              this.contacts = [];
-              this.currentUser.allDates = [];
-              console.log(this.currentUser);
-              sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-              socket.emit('newArray', this.currentUser);
-              window.location.href="/user";
-          },
-          checkMatches: function(){
+                for (var i = 0; i < wantedMatchWantedMatches.length; i++) {
+                    if (this.currentUser.userName.toString() == wantedMatchWantedMatches[i] &&
+                        !(this.userNameInArray(wantedMatchProfile.userName, this.currentUser.matches))) {
+                        this.currentUser.matches.push(wantedMatchProfile);
+                    }
+                }   
+            }
+            socket.emit('newArray', this.currentUser);
+            sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        },
+        contactsButton: function(){
+            this.checkMatches();
+            window.location.href="/user-contacts";
+        },
+	      dummys: function () {
+	          let newUser;
 
-              for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-                  var wantedMatchUsername = this.currentUser.wantedMatches[i];
-                  var wantedMatchProfile = this.allUsers[wantedMatchUsername];
-                  var wantedMatchWantedMatches = wantedMatchProfile.wantedMatches;
+	          for (var i = 0; i < dummyUsers.length; i++) {
+		            let name = dummyUsers[i].name;
+		            let age = dummyUsers[i].age;
+		            let description = dummyUsers[i].description;
+		            let address = dummyUsers[i].address;
+		            let picture = dummyUsers[i].picture;
+		            let number = dummyUsers[i].phoneNumber;
+		            let mail = dummyUsers[i].email;
+		            let password = dummyUsers[i].password;
+		            let userName = dummyUsers[i].userName;
+		            let gender = dummyUsers[i].gender;
+		            
+		            newUser = new Profile(name, age, description,
+					                            address, picture,
+					                            number, mail,
+					                            password, userName, gender);
 
-                  for (var i = 0; i < wantedMatchWantedMatches.length; i++) {
-                      if (this.currentUser.userName.toString() == wantedMatchWantedMatches[i] &&
-                          !(this.userNameInArray(wantedMatchProfile.userName, this.currentUser.matches))) {
-                          this.currentUser.matches.push(wantedMatchProfile);
-                      }
-                  }   
-              }
-              socket.emit('newArray', this.currentUser);
-              sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-          },
-          contactsButton: function(){
-              this.checkMatches();
-              window.location.href="/user-contacts";
-          },
-	        dummys: function () {
-	            let newUser;
+		            console.log(newUser)
 
-	            for (var i = 0; i < dummyUsers.length; i++) {
-		              let name = dummyUsers[i].name;
-		              let age = dummyUsers[i].age;
-		              let description = dummyUsers[i].description;
-		              let address = dummyUsers[i].address;
-		              let picture = dummyUsers[i].picture;
-		              let number = dummyUsers[i].phoneNumber;
-		              let mail = dummyUsers[i].email;
-		              let password = dummyUsers[i].password;
-		              let userName = dummyUsers[i].userName;
-		              let gender = dummyUsers[i].gender;
-		              
-		              newUser = new Profile(name, age, description,
-					                              address, picture,
-					                              number, mail,
-					                              password, userName, gender);
-
-		              console.log(newUser)
-
-		              socket.emit('addNewUser', newUser);
-	            }
-	            this.currentUser = newUser;
-	        },
-      }
+		            socket.emit('addNewUser', newUser);
+	          }
+	          this.currentUser = newUser;
+	      },
+    }
 });
