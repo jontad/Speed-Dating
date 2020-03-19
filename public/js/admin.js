@@ -119,6 +119,7 @@ function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
 }
 
+
 // Uses Math.random to match people
 function matchAlgorithm(males, females, matches) {
     shuffle(females);
@@ -135,6 +136,18 @@ function matchAlgorithm(males, females, matches) {
 
         matches.push(new Match(male, female));
     }
+}
+
+function useAlgorithm() {
+	var box = document.getElementById("matchPanelGrid");
+
+    box.innerHTML = "";
+	tableNo = 1;
+	matches = [];
+	matchAlgorithm(males, females, matches);
+	matches.forEach(function (match) {
+        addMatch(match);
+    });
 }
 
 function addProfile(profile, gender) {
