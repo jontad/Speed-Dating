@@ -27,10 +27,10 @@ let createProfileData = ['Användarnamn', 'Lösenord', 'Förnamn', 'Ålder', 'Bo
 let dateDummy = new Profile("Din Date", "ålder", "description", "Ort", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", 0, 0);
 
 
-let q1 = "Vad tyckte du om daten?";
-let q2 = "Vad tyckte du om din dates personlighet?";
-let q3 = "Tyckte du din dejt var intressant att lyssna på?";
-let q4 = "Kan du tänka dig att träffa din dejt igen?";
+let q1 = "Vad tyckte du om din träff?";
+let q2 = "Vad tyckte du om din träffs personlighet?";
+let q3 = "Tyckte du din träff var intressant att lyssna på?";
+let q4 = "Vad tyckte du om din träffs utseende?";
 let qs = [q1, q2, q3, q4];
 
 
@@ -388,6 +388,9 @@ const vm = new Vue({
             for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
                 var wantedMatchUsername = this.currentUser.wantedMatches[i];
                 var wantedMatchProfile = this.allUsers[wantedMatchUsername];
+                if (!wantedMatchProfile) {
+                    continue;
+                }
                 var wantedMatchWantedMatches = wantedMatchProfile.wantedMatches;
 
                 for (var i = 0; i < wantedMatchWantedMatches.length; i++) {
@@ -425,7 +428,6 @@ const vm = new Vue({
 					                            password, userName, gender);
 
 		            console.log(newUser)
-
 		            socket.emit('addNewUser', newUser);
 	          }
 	          this.currentUser = newUser;

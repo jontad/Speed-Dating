@@ -12,26 +12,27 @@
     <script type="text/javascript" src="js/menu.js"></script> 
   </head>
   <body>
-    <!-- User contacts-page -->
+    
     <main id="main">
-      <div id="shareInfoTitle">
+      
+      <div id="shareInfoHeader">
         Vilka vill du fortsätta ha kontakt med?
-        </div>
-      <div class="wrapper">
-        <div id="profileBlock" v-for="date in currentUser.allDates">
-          <img class="profile-pic" :src="date.picture">
-          <div id="dateName"> {{ date.name }}
+      </div>
+      <div id="contacts">
+        <div class="contactBlock" v-for="(date,index) in currentUser.allDates">
+          <img id="contactPicture" :src="date.picture">
+          
+          <div id="contactsInfo">
+            <span id="contactName">{{ date.name }} </span> <br/>            
+            <span class="italic">
+              <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
           </div>
-          <div id="dateInfo">
-            {{ date.address }} {{ date.age }}
-          </div>
-         
-          <div id="dateDescription"> {{ date.description }}
-          </div>
-          <input type="checkbox" :name="date" :value="date" id="chosenDate" v-model="contacts">
         </div>
       </div>
-         <button id="finishButton" v-on:click="shareContact()"> Klar </button>        
+      <div id="shareInfoButtonDiv">
+        <button id="shareInfoButton" v-on:click="shareContact()"> Skicka </button>
+      </div>
+      
     </main>
   </body>
 </html>
