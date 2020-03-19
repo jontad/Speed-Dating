@@ -10,7 +10,17 @@ body {
     overflow: hidden;
     font-family: "Arial", Helvetica, sans-serif;
 
-}       
+}
+
+div {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+}
+
+
+p {
+    font-family: Arvo; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+}
+
 #profilePicture {
     height: auto;
     width: 100%;
@@ -346,18 +356,20 @@ body {
 }
 
 #shareInfoTitle {
-    width: 800px;
+    width: 1000px;
     padding-top: 10%;
-    text-align: center;
-    
-    
-    //Font style
-    font-family: Arvo;
-    font-size: 45px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 300;
-    line-height: 26.4px;
+    padding-left: 0.5%;
+ 
+    font-size: 4vw;
+
+}
+
+
+#finishButton {
+    transform: scale(1.5);
+    margin-top: 0.5em;
+    margin-left: 8em;
+    border-radius: 5px;
 }
 
 #chosenDate {
@@ -367,20 +379,6 @@ body {
 
 }
 
-#finishButton {
-    transform: scale(1.5);
-    margin-top: 18em;
-    margin-left: 12em;
-    width: 100px;
-    height: 50px;
-    border-radius: 5px;
-
-    //Font style
-    font-family: Arvo;
-    font-size: 30px;
-    font-style: normal;
-    font-variant: normal;
-}
 #email{
     margin-left: 10px;
     
