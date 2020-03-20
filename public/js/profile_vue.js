@@ -219,7 +219,6 @@ const vm = new Vue({
                 sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
                 window.location.href = "/user"
             } else {
-                console.log("hej");
                 document.getElementById("loginInfo").style.display = "block";
             }
         },
@@ -250,6 +249,7 @@ const vm = new Vue({
 
             sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
             socket.emit('newArray', this.currentUser);
+            socket.emit('loggedIn', this.currentUser);
         },
         editPic: function () {
             this.editPicture = !this.editPicture;

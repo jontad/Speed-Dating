@@ -99,7 +99,7 @@ function setup(loggedInUsers) {
         // name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
         var user = loggedInUsers[i];
-        var userProfile = new Profile(user.name, user.age, user.description, user.location, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
+        var userProfile = new Profile(user.name, user.age, user.description, user.address, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
 
         if (userProfile.gender === "male")
             males.push(userProfile);
@@ -626,7 +626,7 @@ function openPopup(div) {
     agePara.appendChild(profileAge);
 
     let fromPara = document.createElement('p');
-    let profileFrom = document.createTextNode("Bor i " + profile.location);
+    let profileFrom = document.createTextNode("Bor i " + profile.address);
     fromPara.appendChild(profileFrom);
 
     let bioPara = document.createElement('p');

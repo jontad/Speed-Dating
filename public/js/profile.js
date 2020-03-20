@@ -1,8 +1,8 @@
-function Profile(name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo) {
+function Profile(name, age, description, address, picture, phoneNumber, email, gender, password, userName, tableNo) {
     this.name = name;
     this.age = age;
     this.description = description;
-    this.location = location;
+    this.address = address;
     this.myProfile = true;
     this.picture = picture;
     this.matches = [];
