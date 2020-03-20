@@ -21,7 +21,27 @@ const vm = new Vue({
 			      if(time > 0 && this.eventState < 4) {
 				        this.eventState += 1;
 			      }
-		},
+		    },
+        createDummyUsers: function(){
+            for (var i = 0; i < 20-this.currentUsers.length; i++) {
+                var gender = i % 2 == 0 ? 'male' : 'female';
+                var newUser = new Profile
+                ('Namn'+i.toString(),
+                 18+i,
+                 'Description'+i.toString(),
+                 'Stad'+i.toString(),
+                 "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg",
+                 i,
+                 'Namn'+ i.toString()+'@email.com',
+                 gender,
+                 'password',
+                 'username' + i.toString(),
+                 -1);
+                this.currentUsers[newUser.userName] = newUser;
+                socket.emit('addNewUser', newUser);
+                socket.emit('loggedIn', newUser);
+            }
+        },
 		shareInfo: function (){
 			this.eventState += 1;
 			socket.emit('eventOver');	

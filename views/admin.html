@@ -26,7 +26,7 @@
     <main>
       <div id="grid">
 	<div class="box a">
-          <hr id="progressLine">
+          <!--<hr id="progressLine">-->
           <div v-if="eventState == 0" style="background-color:green" class="progressBubble">Start</div>
           <div v-else class="progressBubble">Start</div>
           <div v-if="eventState == 1" style="background-color: green" class="progressBubble">Möte 1</div>
@@ -61,12 +61,12 @@
 
             </div>
 
-            <div id="reset" onclick="useAlgorithm()" class="buttons">Reset</div>
+            <div id="reset" onclick="useAlgorithm()" class="buttons">Matcha om användare</div>
 
             <div v-for="(anwser, i) in afterDateAnswers">
             </div>
           </div>
-
+          <button v-on:click="createDummyUsers()">Skapa dummys för demo </button>
 	</div>
 
 	<div class="box c">
@@ -88,8 +88,8 @@
 	  <div v-else onclick="endMeeting()" class="buttons">Avsluta</div>
 	  <div id="startbutton" v-if="eventState < 3" onclick="timer()" v-on:click="changeState" class="buttons">Starta
 	  </div>
-      <div id="startbutton" v-if="eventState == 4" class="buttons" style="background-color: darkgrey">Dela info</div>
-	  <div id="startbutton" v-if="eventState == 3" class="buttons" v-on:click="shareInfo()">Dela info</div>
+      <div id="startbutton" v-if="eventState == 4" class="buttons" style="background-color: darkgrey">Dela kontakter</div>
+	  <div id="startbutton" v-if="eventState == 3" class="buttons" v-on:click="shareInfo()">Dela kontakter</div>
 		  
 	</div>
     </main>
