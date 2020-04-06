@@ -1,4 +1,4 @@
-function Profile(name, age, description, address, picture, phoneNumber, email, gender, password, userName, tableNo) {
+function Profile(name, age, description, address, picture, phoneNumber, email, gender, password, userName, tableNo, afterDateAnswers) {
     this.name = name;
     this.age = age;
     this.description = description;
@@ -13,6 +13,7 @@ function Profile(name, age, description, address, picture, phoneNumber, email, g
     this.userName = userName;
     this.tableNo = tableNo;
     this.wantedMatches =[];
+    this.afterDateAnswers = afterDateAnswers;
 }
 
 function Contact(name, age, phoneNumber, email, picture) {

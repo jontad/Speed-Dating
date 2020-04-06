@@ -80,6 +80,8 @@ let dummyUsers = [
 ];
 
 
+
+
 function setup(loggedInUsers) {
 
     /* // DUMMY CODE
@@ -99,7 +101,7 @@ function setup(loggedInUsers) {
         // name, age, description, location, picture, phoneNumber, email, gender, password, userName, tableNo
 
         var user = loggedInUsers[i];
-        var userProfile = new Profile(user.name, user.age, user.description, user.address, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1);
+        var userProfile = new Profile(user.name, user.age, user.description, user.address, user.picture, user.phoneNumber, user.email, user.gender.toLowerCase(), user.password, user.userName, -1, user.afterDateAnswers);
 
         if (userProfile.gender === "male")
             males.push(userProfile);
@@ -608,6 +610,12 @@ function findProfile(name) {
 }
 
 function openPopup(div) {
+
+    let q1 = "Vad tyckte du om din träff: ";
+    let q2 = "Vad tyckte du om din träffs personlighet: ";
+    let q3 = "Tyckte du din träff var intressant att lyssna på: ";
+    let q4 = "Vad tyckte du om din träffs utseende: ";
+    
     let popup = document.getElementById('popupBox');
     let profileContent = document.getElementById('profileContent');
     profileContent.innerHTML = "";
@@ -633,12 +641,51 @@ function openPopup(div) {
     let profileBio = document.createTextNode("Beskrivning: \n" + profile.description);
     bioPara.appendChild(profileBio);
 
+    
+    let questionsDiv = document.createElement('p');
+    console.log(profile.afterDateAnswers);
+    for (var i = 0; i < profile.afterDateAnswers.length; i++) {
+        let answers = document.createElement('p');
+        let currentAnswers = profile.afterDateAnswers[i];
+
+        let date = document.createTextNode("Date " + (i+1) + ": " + currentAnswers[0].name );                
+        answers.appendChild(date);
+        answers.appendChild(document.createElement("br"));
+        
+        let q1Answer = document.createTextNode(q1 + " " + currentAnswers[1][0]);
+        answers.appendChild(q1Answer);
+        answers.appendChild(document.createElement("br"));
+        
+        let q2Answer = document.createTextNode(q2 + " " + currentAnswers[1][1]);
+        answers.appendChild(q2Answer);
+        answers.appendChild(document.createElement("br"));
+        
+        let q3Answer = document.createTextNode(q3 + " " + currentAnswers[1][2]);
+        answers.appendChild(q3Answer);
+        answers.appendChild(document.createElement("br"));
+        
+        let q4Answer = document.createTextNode(q4 + " " + currentAnswers[1][3]);
+        answers.appendChild(q4Answer);
+        answers.appendChild(document.createElement("br"));
+
+        let otherAnswer = document.createTextNode("Övrigt: " + currentAnswers[2]);
+        answers.appendChild(otherAnswer);
+
+        questionsDiv.appendChild(answers);
+    }
+
+    
+
     profileContent.appendChild(profileImg);
     profileContent.appendChild(namePara);
     profileContent.appendChild(agePara);
     profileContent.appendChild(fromPara);
     profileContent.appendChild(bioPara);
+    linebreak = document.createElement("br");
+    profileContent.appendChild(linebreak);
+    profileContent.appendChild(linebreak);
 
+    profileContent.appendChild(questionsDiv);
 }
 
 

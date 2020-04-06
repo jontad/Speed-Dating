@@ -303,9 +303,21 @@ p {
 	text-align: left;
 }
 
-#closeButton {
-	position: absolute;
-	right: 20em;
-	bottom: 1em;
 
+#closeButton{
+    border: 1px solid;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    text-align: center;
+    line-height: 100%;
+    font-size: 1.8em;
+    height: 1em;
+    width: 1em;
+    background-color: white;
+    z-index: 100000;
 }
+
