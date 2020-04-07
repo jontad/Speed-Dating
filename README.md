@@ -1,23 +1,41 @@
-# deli-very
-This skeleton code gives a folder structure and a basic communication pattern to quickly build prototypes of real-time apps. 
 
-With only fundamental pattern matching abilities and basic HTML/CSS/JS knowledge you will be able to create functional prototypes of web apps. The skeleton code makes use of the modules/frameworks [express js](https://expressjs.com), [socket.io](http://socket.io), and [vue js](https://vuejs.org/) but for prototyping purposes you will most likely not need to understand these libraries very well.
+# Gruppen GAJJS
+Projeketarbete på kursen Systemdesign med ett användareperspektiv (1MD034) vår 2020, Uppsala universitet.
 
-Do not use this skeleton code for creating production apps. Security and stability have not been considered.
+## Komma igång
+För kunna testa hemsidan behöver Javascriptmotor Node JS vara installerad i datorn. För att installera följ steget nedan.
+1. Installera [Node JS](https://nodejs.org)
+2. Navigera to rätt katalog i kommandotolk.
+3. Skriv `npm install` och vänta tills alla nödvändiga filer har installerat.(Det är bara ignorera om npm ger varningen "No repository field" i slutet)
+4. Starta servern genom att skriva `node app.js`
+5. Använd valfri webbläsaren  och surfa till `localhost:3000`. Där kommer man till startsidan.
+(Det kan hända att man behöver ändra inställning  i brandväggen i vissa datorer.
 
-## Getting started
+## Deltagare
+Deltagaren börja med att skapa konto genom att välja `Skapa konto` alternativen. Där man har skapad en profil då kan man logga in genom att välja `Logga in -> användaren`. När man har loggat in kommer man till sin profil.
 
-1. Install [Node JS](https://nodejs.org)
-2. Clone or download (and unzip) this repo
-3. Navigate to the resulting folder in a command line tool (you know that you are in the right folder if it contains the file structure above)
-4. Type `npm install` and wait while magic is installing the necessary libraries, which are specified in the file package.json (Don't worry about the npm warning at the end: "No repository field")
-5. Type `node app.js` to start the server
-6. Use a web browser to check what is happening at `localhost:3000`
-7. Use another web browser to check what is happening at `localhost:3000`
-8. Use another device to check what is happening at `<your IP address>:3000` (for this you may need to adjust your computer's firewall to allow connections to Node)
+## Arrangörer
+Arrangörer kan logga in genom att välja `Logga in -> Admin`. Sen skriva sin inloggnings uppgifter(Just nu vi gör ingen kontroll på att om arrangören har ett konto eller ej). Efter arrangöreren skrivit sin inloggninguppgift tycker man på `Logga in` och då kommer man till arrangör sidan.
 
-That should be enough to get started. Happy tinkering!
-
-## Checklist
-
-Before you submit your lab code, make sure you have solved all the mandatory tasks. [This checklist](checklist.md) helps you to keep track of the tasks.
+## Katalogstructur
+<pre>
+ ├── README.md
+ ├── app.js
+ ├── public
+ │   ├── css
+ │   │   ├── css filer
+ │   ├── img
+ │   │   └── Bilder
+ │   └── js
+ │       ├── Javascript filer
+ │   
+ └── views
+     ├── HTML filer
+     
+</pre>
+## Medlemmar
+- Andreas Harju Schnee
+- Gholam Mohammadi
+- Johan Lövgren
+- Jonathan Tadese
+- Simon Pettersson
