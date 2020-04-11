@@ -643,7 +643,11 @@ function openPopup(div) {
 
     
     let questionsDiv = document.createElement('p');
-    console.log(profile.afterDateAnswers);
+    let earlierDatesPara = document.createElement('div');
+    let earlierDates = document.createTextNode(profile.name + "s tidigare träffar:");
+    earlierDatesPara.appendChild(earlierDates);
+    questionsDiv.appendChild(earlierDatesPara);
+    
     for (var i = 0; i < profile.afterDateAnswers.length; i++) {
         let answers = document.createElement('p');
         let currentAnswers = profile.afterDateAnswers[i];
@@ -681,10 +685,10 @@ function openPopup(div) {
     profileContent.appendChild(agePara);
     profileContent.appendChild(fromPara);
     profileContent.appendChild(bioPara);
+    
     linebreak = document.createElement("br");
     profileContent.appendChild(linebreak);
     profileContent.appendChild(linebreak);
-
     profileContent.appendChild(questionsDiv);
 }
 

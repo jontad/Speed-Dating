@@ -302,8 +302,8 @@ const vm = new Vue({
         },
         checkMatches: function(){
 
-            for (var i = 0; i < this.currentUser.wantedMatches.length; i++) {
-                var wantedMatchUsername = this.currentUser.wantedMatches[i];
+            for (var j = 0; j < this.currentUser.wantedMatches.length; j++) {
+                var wantedMatchUsername = this.currentUser.wantedMatches[j];
                 var wantedMatchProfile = this.allUsers[wantedMatchUsername];
                 if (!wantedMatchProfile) {
                     continue;
