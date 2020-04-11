@@ -652,7 +652,7 @@ function openPopup(div) {
         let answers = document.createElement('p');
         let currentAnswers = profile.afterDateAnswers[i];
 
-        let date = document.createTextNode("Date " + (i+1) + ": " + currentAnswers[0].name );                
+        let date = document.createTextNode("Date nr. " + (i+1) + " med " + currentAnswers[0].name );                
         answers.appendChild(date);
         answers.appendChild(document.createElement("br"));
         
