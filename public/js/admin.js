@@ -141,7 +141,12 @@ function matchAlgorithm(males, females, matches) {
 }
 
 function useAlgorithm() {
-	var box = document.getElementById("matchPanelGrid");
+    var box = document.getElementById("matchPanelGrid");
+    
+    var unmatched = document.getElementById("unmatchedGrid");
+
+    if (unmatched != null)
+        unmatched.innerHTML = "";
 
     box.innerHTML = "";
 	tableNo = 1;
