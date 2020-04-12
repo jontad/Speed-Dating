@@ -144,9 +144,11 @@ function useAlgorithm() {
     var box = document.getElementById("matchPanelGrid");
     
     var unmatched = document.getElementById("unmatchedGrid");
-
+    
     if (unmatched != null)
         unmatched.innerHTML = "";
+
+    enableStart();
 
     box.innerHTML = "";
 	tableNo = 1;
