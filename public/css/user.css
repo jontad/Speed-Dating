@@ -68,7 +68,7 @@ body {
 }
 #profileQuestionsButton {
     text-align: center;
-    padding: 0.5em;
+    padding: 0;
 }
 .profileButtons {
     background: none;
@@ -157,7 +157,7 @@ body {
 }
 #backButton {
     transform: scale(1.3);
-    margin-top: 2em;
+    margin-top: 1em;
     font-size: 1em;
     margin-bottom: 0.5em;
     border-radius: 5px;
