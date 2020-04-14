@@ -1,8 +1,11 @@
 # Gruppen GAJJS
 Projeketarbete i kursen Systemdesign med ett användareperspektiv (1MD034) vår 2020, Uppsala universitet.
 
+## Systemkrav
+Funktionaliteten på denna prototyp är endast garanterad på OSX 10.14.6 och Safari 13.1.
+
 ## Komma igång
-För kunna testa hemsidan behöver Javascriptmotor Node JS vara installerat. För att installera följ steget nedan.
+För kunna testa hemsidan behöver Javascriptmotor Node JS vara installerat. För att installera följ steget nedan. 
 1. Installera [Node JS](https://nodejs.org)
 2. Navigera till rätt katalog med kommandotolk.
 3. Skriv `npm install` och vänta tills alla nödvändiga filer har installerats. (Det är bara ignorera om npm ger varningen "No repository field" i slutet)
@@ -33,6 +36,7 @@ Där kan arrangören se inloggade användare, matcha användare manuellt och aut
  │   
  └── views
      ├── HTML filer
+     
      
 </pre>
 ## Medlemmar
